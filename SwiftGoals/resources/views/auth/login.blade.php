@@ -1,6 +1,6 @@
 <x-authentication-layout>
   <section class="w-screen">
-    <form id="form" class=" bg-transparent backdrop-filter backdrop-blur-sm bg-[#5882C1] bg-opacity-25 mt-10 pt-10 px-16 border-2 border-[#5882C1] border-opacity-15 rounded-3xl max-w-md mx-auto" action="" method="post">
+    <form id="form" class=" bg-transparent backdrop-filter backdrop-blur-sm bg-[#5882C1] bg-opacity-25 mt-10 pt-10 px-16 border-2 border-[#5882C1] border-opacity-15 rounded-3xl max-w-lg mx-auto" action="" method="post">
       <h1 class=" mb-6 text-xl font-bold text-white dark:text-white md:text-3xl lg:text-4xl">Login</h1>
       <div class="mb-5">
         <label for="email" class="block mb-2 text-sm font-medium text-white ">Email</label>
