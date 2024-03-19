@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SwiftGoals</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  @vite('resources/css/app.css')
-</head>
-
-<body style="background-image: url('{{ asset('images/login_bg.png') }}'); background-repeat: no-repeat; background-size: cover;">
+<x-authentication-layout>
   <section class="w-screen">
     <form id="form" class=" bg-transparent backdrop-filter backdrop-blur-sm bg-[#5882C1] bg-opacity-25 mt-10 pt-10 px-16 border-2 border-[#5882C1] border-opacity-15 rounded-3xl max-w-md mx-auto" action="" method="post">
       <h1 class=" mb-6 text-xl font-bold text-white dark:text-white md:text-3xl lg:text-4xl">Login</h1>
@@ -38,6 +27,4 @@
       </div>
     </form>
   </section>
-</body>
-
-</html>
+</x-authentication-layout>
