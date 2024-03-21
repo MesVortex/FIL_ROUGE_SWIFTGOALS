@@ -1,12 +1,201 @@
 <x-main-layout>
   <section>
-    <div class="pt-2 relative mx-auto text-gray-600">
-      <input class="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none" type="search" name="search" placeholder="Search">
-      <button type="submit" class="absolute right-0 top-0 mt-5 mr-4">
-        <svg class="text-gray-600 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 56.966 56.966" style="enable-background:new 0 0 56.966 56.966;" xml:space="preserve" width="512px" height="512px">
-          <path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
-        </svg>
-      </button>
+    <ul class="flex justify-center my-20 font-bold gap-10">
+      <li class="text-[#000AFF]">
+        <a href="">All</a>
+      </li>
+      <li class="">
+        <a href="">Gaming</a>
+      </li>
+      <li class="">
+        <a href="">Thoughts</a>
+      </li>
+      <li class="">
+        <a href="">Music</a>
+      </li>
+      <li class="">
+        <a href="">Eating</a>
+      </li>
+      <li class="">
+        <a href="">Characters</a>
+      </li>
+      <li class="">
+        <a href="">Korean dramas</a>
+      </li>
+      <li class="">
+        <a href="">criticisma</a>
+      </li>
+      <li class="">
+        <a href="">Avatar</a>
+      </li>
+      <li class="">
+        <a href="">Thrillers</a>
+      </li>
+    </ul>
+  </section>
+  <section class="mb-10 px-10 flex flex-wrap justify-around gap-10">
+    <div class="w-96 rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark">
+      <div class="relative overflow-hidden bg-cover bg-no-repeat" data-twe-ripple-init data-twe-ripple-color="light">
+        <img class="rounded-t-3xl" src="https://tecdn.b-cdn.net/img/new/standard/nature/186.jpg" alt="" />
+        <a href="#">
+          <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
+        </a>
+        <div class="absolute top-5 right-5 rounded-full bg-[#1C70EC] text-white py-1 px-4">
+          <p class="">label</p>
+        </div>
+      </div>
+      <div class="p-6 text-surface bg-[#1C70EC] dark:text-white rounded-b-3xl shadow-2xl">
+        <h5 class="mb-2 text-xl text-white font-medium leading-tight">Headline</h5>
+        <p class="mb-4 text-base text-white">
+          Please add your content here. Keep it short and simple. And smile :)
+        </p>
+      </div>
+      <div class="flex justify-between p-5">
+        <div class="flex">
+          <img class="rounded-full bg-gray-600 h-6" src="{{ asset('images/default_profile.png') }}" alt="d">
+          <p class="ml-3">Headline</p>
+        </div>
+        <div class="flex text-[#666666]">
+          <span class="mr-3"><i class="fa-solid fa-clone mr-1"></i>1k</span>
+          <span><i class="fa-brands fa-gratipay mr-1"></i>1.4k</span>
+        </div>
+      </div>
+    </div>
+    <div class="w-96 rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark">
+      <div class="relative overflow-hidden bg-cover bg-no-repeat" data-twe-ripple-init data-twe-ripple-color="light">
+        <img class="rounded-t-3xl" src="https://tecdn.b-cdn.net/img/new/standard/nature/186.jpg" alt="" />
+        <a href="#">
+          <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
+        </a>
+        <div class="absolute top-5 right-5 rounded-full bg-[#1C70EC] text-white py-1 px-4">
+          <p class="">label</p>
+        </div>
+      </div>
+      <div class="p-6 text-surface bg-[#1C70EC] dark:text-white rounded-b-3xl shadow-2xl">
+        <h5 class="mb-2 text-xl text-white font-medium leading-tight">Headline</h5>
+        <p class="mb-4 text-base text-white">
+          Please add your content here. Keep it short and simple. And smile :)
+        </p>
+      </div>
+      <div class="flex justify-between p-5">
+        <div class="flex">
+          <img class="rounded-full bg-gray-600 h-6" src="{{ asset('images/default_profile.png') }}" alt="d">
+          <p class="ml-3">Headline</p>
+        </div>
+        <div class="flex text-[#666666]">
+          <span class="mr-3"><i class="fa-solid fa-clone mr-1"></i>1k</span>
+          <span><i class="fa-brands fa-gratipay mr-1"></i>1.4k</span>
+        </div>
+      </div>
+    </div>
+    <div class="w-96 rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark">
+      <div class="relative overflow-hidden bg-cover bg-no-repeat" data-twe-ripple-init data-twe-ripple-color="light">
+        <img class="rounded-t-3xl" src="https://tecdn.b-cdn.net/img/new/standard/nature/186.jpg" alt="" />
+        <a href="#">
+          <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
+        </a>
+        <div class="absolute top-5 right-5 rounded-full bg-[#1C70EC] text-white py-1 px-4">
+          <p class="">label</p>
+        </div>
+      </div>
+      <div class="p-6 text-surface bg-[#1C70EC] dark:text-white rounded-b-3xl shadow-2xl">
+        <h5 class="mb-2 text-xl text-white font-medium leading-tight">Headline</h5>
+        <p class="mb-4 text-base text-white">
+          Please add your content here. Keep it short and simple. And smile :)
+        </p>
+      </div>
+      <div class="flex justify-between p-5">
+        <div class="flex">
+          <img class="rounded-full bg-gray-600 h-6" src="{{ asset('images/default_profile.png') }}" alt="d">
+          <p class="ml-3">Headline</p>
+        </div>
+        <div class="flex text-[#666666]">
+          <span class="mr-3"><i class="fa-solid fa-clone mr-1"></i>1k</span>
+          <span><i class="fa-brands fa-gratipay mr-1"></i>1.4k</span>
+        </div>
+      </div>
+    </div>
+    <div class="w-96 rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark">
+      <div class="relative overflow-hidden bg-cover bg-no-repeat" data-twe-ripple-init data-twe-ripple-color="light">
+        <img class="rounded-t-3xl" src="https://tecdn.b-cdn.net/img/new/standard/nature/186.jpg" alt="" />
+        <a href="#">
+          <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
+        </a>
+        <div class="absolute top-5 right-5 rounded-full bg-[#1C70EC] text-white py-1 px-4">
+          <p class="">label</p>
+        </div>
+      </div>
+      <div class="p-6 text-surface bg-[#1C70EC] dark:text-white rounded-b-3xl shadow-2xl">
+        <h5 class="mb-2 text-xl text-white font-medium leading-tight">Headline</h5>
+        <p class="mb-4 text-base text-white">
+          Please add your content here. Keep it short and simple. And smile :)
+        </p>
+      </div>
+      <div class="flex justify-between p-5">
+        <div class="flex">
+          <img class="rounded-full bg-gray-600 h-6" src="{{ asset('images/default_profile.png') }}" alt="d">
+          <p class="ml-3">Headline</p>
+        </div>
+        <div class="flex text-[#666666]">
+          <span class="mr-3"><i class="fa-solid fa-clone mr-1"></i>1k</span>
+          <span><i class="fa-brands fa-gratipay mr-1"></i>1.4k</span>
+        </div>
+      </div>
+    </div>
+    <div class="w-96 rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark">
+      <div class="relative overflow-hidden bg-cover bg-no-repeat" data-twe-ripple-init data-twe-ripple-color="light">
+        <img class="rounded-t-3xl" src="https://tecdn.b-cdn.net/img/new/standard/nature/186.jpg" alt="" />
+        <a href="#">
+          <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
+        </a>
+        <div class="absolute top-5 right-5 rounded-full bg-[#1C70EC] text-white py-1 px-4">
+          <p class="">label</p>
+        </div>
+      </div>
+      <div class="p-6 text-surface bg-[#1C70EC] dark:text-white rounded-b-3xl shadow-2xl">
+        <h5 class="mb-2 text-xl text-white font-medium leading-tight">Headline</h5>
+        <p class="mb-4 text-base text-white">
+          Please add your content here. Keep it short and simple. And smile :)
+        </p>
+      </div>
+      <div class="flex justify-between p-5">
+        <div class="flex">
+          <img class="rounded-full bg-gray-600 h-6" src="{{ asset('images/default_profile.png') }}" alt="d">
+          <p class="ml-3">Headline</p>
+        </div>
+        <div class="flex text-[#666666]">
+          <span class="mr-3"><i class="fa-solid fa-clone mr-1"></i>1k</span>
+          <span><i class="fa-brands fa-gratipay mr-1"></i>1.4k</span>
+        </div>
+      </div>
+    </div>
+    <div class="w-96 rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark">
+      <div class="relative overflow-hidden bg-cover bg-no-repeat" data-twe-ripple-init data-twe-ripple-color="light">
+        <img class="rounded-t-3xl" src="https://tecdn.b-cdn.net/img/new/standard/nature/186.jpg" alt="" />
+        <a href="#">
+          <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
+        </a>
+        <div class="absolute top-5 right-5 rounded-full bg-[#1C70EC] text-white py-1 px-4">
+          <p class="">label</p>
+        </div>
+      </div>
+      <div class="p-6 text-surface bg-[#1C70EC] dark:text-white rounded-b-3xl shadow-2xl">
+        <h5 class="mb-2 text-xl text-white font-medium leading-tight">Headline</h5>
+        <p class="mb-4 text-base text-white">
+          Please add your content here. Keep it short and simple. And smile :)
+        </p>
+      </div>
+      <div class="flex justify-between p-5">
+        <div class="flex">
+          <img class="rounded-full bg-gray-600 h-6" src="{{ asset('images/default_profile.png') }}" alt="d">
+          <p class="ml-3">Headline</p>
+        </div>
+        <div class="flex text-[#666666]">
+          <span class="mr-3"><i class="fa-solid fa-clone mr-1"></i>1k</span>
+          <span><i class="fa-brands fa-gratipay mr-1"></i>1.4k</span>
+        </div>
+      </div>
     </div>
   </section>
+
 </x-main-layout>

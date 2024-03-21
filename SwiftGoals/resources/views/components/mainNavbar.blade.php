@@ -20,16 +20,26 @@
     <div class="items-center justify-between hidden w-full lg:flex lg:justify-center lg:my-5 lg:w-full lg:order-1" id="mobile-menu-2">
       <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:items-center lg:space-x-8 lg:mt-0 lg:bg-[#012E4A] p-1 rounded-full">
         <li class="lg:bg-white lg:px-2.5 lg:py-1.5 lg:rounded-full">
-          <a href="#" class="block py-2 pl-3 pr-4 text-white bg-[#1C70EC] rounded lg:bg-transparent lg:text-black lg:p-0 dark:text-white" aria-current="page">Home</a>
+          <a href="{{ route('home') }}" class="block py-2 pl-3 pr-4 text-white bg-[#1C70EC] rounded lg:bg-transparent lg:text-black lg:p-0 dark:text-white" aria-current="page">Home</a>
         </li>
         <li class="lg:hover:bg-white lg:hover:px-2.5 lg:hover:py-1.5 lg:hover:rounded-full transition-all">
           <a href="#" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-black lg:text-[#C4C4C4] lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700 transition-all">Goals</a>
         </li>
         <li class="lg:hover:bg-white lg:hover:px-2.5 lg:hover:py-1.5 lg:hover:rounded-full transition-all">
-          <a href="#" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-black lg:text-[#C4C4C4] lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700 transition-all">Templates</a>
+          <a href="{{ route('explore') }}" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-black lg:text-[#C4C4C4] lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700 transition-all">Templates</a>
         </li>
         <li class="lg:hover:bg-white lg:hover:px-2.5 lg:hover:py-1.5 lg:hover:rounded-full transition-all">
           <a href="#" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-black lg:text-[#C4C4C4] lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700 transition-all">Community</a>
+        </li>
+        <li class="">
+          <div class=" relative mx-auto text-gray-600">
+            <input class="border-2 border-white border-opacity-20 bg-[#0F55E8] bg-opacity-10 h-9 px-10 pr-40 rounded-full text-sm focus:outline-none" type="search" name="search" placeholder="Search">
+            <button type="submit" class="absolute left-0 top-0 mt-2.5 ml-4">
+              <svg class="text-[#C4C4C4] h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 56.966 56.966" style="enable-background:new 0 0 56.966 56.966;" xml:space="preserve" width="512px" height="512px">
+                <path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
+              </svg>
+            </button>
+          </div>
         </li>
         <li class="lg:bg-white lg:px-4 lg:py-1.5 lg:rounded-full">
           <a href="#" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:text-[#C4C4C4] lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">

@@ -28,3 +28,7 @@ Route::get('/register', function () {
 Route::get('/home', function () {
     return view('user.home');
 })->name('home');
+
+Route::get('/explore', function () {
+    return view('user.explore');
+})->name('explore');
