@@ -32,3 +32,7 @@ Route::get('/home', function () {
 Route::get('/explore', function () {
     return view('user.explore');
 })->name('explore');
+
+Route::get('/community', function () {
+    return view('user.community');
+})->name('community');

@@ -1,4 +1,9 @@
 <x-main-layout>
+
+  @section('navbar')
+  <x-mainNavbar page='home' />
+  @endsection
+  
   <section class="px-32 mt-10 mb-20">
     <div class="flex justify-between">
       <h1 class="font-semibold text-9xl ">Plans & <span class=" block">Goals</span></h1>

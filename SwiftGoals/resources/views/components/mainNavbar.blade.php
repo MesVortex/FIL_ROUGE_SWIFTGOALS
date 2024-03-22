@@ -1,11 +1,12 @@
-<nav class="bg-white border-gray-200 py-2.5 dark:bg-gray-900">
+@props(['page'])
+<nav class=" bg-white border-gray-200 py-2.5 dark:bg-gray-900">
   <div class="flex justify-center">
     <a href="#" class="flex items-center mx-auto">
       <img src="{{ asset('/images/SwiftGoalsMainLogo-removebg-preview.png') }}" class="h-6 mr-3 sm:h-16" alt="SwiftGoals Logo" />
       <span class="self-center text-2xl font-bold whitespace-nowrap text-[#012E4A] dark:text-white">SwiftGoals</span>
     </a>
   </div>
-  <div class="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto">
+  <div class="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto h-auto">
     <div class="flex items-center lg:order-2">
       <button data-collapse-toggle="mobile-menu-2" type="button" class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mobile-menu-2" aria-expanded="false">
         <span class="sr-only">Open main menu</span>
@@ -19,18 +20,19 @@
     </div>
     <div class="items-center justify-between hidden w-full lg:flex lg:justify-center lg:my-5 lg:w-full lg:order-1" id="mobile-menu-2">
       <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:items-center lg:space-x-8 lg:mt-0 lg:bg-[#012E4A] p-1 rounded-full">
-        <li class="lg:bg-white lg:px-2.5 lg:py-1.5 lg:rounded-full">
-          <a href="{{ route('home') }}" class="block py-2 pl-3 pr-4 text-white bg-[#1C70EC] rounded lg:bg-transparent lg:text-black lg:p-0 dark:text-white" aria-current="page">Home</a>
+        <li @if ($page === 'home') class="lg:bg-white lg:text-black lg:px-2.5 lg:py-1.5 lg:rounded-full" @else class="lg:hover:bg-white lg:hover:px-2.5 lg:text-[#C4C4C4] lg:hover:py-1.5 lg:ml-3 lg:hover:ml-0 lg:hover:rounded-full transition-all" @endif>
+          <a href="{{ route('home') }}" class="block py-2 pl-3 pr-4 bg-[#1C70EC] rounded lg:bg-transparent lg:hover:text-black lg:p-0 dark:text-white" aria-current="page">Home</a>
         </li>
-        <li class="lg:hover:bg-white lg:hover:px-2.5 lg:hover:py-1.5 lg:hover:rounded-full transition-all">
-          <a href="#" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-black lg:text-[#C4C4C4] lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700 transition-all">Goals</a>
+        <li @if ($page === 'goals') class="lg:bg-white lg:text-black lg:px-2.5 lg:py-1.5 lg:rounded-full" @else class="lg:hover:bg-white lg:hover:px-2.5 lg:text-[#C4C4C4] lg:hover:py-1.5 lg:hover:rounded-full transition-all" @endif>
+          <a href="#" class="block py-2 pl-3 pr-4 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-black lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700 transition-all">Goals</a>
         </li>
-        <li class="lg:hover:bg-white lg:hover:px-2.5 lg:hover:py-1.5 lg:hover:rounded-full transition-all">
-          <a href="{{ route('explore') }}" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-black lg:text-[#C4C4C4] lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700 transition-all">Templates</a>
+        <li @if ($page === 'explore') class="lg:bg-white lg:text-black lg:px-2.5 lg:py-1.5 lg:rounded-full" @else class="lg:hover:bg-white lg:hover:px-2.5 lg:text-[#C4C4C4] lg:hover:py-1.5 lg:hover:rounded-full transition-all" @endif>
+          <a href="{{ route('explore') }}" class="block py-2 pl-3 pr-4 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-black lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700 transition-all">Templates</a>
         </li>
-        <li class="lg:hover:bg-white lg:hover:px-2.5 lg:hover:py-1.5 lg:hover:rounded-full transition-all">
-          <a href="#" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-black lg:text-[#C4C4C4] lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700 transition-all">Community</a>
+        <li @if ($page === 'community') class="lg:bg-white lg:text-black lg:px-2.5 lg:py-1.5 lg:rounded-full" @else class="lg:hover:bg-white lg:hover:px-2.5 lg:text-[#C4C4C4] lg:hover:py-1.5 lg:hover:rounded-full transition-all" @endif>
+          <a href="{{ route('community') }}" class="block py-2 pl-3 pr-4 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-black lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700 transition-all">Community</a>
         </li>
+        @if($page === 'explore' || $page === 'community')
         <li class="">
           <div class=" relative mx-auto text-gray-600">
             <input class="border-2 border-white border-opacity-20 bg-[#0F55E8] bg-opacity-10 h-9 px-10 pr-40 rounded-full text-sm focus:outline-none" type="search" name="search" placeholder="Search">
@@ -41,6 +43,7 @@
             </button>
           </div>
         </li>
+        @endif
         <li class="lg:bg-white lg:px-4 lg:py-1.5 lg:rounded-full">
           <a href="#" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:text-[#C4C4C4] lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
             <img class="rounded-full h-6" src="{{ asset('images/default_profile.png') }}" alt="">

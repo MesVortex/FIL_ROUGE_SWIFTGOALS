@@ -1,4 +1,9 @@
 <x-main-layout>
+
+  @section('navbar')
+  <x-mainNavbar page='explore' />
+  @endsection
+
   <section>
     <ul class="flex justify-center my-20 font-bold gap-10">
       <li class="text-[#000AFF]">
