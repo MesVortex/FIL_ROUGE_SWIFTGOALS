@@ -36,3 +36,7 @@ Route::get('/explore', function () {
 Route::get('/community', function () {
     return view('user.community');
 })->name('community');
+
+Route::get('/profile', function () {
+    return view('user.profile');
+})->name('profile');
