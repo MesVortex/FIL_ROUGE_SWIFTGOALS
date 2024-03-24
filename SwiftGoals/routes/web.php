@@ -40,3 +40,7 @@ Route::get('/community', function () {
 Route::get('/profile', function () {
     return view('user.profile');
 })->name('profile');
+
+Route::get('/dashboard', function () {
+    return view('admin.dashboard');
+})->name('dashboard');

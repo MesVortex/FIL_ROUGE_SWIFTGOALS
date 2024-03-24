@@ -5,7 +5,12 @@
         <i class="fa-solid fa-arrow-left fa-xl ml-10"></i>
       </a>
       <div class="flex flex-col self-end mt-6 w-7/12">
-        <img src="{{ asset('images/default_profile.png') }}" alt="User avatar" class="self-center rounded-full w-[139px]" />
+        <a href="#" class="self-center rounded-full w-[139px] relative">
+          <img src="{{ asset('images/default_profile.png') }}" alt="User avatar" class="" />
+          <div class="bg-[#000AFF] px-2 py-1 rounded-full absolute bottom-1 right-3">
+            <i class="fa-regular fa-pen-to-square text-white"></i>
+          </div>
+        </a>
         <div class="flex flex-col justify-between self-center px-3 mt-3.5 max-w-full w-[139px]">
           <h2 class="text-xl font-semibold tracking-normal text-stone-800">GFXAgency</h2>
           <p class="self-center mt-2 text-sm tracking-normal text-neutral-400">UI UX DESIGN</p>

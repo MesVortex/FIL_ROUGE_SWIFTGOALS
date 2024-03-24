@@ -5,6 +5,7 @@
   @endsection
 
   <section>
+  <x-logo/>
     <ul class="flex justify-center my-20 font-bold gap-10">
       <li class="text-[#000AFF]">
         <a href="">All</a>
