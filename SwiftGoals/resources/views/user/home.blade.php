@@ -1,13 +1,10 @@
 <x-main-layout>
 
-  @section('navbar')
-  <x-mainNavbar page='home' />
-  @endsection
-
   <section class="mb-20">
-    <div class="relative px-32 z-10" style="background-image: url('{{ asset('images/home_header.jpg') }}'); background-size: cover; background-repeat: no-repeat;">
+    <div class="relative px-32 z-10" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), transparent), url('{{ asset('images/home_header.jpg') }}'); background-size: cover; background-repeat: no-repeat;">
       <x-logo />
-      <div class="flex justify-between mt-28">
+      <x-mainNavbar page='home' />
+      <div class="flex justify-between mt-10">
         <h1 class="font-semibold text-9xl text-white">Plans & <span class=" block">Goals</span></h1>
         <div class="flex items-end">
           <button class=" bg-[#F9F9F9] p-6 rounded-full font-medium">Scroll down<i class="fa-solid fa-arrow-down-long ml-3"></i></button>
@@ -186,4 +183,5 @@
       </div>
     </section>
   </section>
+  <x-footer />
 </x-main-layout>

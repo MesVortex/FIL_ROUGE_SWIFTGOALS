@@ -1,12 +1,9 @@
 <x-main-layout>
 
-  @section('navbar')
-  <x-mainNavbar page='community' />
-  @endsection
-
   <div class="">
     <div class="relative px-20 z-10" style="background-image: url('{{ asset('images/community_header.jpg') }}'); background-size: cover; background-repeat: no-repeat;">
       <x-logo />
+      <x-mainNavbar page='community' />
       <section class="flex gap-5 justify-between px-6 py-4 mx-auto mb-10 mt-32 max-w-full bg-white shadow-2xl rounded-3xl w-8/12 max-md:flex-wrap max-md:px-5 max-md:mt-10">
         <div class="flex gap-5 text-xl text-center lowercase text-slate-500 text-opacity-50 w-full">
           <img src="{{ asset('images/default_profile.png') }}" alt="user icon" class="shrink-0 rounded-full w-14" />
@@ -236,4 +233,5 @@
       </div>
     </section>
   </div>
+  <x-footer />
 </x-main-layout>

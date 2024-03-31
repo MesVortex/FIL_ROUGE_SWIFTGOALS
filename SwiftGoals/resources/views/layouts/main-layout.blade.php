@@ -17,15 +17,11 @@
 
 <body class="font-lexend">
     <!-- Page Content -->
-    <header>
-        @yield('navbar')
-    </header>
+    
 
     <main>
         {{ $slot }}
     </main>
-
-    @include('components.footer')
 
 
 </body>

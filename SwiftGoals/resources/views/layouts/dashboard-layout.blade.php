@@ -16,24 +16,39 @@
 
     @vite('resources/css/app.css', 'resources/js/app.js')
 
-    <script src="{{ asset('js/dropdown.js') }}"></script>
+    <!-- <script src="{{ asset('js/dropdown.js') }}"></script>
     <script src="{{ asset('js/alert.js') }}"></script>
     <script src="{{ asset('js/navbar.js') }}"></script>
-    <script src="{{ asset('js/sidebar.js') }}"></script>
+    <script src="{{ asset('js/sidebar.js') }}"></script> -->
 
 </head>
 
 <body class="font-lexend bg-gray-100">
     <!-- Page Content -->
-    <header>
-        <x-dashboardNavbar />
-    </header>
-    @include('components.sidebar')
+    <div class="h-screen flex flex-row flex-wrap">
+
+        <header>
+            <x-dashboardNavbar />
+        </header>
+        @include('components.sidebar')
 
 
-    <main>
-        {{ $slot }}
-    </main>
+        <main>
+            <!-- strat wrapper -->
+            {{ $slot }}
+            <!-- end wrapper -->
+        </main>
+    </div>
+    <!-- script -->
+    <script>
+        const toggleButton = document.querySelector('#toggle-sidebar');
+        const sidebar = document.querySelector('#sidebar');
+
+        toggleButton.addEventListener('click', () => {
+            sidebar.classList.toggle('-translate-x-full');
+        });
+    </script>
+    <!-- end script -->
 
 </body>
 

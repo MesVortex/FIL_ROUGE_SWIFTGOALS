@@ -1,11 +1,7 @@
 <x-main-layout>
-
-  @section('navbar')
-  <x-mainNavbar page='explore' />
-  @endsection
-
   <section>
-  <x-logo/>
+    <x-logo />
+    <x-mainNavbar page='explore' />
     <ul class="flex justify-center my-20 font-bold gap-10">
       <li class="text-[#000AFF]">
         <a href="">All</a>
@@ -203,5 +199,5 @@
       </div>
     </div>
   </section>
-
+  <x-footer />
 </x-main-layout>

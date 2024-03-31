@@ -29,6 +29,18 @@ Route::get('/home', function () {
     return view('user.home');
 })->name('home');
 
+Route::get('/goals', function () {
+    return view('user.goals.goals');
+})->name('goals');
+
+Route::get('/goals/pinned', function () {
+    return view('user.goals.pinnedGoals');
+})->name('pinned.goals');
+
+Route::get('/goals/id', function () {
+    return view('user.goals.goalPage');
+})->name('goal.page');
+
 Route::get('/explore', function () {
     return view('user.explore');
 })->name('explore');

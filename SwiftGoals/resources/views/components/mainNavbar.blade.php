@@ -1,5 +1,5 @@
 @props(['page'])
-<nav class="fixed left-1/2 transform -translate-x-1/2 bg-transparent top-14 z-50 border-gray-200 py-2.5 dark:bg-gray-900">  
+<nav class="bg-transparent border-gray-200 dark:bg-gray-900">  
   <div class="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto h-auto">
     <div class="flex items-center lg:order-2">
       <button data-collapse-toggle="mobile-menu-2" type="button" class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mobile-menu-2" aria-expanded="false">
@@ -18,7 +18,7 @@
           <a href="{{ route('home') }}" class="block py-2 pl-3 pr-4 bg-[#1C70EC] rounded lg:bg-transparent lg:hover:text-black lg:p-0 dark:text-white" aria-current="page">Home</a>
         </li>
         <li @if ($page === 'goals') class="lg:bg-white lg:text-black lg:px-2.5 lg:py-1.5 lg:rounded-full" @else class="lg:hover:bg-white lg:hover:px-2.5 lg:text-[#C4C4C4] lg:hover:py-1.5 lg:hover:rounded-full transition-all" @endif>
-          <a href="#" class="block py-2 pl-3 pr-4 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-black lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700 transition-all">Goals</a>
+          <a href="{{ route('goals') }}" class="block py-2 pl-3 pr-4 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-black lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700 transition-all">Goals</a>
         </li>
         <li @if ($page === 'explore') class="lg:bg-white lg:text-black lg:px-2.5 lg:py-1.5 lg:rounded-full" @else class="lg:hover:bg-white lg:hover:px-2.5 lg:text-[#C4C4C4] lg:hover:py-1.5 lg:hover:rounded-full transition-all" @endif>
           <a href="{{ route('explore') }}" class="block py-2 pl-3 pr-4 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-black lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700 transition-all">Templates</a>
