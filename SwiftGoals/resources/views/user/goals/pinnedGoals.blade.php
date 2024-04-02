@@ -73,11 +73,11 @@
   <div class="w-auto h-screen ml-32 py-14">
     <h1 class="group mb-16 text-center text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Start Achieving Your Go<span class="underline underline-offset-3 decoration-8 decoration-blue-100 group-hover:decoration-blue-600 text-gray-100 group-hover:text-gray-900 transition-all ease-in duration-500">als and ambitions</span></h1>
     <section class="w-full flex flex-wrap justify-around gap-10">
-      <div class="max-w-md w-full lg:flex h-40 overflow-hidden rounded-2xl border border-grey-light group shadow-xl">
-        <div class="h-40 lg:h-auto lg:w-52 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l lg:rounded-r-full text-center overflow-hidden" style="background-image: url('{{ asset('images/ronnie-overgoor-EdKCckXXRCI-unsplash.jpg') }}')" title="goal">
+      <div class="w-full lg:flex h-28 max-w-sm overflow-hidden rounded-2xl border border-grey-light group shadow-xl">
+        <div class="h-40 lg:h-auto lg:w-32 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l lg:rounded-r-full text-center overflow-hidden" style="background-image: url('{{ asset('images/ronnie-overgoor-EdKCckXXRCI-unsplash.jpg') }}')" title="goal">
         </div>
-        <div class="bg-white p-4 flex flex-col justify-around leading-normal">
-          <div class="mt-5">
+        <div class="bg-white p-4 flex flex-col justify-around items-center leading-normal w-full">
+          <div class="">
             <p class="text-3xl text-grey-dark flex items-center">
               Goal name
             </p>
@@ -85,7 +85,7 @@
               main goal description
             </p>
           </div>
-          <div class="justify-around opacity-0 flex group-hover:opacity-100 transition-all duration-300 ease-in">
+          <div class="justify-around opacity-0 flex gap-10 group-hover:opacity-100 transition-all duration-300 ease-in">
             <a href="">
               <i class="fa-solid fa-map-pin"></i>
             </a>
@@ -103,11 +103,11 @@
         </div> -->
         <!-- End Progress Vertical -->
       </div>
-      <div class="max-w-md w-full lg:flex h-40 overflow-hidden rounded-2xl border border-grey-light group shadow-xl">
-        <div class="h-40 lg:h-auto lg:w-52 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l lg:rounded-r-full text-center overflow-hidden" style="background-image: url('{{ asset('images/ronnie-overgoor-EdKCckXXRCI-unsplash.jpg') }}')" title="goal">
+      <div class="w-full lg:flex h-28 max-w-sm overflow-hidden rounded-2xl border border-grey-light group shadow-xl">
+        <div class="h-40 lg:h-auto lg:w-32 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l lg:rounded-r-full text-center overflow-hidden" style="background-image: url('{{ asset('images/ronnie-overgoor-EdKCckXXRCI-unsplash.jpg') }}')" title="goal">
         </div>
-        <div class="bg-white p-4 flex flex-col justify-around leading-normal">
-          <div class="mt-5">
+        <div class="bg-white p-4 flex flex-col justify-around items-center leading-normal w-full">
+          <div class="">
             <p class="text-3xl text-grey-dark flex items-center">
               Goal name
             </p>
@@ -115,7 +115,7 @@
               main goal description
             </p>
           </div>
-          <div class="justify-around opacity-0 flex group-hover:opacity-100 transition-all duration-300 ease-in">
+          <div class="justify-around opacity-0 flex gap-10 group-hover:opacity-100 transition-all duration-300 ease-in">
             <a href="">
               <i class="fa-solid fa-map-pin"></i>
             </a>
@@ -132,7 +132,7 @@
           <div class="rounded-full overflow-hidden bg-blue-600" style="height: 90%"></div>
         </div> -->
         <!-- End Progress Vertical -->
-      </div>
+      </div>    
     </section>
   </div>
 
