@@ -1,4 +1,4 @@
-let steps = document.getElementsByClassName("step");
+let steps = document.getElementsByClassName("stepsDiv");
 let priority1 = document.getElementById("priority1");
 let priority2 = document.getElementById("priority2");
 let priority3 = document.getElementById("priority3");
@@ -100,13 +100,20 @@ function createStep(priority) {
     var newDiv = document.createElement("div");
     newDiv.setAttribute(
         "class",
-        "w-full h-auto text-start bg-white text-gray-700 p-2 rounded-lg shadow shadow-blue-700 transition-all step"
+        "relative w-full group h-auto pr-6 text-start bg-white text-gray-700 p-2 rounded-lg shadow shadow-blue-700 transition-all stepsDiv"
     );
     newDiv.setAttribute("draggable", "true");
     newDiv.setAttribute("type", "text");
     newDiv.setAttribute("value", "");
-    newDiv.setAttribute("onclick", "openModal(3)");
-    newDiv.textContent = "new step";
+    // newDiv.textContent = "new step";
+
+    let newStep = `<div class="step" value="" name="steps[]">
+                        new step
+                    </div>
+                    <a onclick="openModal(1)" class="absolute right-2 bottom-1 opacity-0 group-hover:opacity-100 text-gray-400 cursor-pointer transition-all duration-300 ease-in">
+                        <i class="fa-regular fa-eye fa-lg ml-4"></i>
+                    </a>`;
+    newDiv.innerHTML = newStep;
 
     var priorityDiv = document.getElementById(`priority${priority}`);
     priorityDiv.appendChild(newDiv);
@@ -142,5 +149,60 @@ function createStep(priority) {
     </div>
     </div>`;
 
-    document.getElementById('test').innerHTML = html;
+    document.getElementById("test").innerHTML = html;
 }
+
+//////////////////////////////////////////////////////////////////////
+
+// Select the node you want to observe
+document.body.addEventListener("click", function (e) {
+    const targetNode = this;
+
+    // Options for the observer (which mutations to observe)
+    const config = { attributes: true, childList: true, subtree: true };
+
+    // Callback function to execute when mutations are observed
+    const callback = function (mutationsList, observer) {
+        for (const mutation of mutationsList) {
+            if (
+                mutation.type === "childList" ||
+                mutation.type === "attributes" ||
+                mutation.type === "subtree"
+            ) {
+                document.getElementById("saveButton").style.display =
+                    "inline-flex";
+            }
+        }
+    };
+
+    // Create a new observer instance linked to the callback function
+    const observer = new MutationObserver(callback);
+
+    // Start observing the target node for configured mutations
+    observer.observe(targetNode, config);
+});
+
+function save() {
+    var mainForm = document.getElementById("form");
+    var steps = document.getElementsByClassName("step");
+
+    mainForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        for (var i = 0; i < steps.length; i++) {
+            changeToInput(steps[i]);
+        }
+
+        this.submit();
+    });
+}
+
+////////////////////////////////////////////////////////////
+
+window.addEventListener("beforeunload", function (e) {
+    var saveButton = document.getElementById("saveButton");
+    if (saveButton.style.display == "inline-flex") {
+        e.preventDefault();
+        e.returnValue = "";
+    }
+});

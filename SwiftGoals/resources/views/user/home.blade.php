@@ -181,7 +181,7 @@
           </svg>
         </div>
       </div>
-    </section>
+    </section>  
   </section>
   <x-footer />
 </x-main-layout>

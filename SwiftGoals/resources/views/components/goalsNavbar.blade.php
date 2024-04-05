@@ -28,7 +28,7 @@
           </div>
         </li>
         <li @if ( $page == 'personal goals' ) class="lg:bg-white lg:text-black lg:px-2.5 lg:py-1.5 lg:rounded-full lg:border relative group" @else class="lg:hover:bg-white lg:hover:px-2.5 lg:text-[#C4C4C4] lg:hover:py-1.5 lg:hover:rounded-full transition-all relative group" @endif>
-          <a href="{{ route('goals') }}" class="block py-2 pl-3 pr-4 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-black lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700 transition-all">
+          <a href="{{ route('goal.index') }}" class="block py-2 pl-3 pr-4 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-black lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700 transition-all">
             <i class="fa-solid fa-bullseye fa-lg"></i>
           </a>
           <div class="absolute shadow-lg hidden group-hover:block bg-[#333] text-white font-semibold px-3 py-[6px] text-[13px] right-0 left-10 w-max top-0 rounded">

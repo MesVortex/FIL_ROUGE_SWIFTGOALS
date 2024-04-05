@@ -1,7 +1,7 @@
 <x-goal-layout>
   <div class="mt-16">
     <div class="mx-10 flex justify-between text-blue-700">
-      <a href="{{ route('goals') }}">
+      <a href="{{ route('goal.index') }}">
         <i class="fa-solid fa-backward fa-2xl"></i>
       </a>
       <a class="cursor-pointer" onclick="toggleDrawer();">
@@ -55,7 +55,7 @@
   </div>
   <div class="flex justify-center">
     <div class="">
-      <img class=" items-start" src="{{ asset('images/arrow_left.png') }}" alt="">
+      <img class="" src="{{ asset('images/arrow_left.png') }}" alt="">
     </div>
     <div>
       <img src="{{ asset('images/arrow_middle.png') }}" alt="">
@@ -64,16 +64,28 @@
       <img src="{{ asset('images/arrow_right.png') }}" alt="">
     </div>
   </div>
-  <section class="px-16 pb-12 flex justify-between">
+  <form id="form" method="post" action="{{ route('step.store') }}" class="px-16 pb-12 flex justify-between">
+    @csrf
+    @method('POST')
     <div id='priority1' class="h-auto relative min-h-96 overflow-hidden py-16 w-64 border-2 border-blue-700 shadow-2xl border-opacity-75 p-3 space-y-3 rounded-3xl bg-transparent backdrop-filter backdrop-blur-md bg-opacity-25">
       <div class="absolute top-0 left-0 w-full h-auto text-center rounded-b-2xl bg-white text-balck px-2 py-5 rounded-lg shadow shadow-blue-700">
         Priority level
       </div>
-      <div value="" onclick="openModal(1)" type="text" class="w-full h-auto text-start bg-white text-gray-700 p-2 rounded-lg shadow shadow-blue-700 transition-all step" draggable="true">
-        Je vais concevoir la maquette de page Home en mode Desktop et Smartphone.
+      <div type="text" class="relative w-full group h-auto pr-6 text-start bg-white text-gray-700 p-2 rounded-lg shadow shadow-blue-700 transition-all stepsDiv" draggable="true">
+        <div class="step" value="" name="steps[]">
+          Je vais concevoir la maquette de page Home en mode Desktop et Smartphone.
+        </div>
+        <a onclick="openModal(1)" class="absolute right-2 bottom-1 opacity-0 group-hover:opacity-100 text-gray-400 cursor-pointer transition-all duration-300 ease-in">
+          <i class="fa-regular fa-eye fa-lg ml-4"></i>
+        </a>
       </div>
-      <div value="" onclick="openModal(2)" type="text" class="w-full h-auto text-start bg-white text-gray-700 p-2 rounded-lg shadow shadow-blue-700 transition-all step" draggable="true">
-        step 2
+      <div value="" type="text" class="relative w-full group h-auto pr-6 text-start bg-white text-gray-700 p-2 rounded-lg shadow shadow-blue-700 transition-all stepsDiv" draggable="true">
+        <div class="step" value="" name="steps[]">
+          step 2
+        </div>
+        <a onclick="openModal(1)" class="absolute right-2 bottom-1 opacity-0 group-hover:opacity-100 text-gray-400 cursor-pointer transition-all duration-300 ease-in">
+          <i class="fa-regular fa-eye fa-lg ml-4"></i>
+        </a>
       </div>
       <div onclick="createStep(1);" class="absolute bottom-2 left-1/2 -translate-x-1/2 cursor-pointer w-11/12 bg-transparent hover:bg-gray-300 text-white py-2 rounded-lg border-2 border-dashed border-gray-500 text-center transition-all" draggable="true">
         <i class="fa-solid fa-plus text-gray-500"></i>
@@ -105,7 +117,7 @@
         </div>
       </div>
     </div>
-    <div id="modal2" class="modal hidden fixed w-full h-100 inset-0 z-50 overflow-hidden flex justify-center items-center animated fadeIn faster" style="background: rgba(0,0,0,.7);">
+    <div id="modal2" class="modal hidden fixed w-full h-100 inset-0 z-50 overflow-hidden justify-center items-center animated fadeIn faster" style="background: rgba(0,0,0,.7);">
       <div class="border border-teal-500 shadow-lg modal-container bg-white w-11/12 md:max-w-md mx-auto rounded-lg shadow-lg z-50 overflow-y-auto">
         <div class="modal-content py-4 text-left px-6">
           <!--Title-->
@@ -147,7 +159,13 @@
         <i class="fa-solid fa-plus text-gray-500"></i>
       </div>
     </div>
-  </section>
+    <button id="saveButton" onclick="save();"  class="relative hidden inline-flex items-center justify-center px-6 py-3 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group">
+      <span class="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-blue-600 rounded-md group-hover:mt-0 group-hover:ml-0"></span>
+      <span class="absolute inset-0 w-full h-full bg-white rounded-md "></span>
+      <span class="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-blue-600 rounded-md opacity-0 group-hover:opacity-100 "></span>
+      <span class="relative text-blue-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white">Save</span>
+    </button>
+  </form>
 
   <script src="{{ asset('js/goals.js') }}"></script>
   <script>
@@ -155,6 +173,8 @@
       var drawer = document.getElementById('drawer-right-example');
       drawer.classList.toggle('translate-x-full');
     }
+
+    /////////////////////////////////////
 
     const modals = document.querySelectorAll('.modal');
     const closeButton = document.querySelectorAll('.modal-close');

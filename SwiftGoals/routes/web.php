@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\GoalController;
+use App\Http\Controllers\StepController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,10 +31,6 @@ Route::get('/home', function () {
     return view('user.home');
 })->name('home');
 
-Route::get('/goals', function () {
-    return view('user.goals.goals');
-})->name('goals');
-
 Route::get('/goals/pinned', function () {
     return view('user.goals.pinnedGoals');
 })->name('pinned.goals');
@@ -56,3 +54,8 @@ Route::get('/profile', function () {
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
 })->name('dashboard');
+
+
+Route::resource('/goal', GoalController::class);
+
+Route::resource('/step', StepController::class);
