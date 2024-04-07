@@ -2,7 +2,17 @@
   <x-goalsNavbar page='personal goals' />
   <div class="w-auto h-screen ml-32 py-14">
     <h1 class="group mb-16 text-center text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Start Achieving Your Go<span class="underline underline-offset-3 decoration-8 decoration-blue-100 group-hover:decoration-blue-600 text-gray-100 group-hover:text-gray-900 transition-all ease-in duration-500">als and ambitions</span></h1>
-    <section class="w-full flex flex-wrap justify-around gap-10">
+    <div id="goalAdded" class="relative flex w-1/2 px-4 py-4 text-base text-white bg-gray-900 rounded-lg font-regular hidden" data-dismissible="alert">
+      <div id="alertMessage" class="mr-12 "></div>
+      <button onclick="removeAlert();" data-dismissible-target="alert" class="!absolute  top-3 right-3 h-8 max-h-[32px] w-8 max-w-[32px] select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-white transition-all hover:bg-white/10 active:bg-white/30 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
+        <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </span>
+      </button>
+    </div>
+    <section class="w-full flex flex-wrap justify-around gap-10" id="goals">
       @foreach($goals as $goal)
       <div class="w-full lg:flex h-28 max-w-sm overflow-hidden rounded-2xl border border-grey-light group shadow-xl">
         <div class="h-40 lg:h-auto lg:w-32 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l lg:rounded-r-full text-center overflow-hidden" style="background-image: url('{{ asset('images/ronnie-overgoor-EdKCckXXRCI-unsplash.jpg') }}')" title="goal">
@@ -56,7 +66,7 @@
           </svg>
           <span class="sr-only">Close menu</span>
         </button>
-        <form class="mb-6" method="POST" action="{{ route('goal.store') }}">
+        <form id="addGoal" class="mb-6" method="POST" action="{{ route('goal.store') }}">
           @csrf
           @method('POST')
           <div class="mb-6">
@@ -75,13 +85,77 @@
       </div>
     </section>
   </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
   <script>
     function toggleDrawer() {
       var drawer = document.getElementById('drawer-form');
       var drawerBackground = document.getElementById('drawerBackground');
-      
+
       drawer.classList.toggle('translate-x-full');
       drawerBackground.classList.toggle('hidden');
     }
+
+    function removeAlert() {
+      const alert = document.getElementById('goalAdded');
+      alert.style.display = 'none';
+    }
+  </script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#addGoal').on('submit', function(event) {
+        event.preventDefault();
+
+        jQuery.ajax({
+          url: "{{ route('goal.store') }}",
+          data: jQuery('#addGoal').serialize(),
+          type: 'post',
+
+          success: function(result) {
+            $('#goalAdded').css('display', 'flex');
+            jQuery('#alertMessage').html(result.success);
+            jQuery('#goals').append(`      
+            <div class="w-full lg:flex h-28 max-w-sm overflow-hidden rounded-2xl border border-grey-light group shadow-xl">
+        <div class="h-40 lg:h-auto lg:w-32 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l lg:rounded-r-full text-center overflow-hidden" style="background-image: url('{{ asset('images/ronnie-overgoor-EdKCckXXRCI-unsplash.jpg') }}')" title="goal">
+        </div>
+        <div class="bg-white p-4 flex flex-col justify-around items-center leading-normal w-full">
+          <div class="">
+            <p class="text-3xl text-grey-dark flex items-center">
+              ${result.goal.title}
+            </p>
+            <p class="flex items-center">
+              ${result.goal.mainGoal}
+            </p>
+          </div>
+          <div class="justify-around opacity-0 flex gap-10 group-hover:opacity-100 transition-all duration-300 ease-in">
+            <a href="">
+              <i class="fa-solid fa-map-pin"></i>
+            </a>
+            <a href="route('goal.show', ${result.goal.id})">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </a>
+            <form action="route('goal.destroy', ${result.goal.id})" method="post">
+              @csrf
+              @method('DELETE')
+              <button type="submit">
+                <i class="fa-solid fa-square-minus text-red-600"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+        <!-- Progress Vertical -->
+        <!-- <div class="flex flex-col flex-nowrap justify-end place-self-center mr-3 w-2 h-32 bg-gray-200 rounded-full overflow-hidden dark:bg-gray-700" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
+          <div class="rounded-full overflow-hidden bg-blue-600" style="height: 90%"></div>
+        </div> -->
+        <!-- End Progress Vertical -->
+      </div>
+`);
+            jQuery('#addGoal')[0].reset();
+            toggleDrawer();
+          }
+        })
+      });
+    });
   </script>
 </x-main-layout>

@@ -64,7 +64,7 @@
       <img src="{{ asset('images/arrow_right.png') }}" alt="">
     </div>
   </div>
-  <form id="form" method="post" action="{{ route('step.store') }}" class="px-16 pb-12 flex justify-between">
+  <section id="form" method="post" action="{{ route('step.store') }}" class="px-16 pb-12 flex justify-between">
     @csrf
     @method('POST')
     <div id='priority1' class="h-auto relative min-h-96 overflow-hidden py-16 w-64 border-2 border-blue-700 shadow-2xl border-opacity-75 p-3 space-y-3 rounded-3xl bg-transparent backdrop-filter backdrop-blur-md bg-opacity-25">
@@ -79,6 +79,15 @@
           <i class="fa-regular fa-eye fa-lg ml-4"></i>
         </a>
       </div>
+      <form class="relative w-full group h-auto pr-6 text-start bg-white text-gray-700 p-2 rounded-lg shadow shadow-blue-700 transition-all stepsDiv" draggable="true">
+        <div ondblclick="getDivContent(this);">
+          Ajax Test.
+        </div>
+        <input type="hidden" name="step" value="" class="step">
+        <a onclick="openModal(1)" class="absolute right-2 bottom-1 opacity-0 group-hover:opacity-100 text-gray-400 cursor-pointer transition-all duration-300 ease-in">
+          <i class="fa-regular fa-eye fa-lg ml-4"></i>
+        </a>
+      </form>
       <div value="" type="text" class="relative w-full group h-auto pr-6 text-start bg-white text-gray-700 p-2 rounded-lg shadow shadow-blue-700 transition-all stepsDiv" draggable="true">
         <div class="step" value="" name="steps[]">
           step 2
@@ -159,15 +168,16 @@
         <i class="fa-solid fa-plus text-gray-500"></i>
       </div>
     </div>
-    <button id="saveButton" onclick="save();"  class="relative hidden inline-flex items-center justify-center px-6 py-3 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group">
+    <button id="saveButton" onclick="save();" class="relative hidden inline-flex items-center justify-center px-6 py-3 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group">
       <span class="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-blue-600 rounded-md group-hover:mt-0 group-hover:ml-0"></span>
       <span class="absolute inset-0 w-full h-full bg-white rounded-md "></span>
       <span class="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-blue-600 rounded-md opacity-0 group-hover:opacity-100 "></span>
       <span class="relative text-blue-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white">Save</span>
     </button>
-  </form>
+  </section>
 
-  <script src="{{ asset('js/goals.js') }}"></script>
+  <!-- <script src="{{ asset('js/goals.js') }}"></script> -->
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
   <script>
     function toggleDrawer() {
       var drawer = document.getElementById('drawer-right-example');
@@ -195,16 +205,39 @@
       modal.style.display = 'flex';
     }
 
-    // for (let i = 0; i < closeButton.length; i++) {
+    //////////////////////////////////////////////
 
-    //   const elements = closeButton[i];
+    function getDivContent(div) {
+      var closestForm = div.closest('form');
+      if (closestForm) {
+        var closestInput = closestForm.querySelector('.step');
+        closestInput.type = 'text';
+        closestInput.value = div.textContent;
+        div.style.display = 'none';
+      }
+    }
+  </script>
 
-    //   elements.onclick = (e) => modalClose();
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#stepData').on('submit', function(event) {
+        event.preventDefault();
 
-    //   // window.onclick = function(event) {
-    //   //   if (event.target == modal) modalClose();
-    //   // }
-    // }
+        jQuery.ajax({
+          url: "{{ route('step.store') }}",
+          data: jQuery('#stepData').serialize(),
+          type: 'post',
+
+          success: function(result) {
+            // $('#goalAdded').css('display', 'flex');
+            // jQuery('#alertMessage').html(result.success);
+            // jQuery('#goals').append();
+            // jQuery('#addGoal')[0].reset();
+            resetToDiv();
+          }
+        })
+      });
+    });
   </script>
 
 </x-goal-layout>

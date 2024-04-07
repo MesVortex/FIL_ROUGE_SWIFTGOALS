@@ -154,55 +154,54 @@ function createStep(priority) {
 
 //////////////////////////////////////////////////////////////////////
 
-// Select the node you want to observe
-document.body.addEventListener("click", function (e) {
-    const targetNode = this;
+// // Select the node you want to observe
+// document.body.addEventListener("click", function (e) {
+//     const targetNode = this;
 
-    // Options for the observer (which mutations to observe)
-    const config = { attributes: true, childList: true, subtree: true };
+//     // Options for the observer (which mutations to observe)
+//     const config = { attributes: true, childList: true, subtree: true };
 
-    // Callback function to execute when mutations are observed
-    const callback = function (mutationsList, observer) {
-        for (const mutation of mutationsList) {
-            if (
-                mutation.type === "childList" ||
-                mutation.type === "attributes" ||
-                mutation.type === "subtree"
-            ) {
-                document.getElementById("saveButton").style.display =
-                    "inline-flex";
-            }
-        }
-    };
+//     // Callback function to execute when mutations are observed
+//     const callback = function (mutationsList, observer) {
+//         for (const mutation of mutationsList) {
+//             if (
+//                 mutation.type === "childList" ||
+//                 mutation.type === "attributes" ||
+//                 mutation.type === "subtree"
+//             ) {
+//                 document.getElementById("saveButton").style.display =
+//                     "inline-flex";
+//             }
+//         }
+//     };
 
-    // Create a new observer instance linked to the callback function
-    const observer = new MutationObserver(callback);
+//     // Create a new observer instance linked to the callback function
+//     const observer = new MutationObserver(callback);
 
-    // Start observing the target node for configured mutations
-    observer.observe(targetNode, config);
-});
+//     // Start observing the target node for configured mutations
+//     observer.observe(targetNode, config);
+// });
 
-function save() {
-    var mainForm = document.getElementById("form");
-    var steps = document.getElementsByClassName("step");
+// function save() {
+//     var mainForm = document.getElementById("form");
+//     var steps = document.getElementsByClassName("step");
 
-    mainForm.addEventListener("submit", function (e) {
-        e.preventDefault();
+//     mainForm.addEventListener("submit", function (e) {
+//         e.preventDefault();
 
-        for (var i = 0; i < steps.length; i++) {
-            changeToInput(steps[i]);
-        }
+//         for (var i = 0; i < steps.length; i++) {
+//             changeToInput(steps[i]);
+//         }
 
-        this.submit();
-    });
-}
+//         this.submit();
+//     });
+// }
 
 ////////////////////////////////////////////////////////////
 
-window.addEventListener("beforeunload", function (e) {
-    var saveButton = document.getElementById("saveButton");
-    if (saveButton.style.display == "inline-flex") {
-        e.preventDefault();
-        e.returnValue = "";
-    }
-});
+// window.addEventListener("beforeunload", function (e) {
+//     var saveButton = document.getElementById("saveButton");
+//     if (saveButton.style.display == "inline-flex") {
+//         e.preventDefault();
+//     }
+// });

@@ -30,6 +30,7 @@ class StepController extends Controller
     {
         dd($request->steps);
         foreach ($request->steps as $step) {
+            
             Step::create([
                 'title' => 'test',
                 'description' => $step,

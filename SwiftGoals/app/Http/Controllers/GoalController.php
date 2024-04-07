@@ -14,8 +14,8 @@ class GoalController extends Controller
     {
         $userID = 1;
         $goals = Goal::where('userID', $userID)
-                        ->where('isTemplate', 0)
-                        ->get();
+            ->where('isTemplate', 0)
+            ->get();
         return view('user.goals.goals', compact('goals'));
     }
 
@@ -34,8 +34,11 @@ class GoalController extends Controller
     {
         $data = $request->validated();
         $data['userID'] = 1;
-        Goal::create($data);
-        return redirect()->back()->with('success', 'goal added successfully!');
+        $newGoal = Goal::create($data);
+        return response()->json([
+            'success' => 'goal added successfully!',
+            'goal' => $newGoal,
+        ]);
     }
 
     /**
@@ -60,7 +63,6 @@ class GoalController extends Controller
     public function update(goalRequest $request, Goal $goal)
     {
         $goal->update($request->validated());
-
     }
 
     /**

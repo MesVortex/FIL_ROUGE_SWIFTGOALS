@@ -22,8 +22,7 @@ class StepRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // 'title' => '',
-            // 'description' => 'required',
+            'description' => 'required',
         ];
     }
 }
