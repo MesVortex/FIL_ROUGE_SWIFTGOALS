@@ -65,40 +65,43 @@
     </div>
   </div>
   <section id="form" method="post" action="{{ route('step.store') }}" class="px-16 pb-12 flex justify-between">
-    @csrf
-    @method('POST')
     <div id='priority1' class="h-auto relative min-h-96 overflow-hidden py-16 w-64 border-2 border-blue-700 shadow-2xl border-opacity-75 p-3 space-y-3 rounded-3xl bg-transparent backdrop-filter backdrop-blur-md bg-opacity-25">
       <div class="absolute top-0 left-0 w-full h-auto text-center rounded-b-2xl bg-white text-balck px-2 py-5 rounded-lg shadow shadow-blue-700">
         Priority level
       </div>
-      <div type="text" class="relative w-full group h-auto pr-6 text-start bg-white text-gray-700 p-2 rounded-lg shadow shadow-blue-700 transition-all stepsDiv" draggable="true">
+      <!-- <div type="text" class="relative w-full group h-auto pr-6 text-start bg-white text-gray-700 p-2 rounded-lg shadow shadow-blue-700 transition-all stepsDiv" draggable="true">
         <div class="step" value="" name="steps[]">
           Je vais concevoir la maquette de page Home en mode Desktop et Smartphone.
         </div>
         <a onclick="openModal(1)" class="absolute right-2 bottom-1 opacity-0 group-hover:opacity-100 text-gray-400 cursor-pointer transition-all duration-300 ease-in">
           <i class="fa-regular fa-eye fa-lg ml-4"></i>
         </a>
-      </div>
+      </div> -->
+      @foreach($steps as $step)
       <form class="relative w-full group h-auto pr-6 text-start bg-white text-gray-700 p-2 rounded-lg shadow shadow-blue-700 transition-all stepsDiv" draggable="true">
-        <div ondblclick="getDivContent(this);">
-          Ajax Test.
-        </div>
-        <input type="hidden" name="step" value="" class="step">
+        @csrf
+        @method('PUT')
+        <div ondblclick="getDivContent(this);" class="stepDiv">{{$step->title}}</div>
+        <input type="hidden" name="title" value="{{$step->title}}" class="step">
+        <input type="hidden" name="goalID" value="{{ $goal->id }}">
+        <input type="hidden" name="priority" value="1">
+        <input type="hidden" name="stepID" value="{{$step->id}}">
         <a onclick="openModal(1)" class="absolute right-2 bottom-1 opacity-0 group-hover:opacity-100 text-gray-400 cursor-pointer transition-all duration-300 ease-in">
           <i class="fa-regular fa-eye fa-lg ml-4"></i>
         </a>
+        <button onclick="save(this);" class="hidden submitBTN">save</button>
       </form>
-      <div value="" type="text" class="relative w-full group h-auto pr-6 text-start bg-white text-gray-700 p-2 rounded-lg shadow shadow-blue-700 transition-all stepsDiv" draggable="true">
-        <div class="step" value="" name="steps[]">
-          step 2
-        </div>
-        <a onclick="openModal(1)" class="absolute right-2 bottom-1 opacity-0 group-hover:opacity-100 text-gray-400 cursor-pointer transition-all duration-300 ease-in">
-          <i class="fa-regular fa-eye fa-lg ml-4"></i>
-        </a>
-      </div>
-      <div onclick="createStep(1);" class="absolute bottom-2 left-1/2 -translate-x-1/2 cursor-pointer w-11/12 bg-transparent hover:bg-gray-300 text-white py-2 rounded-lg border-2 border-dashed border-gray-500 text-center transition-all" draggable="true">
-        <i class="fa-solid fa-plus text-gray-500"></i>
-      </div>
+      @endforeach
+      <form class="absolute bottom-2 left-1/2 -translate-x-1/2 w-11/12 bg-transparent hover:bg-gray-300 text-white py-2 rounded-lg border-2 border-dashed border-gray-500 text-center transition-all" draggable="true">
+        @csrf
+        @method('POST')
+        <input type="hidden" name="title" value="new Step" class="step">
+        <input type="hidden" name="goalID" value="{{ $goal->id }}">
+        <input type="hidden" name="priority" value="1">
+        <button onclick="store(this);" class="flex items-center h-full">
+          <i class="fa-solid fa-plus text-gray-500 absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden"></i>
+        </button>
+      </form>
     </div>
     <!-- step pop-up -->
     <div id="modal1" class="modal hidden fixed w-full h-100 inset-0 z-50 overflow-hidden justify-center items-center animated fadeIn faster" style="background: rgba(0,0,0,.7);">
@@ -211,33 +214,139 @@
       var closestForm = div.closest('form');
       if (closestForm) {
         var closestInput = closestForm.querySelector('.step');
+        var closestBTN = closestForm.querySelector('.submitBTN');
         closestInput.type = 'text';
         closestInput.value = div.textContent;
         div.style.display = 'none';
+        closestBTN.style.display = 'block';
       }
+    }
+
+    //////////////////////////////////////////////
+
+    function getInputValue(input) {
+      var closestForm = input.closest('form');
+      if (closestForm) {
+        var closestDiv = closestForm.querySelector('.stepDiv');
+        var closestBTN = closestForm.querySelector('.submitBTN');
+        input.type = 'hidden';
+        closestDiv.textContent = input.value;
+        closestDiv.style.display = 'block';
+        closestBTN.style.display = 'none';
+      }
+    }
+
+    function createStep(storedStep) {
+      var newForm = document.createElement("form");
+      newForm.setAttribute(
+        "class",
+        "relative w-full group h-auto pr-6 text-start bg-white text-gray-700 p-2 rounded-lg shadow shadow-blue-700 transition-all stepsDiv"
+      );
+      newForm.setAttribute("draggable", "true");
+      // newForm.setAttribute("type", "text");
+      // newDiv.setAttribute("value", "");
+      // newDiv.textContent = "new step";
+
+      let newStep = `
+        @csrf
+        @method('PUT')
+        <div ondblclick="getDivContent(this);" class="stepDiv">${storedStep.title}</div>
+        <input type="hidden" name="title" value="${storedStep.title}" class="step">
+        <input type="hidden" name="goalID" value="{{ $goal->id }}">
+        <input type="hidden" name="priority" value="1">
+        <input type="hidden" name="stepID" value="${storedStep.id}">
+        <a onclick="openModal(1)" class="absolute right-2 bottom-1 opacity-0 group-hover:opacity-100 text-gray-400 cursor-pointer transition-all duration-300 ease-in">
+          <i class="fa-regular fa-eye fa-lg ml-4"></i>
+        </a>
+        <button onclick="save(this);" class="hidden submitBTN">save</button>`;
+
+      newForm.innerHTML = newStep;
+
+      var priorityDiv = document.getElementById(`priority1`);
+      priorityDiv.appendChild(newForm);
+
+      // newDiv.addEventListener("dragstart", handleDragStart);
+      // newDiv.addEventListener("dblclick", function(e) {
+      //   changeToInput(e.target);
+      // });
+
+      //   let html = `<div id="modal3" class="modal hidden fixed w-full h-100 inset-0 z-50 overflow-hidden justify-center items-center animated fadeIn faster" style="background: rgba(0,0,0,.7);">
+      // <div class="border border-teal-500 shadow-lg modal-container bg-white w-11/12 md:max-w-md mx-auto rounded-lg shadow-lg z-50 overflow-y-auto">
+      //   <div class="modal-content py-4 text-left px-6">
+      //     <!--Title-->
+      //     <div class="flex justify-between items-center pb-3">
+      //       <p class="text-2xl font-bold">Step Info</p>
+      //       <div onclick="modalClose(3)" class="modal-close cursor-pointer z-50">
+      //         <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+      //           <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
+      //           </path>
+      //         </svg>
+      //       </div>
+      //     </div>
+      //     <!--Body-->
+      //     <div class="my-5">
+      //       <p>new step</p>
+      //     </div>
+      //     <!--Footer-->
+      //     <div class="flex justify-end pt-2">
+      //       <button onclick="modalClose(3)" class="focus:outline-none modal-close px-4 bg-gray-400 p-3 rounded-lg text-black hover:bg-gray-300">Cancel</button>
+      //       <button class="focus:outline-none px-4 bg-teal-500 p-3 ml-3 rounded-lg text-white hover:bg-teal-400">Confirm</button>
+      //     </div>
+      //   </div>
+      // </div>
+      // </div>`;
+
+      //   document.getElementById("test").innerHTML = html;
     }
   </script>
 
   <script type="text/javascript">
-    $(document).ready(function() {
-      $('#stepData').on('submit', function(event) {
+    function save(button) {
+      var form = button.closest('form');
+      var input = form.querySelector('.step');
+      $(form).on('submit', function(event) {
         event.preventDefault();
 
         jQuery.ajax({
-          url: "{{ route('step.store') }}",
-          data: jQuery('#stepData').serialize(),
-          type: 'post',
+          url: `{{ route('step.update') }}`,
+          data: jQuery(form).serialize(),
+          type: 'put',
 
           success: function(result) {
+            console.log(result.step);
             // $('#goalAdded').css('display', 'flex');
             // jQuery('#alertMessage').html(result.success);
             // jQuery('#goals').append();
             // jQuery('#addGoal')[0].reset();
-            resetToDiv();
+            getInputValue(input);
           }
         })
+
       });
-    });
+    }
+
+    function store(button) {
+      var form = button.closest('form');
+      $(form).on('submit', function(event) {
+        event.preventDefault();
+
+        jQuery.ajax({
+          url: `{{ route('step.store') }}`,
+          data: jQuery(form).serialize(),
+          type: 'post',
+
+          success: function(result) {
+            console.log(result.step);
+            // $('#goalAdded').css('display', 'flex');
+            // jQuery('#alertMessage').html(result.success);
+            // jQuery('#goals').append();
+            // jQuery('#addGoal')[0].reset();
+            createStep(result.step);
+          }
+        })
+
+      });
+    }
   </script>
 
 </x-goal-layout>

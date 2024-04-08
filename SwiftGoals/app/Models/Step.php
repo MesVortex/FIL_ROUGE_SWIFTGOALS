@@ -14,6 +14,7 @@ class Step extends Model
         'description',
         'goalID',
         'isComplete',
+        'priority',
     ];
 
     public function goals()

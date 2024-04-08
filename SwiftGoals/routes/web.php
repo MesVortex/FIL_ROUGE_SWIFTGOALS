@@ -52,10 +52,12 @@ Route::get('/profile', function () {
 })->name('profile');
 
 Route::get('/dashboard', function () {
-    return view('admin.dashboard');
+    return view('admin.categorie');
 })->name('dashboard');
 
 
 Route::resource('/goal', GoalController::class);
 
-Route::resource('/step', StepController::class);
+Route::put('/step/update', [StepController::class, 'update'])->name('step.update');
+
+Route::resource('/step', StepController::class)->except('update');

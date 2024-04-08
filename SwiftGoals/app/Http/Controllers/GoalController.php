@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\goalRequest;
 use App\Models\Goal;
+use App\Models\Step;
 
 class GoalController extends Controller
 {
@@ -46,7 +47,8 @@ class GoalController extends Controller
      */
     public function show(Goal $goal)
     {
-        return view('user.goals.goalPage', compact('goal'));
+        $steps = Step::where('goalID', $goal->id)->get();
+        return view('user.goals.goalPage', compact('goal', 'steps'));
     }
 
     /**

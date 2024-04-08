@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StepRequest;
 use App\Models\Step;
 use Illuminate\Http\Request;
 
@@ -26,19 +27,14 @@ class StepController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StepRequest $request)
     {
-        dd($request->steps);
-        foreach ($request->steps as $step) {
-            
-            Step::create([
-                'title' => 'test',
-                'description' => $step,
-                'goalID' => $request->goalID,
-                'priority' => 1,
-            ]);
-        }
-        return redirect()->back()->with('success', 'steps added successfully!');
+        $data = $request->validated();
+        $data['description'] = 'jfkdjh';
+        $newStep = Step::create($data);
+        return response()->json([
+            'step' => $newStep,
+        ]);
     }
 
     /**
@@ -60,9 +56,15 @@ class StepController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Step $step)
+    public function update(StepRequest $request)
     {
-        //
+        $step = Step::find($request->stepID);
+        $data = $request->validated();
+        $data['description'] = 'jfkdjh';
+        $updatedStep = $step->update($data);
+        return response()->json([
+            'step' => $updatedStep,
+        ]);
     }
 
     /**
