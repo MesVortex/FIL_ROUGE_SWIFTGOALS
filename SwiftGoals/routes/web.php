@@ -56,8 +56,9 @@ Route::get('/dashboard', function () {
 })->name('dashboard');
 
 
-Route::resource('/goal', GoalController::class);
+Route::get('/goal/ajax/index', [GoalController::class, 'ajaxIndex'])->name('goal.ajaxIndex');
+Route::delete('/goal/destroy', [GoalController::class, 'destroy'])->name('goal.destroy');
+Route::resource('/goal', GoalController::class)->except('destroy');
 
 Route::put('/step/update', [StepController::class, 'update'])->name('step.update');
-
 Route::resource('/step', StepController::class)->except('update');

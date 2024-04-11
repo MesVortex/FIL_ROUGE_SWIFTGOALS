@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\goalRequest;
 use App\Models\Goal;
 use App\Models\Step;
+use Illuminate\Http\Request;
 
 class GoalController extends Controller
 {
@@ -18,6 +19,17 @@ class GoalController extends Controller
             ->where('isTemplate', 0)
             ->get();
         return view('user.goals.goals', compact('goals'));
+    }
+
+    public function ajaxIndex()
+    {
+        $userID = 1;
+        $goals = Goal::where('userID', $userID)
+            ->where('isTemplate', 0)
+            ->get();
+        return response()->json([
+            'goals' =>$goals,
+        ]);
     }
 
     /**
@@ -64,15 +76,18 @@ class GoalController extends Controller
      */
     public function update(goalRequest $request, Goal $goal)
     {
-        $goal->update($request->validated());
+        // $goal->update($request->validated());
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Goal $goal)
+    public function destroy(Request $request)
     {
+        $goal = Goal::find($request->goalID);
         $goal->delete();
-        return redirect()->back()->with('success', 'goal deleted successfully!');
+        return response()->json([
+            'success' => 'goal deleted successfully!',
+        ]);
     }
 }

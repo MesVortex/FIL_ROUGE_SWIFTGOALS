@@ -1,4 +1,4 @@
-let steps = document.getElementsByClassName("stepsDiv");
+let steps = document.getElementsByClassName("stepsForm");
 let priority1 = document.getElementById("priority1");
 let priority2 = document.getElementById("priority2");
 let priority3 = document.getElementById("priority3");
@@ -31,11 +31,11 @@ for (step of steps) {
             selectedStep = null;
         });
     };
-    step.addEventListener("dragstart", handleDragStart);
+    // step.addEventListener("dragstart", handleDragStart);
 
-    step.addEventListener("dblclick", function (e) {
-        changeToInput(e.target);
-    });
+    // step.addEventListener("dblclick", function (e) {
+    //     changeToInput(e.target);
+    // });
 }
 
 function changeToInput(stepDiv) {
