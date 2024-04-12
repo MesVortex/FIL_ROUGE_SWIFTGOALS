@@ -133,8 +133,8 @@
     </div>
   </section>
   <div id="pop-up-section">
-      <!-- modal goes here with ajax -->
-    </div>
+    <!-- modal goes here with ajax -->
+  </div>
 
   <!-- <script src="{{ asset('js/goals.js') }}"></script> -->
   <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
@@ -144,11 +144,11 @@
       const todoList = document.getElementById("todo-list");
       const li = document.createElement("li");
       li.className =
-        "border-t border-gray-200 flex items-center justify-between py-4";
+        "border-b border-gray-200 flex items-center justify-between py-4";
       if (task.isComplete == 1) {
         li.innerHTML = `
                   <label class="flex items-center">
-                      <input onchange="checkBoxes(this.parentElement.parentElement);" checked type="checkbox" class="mr-2">
+                      <input onchange="checkBoxes(this.parentElement.parentElement); updateProgressBar();" checked type="checkbox" class="mr-2 tinyStep">
                       <span class="line-through">${task.title}</span>
                   </label>
                   <div class="flex gap-3">
@@ -166,7 +166,7 @@
       } else {
         li.innerHTML = `
                   <label class="flex items-center">
-                      <input onchange="checkBoxes(this.parentElement.parentElement);" type="checkbox" class="mr-2">
+                      <input onchange="checkBoxes(this.parentElement.parentElement); updateProgressBar();" type="checkbox" class="mr-2 tinyStep">
                       <span>${task.title}</span>
                   </label>
                   <div class="flex gap-3">
@@ -183,6 +183,7 @@
               `;
       }
       todoList.appendChild(li);
+      updateProgressBar();
     }
 
     function checkBoxes(list) {
@@ -212,12 +213,12 @@
       var form = button.closest('form');
       $(form).on('submit', function(event) {
         event.preventDefault();
-  
+
         jQuery.ajax({
           url: "{{ route('tinyStep.store') }}",
           data: jQuery(form).serialize(),
           type: 'post',
-  
+
           success: function(result) {
             // $('#goalAlert').css('display', 'flex');
             // jQuery('#alertMessage').html(result.success);       
@@ -231,12 +232,12 @@
       var form = button.closest('form');
       $(form).on('submit', function(event) {
         event.preventDefault();
-  
+
         jQuery.ajax({
           url: "{{ route('step.updateDescription') }}",
           data: jQuery(form).serialize(),
           type: 'patch',
-  
+
           success: function(result) {
             button.classList.add('hidden');
           }
@@ -296,11 +297,14 @@
                     @csrf
                     @method('POST')
                     <input type="hidden" name="title" value="new Tiny Step" id="todo-input" class="step">
-                    <input type="hidden" name="stepID" value="1">
-                    <button onclick="addTinyStep()"><i class="fa-solid fa-circle-plus text-gray-500"></i></button>
+                    <input type="hidden" name="stepID" value="${result.step[0].id}">
+                    <button onclick="addTinyStep(this)"><i class="fa-solid fa-circle-plus text-gray-500"></i></button>
                   </form>
                 </div>
-                <ul id="todo-list">     
+                <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                  <div id="progress-bar" class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full transition-all duration-300 ease-in-out" style="width: 0%"> 0%</div>
+                </div>   
+                <ul id="todo-list">
                 </ul>
               </div>
             </div>
@@ -331,17 +335,32 @@
     </div>
             `;
             jQuery('#pop-up-section').html(modal);
-            
-            if(result.step[0].tiny_steps.length > 0) {
+
+            if (result.step[0].tiny_steps.length > 0) {
               for (var i = 0; i < result.step[0].tiny_steps.length; i++) {
                 addTask(result.step[0].tiny_steps[i]);
-              }  
+              }
             }
             openModal(result.step[0].id);
+            updateProgressBar();
           }
         })
 
       });
+    }
+    ////////////////////////////////////////
+
+    function updateProgressBar() {
+      var tinyStepsInputs = document.querySelectorAll(".tinyStep");
+      var progressBar = document.getElementById("progress-bar");
+      var progress = 0;
+      for (var i = 0; i < tinyStepsInputs.length; i++) {
+        if(tinyStepsInputs[i].checked) {
+          progress++;
+        }
+      }
+      progressBar.style.width = (progress / tinyStepsInputs.length) * 100 + "%";
+      progressBar.textContent = Math.ceil((progress / tinyStepsInputs.length) * 100) + "%";
     }
     ////////////////////////////////////////
 
