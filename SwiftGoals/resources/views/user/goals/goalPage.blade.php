@@ -147,10 +147,10 @@
         "border-t border-gray-200 flex items-center justify-between py-4";
       if (task.isComplete == 1) {
         li.innerHTML = `
-        <label class="flex items-center">
+                  <label class="flex items-center">
                       <input onchange="checkBoxes(this.parentElement.parentElement);" checked type="checkbox" class="mr-2">
                       <span class="line-through">${task.title}</span>
-                    </label>
+                  </label>
                   <div class="flex gap-3">
                       <button class="text-blue-500
                        hover:text-blue-700 edit-btn">Edit</button>
@@ -227,6 +227,22 @@
       });
     }
 
+    function saveDescription(button) {
+      var form = button.closest('form');
+      $(form).on('submit', function(event) {
+        event.preventDefault();
+  
+        jQuery.ajax({
+          url: "{{ route('step.updateDescription') }}",
+          data: jQuery(form).serialize(),
+          type: 'patch',
+  
+          success: function(result) {
+            button.classList.add('hidden');
+          }
+        })
+      });
+    }
 
     ////////////////////////////////////////
 
@@ -265,8 +281,12 @@
           <div class="flex justify-around gap-5">
             <div class="my-5">
               <form class="">
+                @csrf
+                @method('PATCH')
                 <label for="stepDescription" class="block text-gray-500 text-sm font-bold italic mb-2">Description</label>
-                <textarea id="stepDescription" name="stepDescription" rows="3" cols="50" class="w-full border-none focus:bg-gray-400 focus:outline-none focus:text-white p-2 rounded-lg transition-all duration-300">${result.step[0].description}</textarea>
+                <textarea onfocus="this.nextElementSibling.nextElementSibling.classList.remove('hidden');" type="text" id="stepDescription" name="stepDescription" rows="3" cols="50" class="w-full border-none focus:bg-gray-400 focus:outline-none focus:text-white p-2 rounded-lg transition-all duration-300">${result.step[0].description}</textarea>
+                <input type="hidden" name="stepID" value="${result.step[0].id}">
+                <button onclick="saveDescription(this);" class="hidden">Save</button>
               </form>
               <hr class="w-9/12 h-1 my-5 mx-auto bg-gray-500 rounded dark:bg-gray-700">
               <div>

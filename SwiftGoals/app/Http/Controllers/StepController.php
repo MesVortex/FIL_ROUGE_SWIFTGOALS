@@ -70,6 +70,17 @@ class StepController extends Controller
         ]);
     }
 
+    public function updateDescription(Request $request)
+    {
+        $step = Step::find($request->stepID);
+        $updatedStep = $step->update([
+            'description' => $request->stepDescription,
+        ]);
+        return response()->json([
+            'step' => $updatedStep,
+        ]);
+    }
+
     /**
      * Remove the specified resource from storage.
      */
