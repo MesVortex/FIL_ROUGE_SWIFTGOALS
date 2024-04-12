@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('tinysteps', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->unsignedBigInteger('goalID');
-            $table->foreign('goalID')->references('id')->on('goals')->onDelete('cascade');
+            $table->unsignedBigInteger('stepID');
+            $table->foreign('stepID')->references('id')->on('steps')->onDelete('cascade');
             $table->boolean('isComplete')->default('0');
             $table->timestamps();
         });

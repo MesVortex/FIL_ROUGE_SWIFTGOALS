@@ -40,9 +40,12 @@ class StepController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Step $step)
+    public function show(Request $request)
     {
-        //
+        $step = Step::where('id', $request->stepID)->with('tinySteps')->get();
+        return response()->json([
+            'step' => $step,
+        ]);
     }
 
     /**
@@ -70,8 +73,13 @@ class StepController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Step $step)
+    public function destroy(Request $request)
     {
-        //
+        $step = Step::find($request->stepID);
+        $step->delete();
+        return response()->json([
+            'success' => 'step deleted successfully!',
+        ]);
+
     }
 }

@@ -22,4 +22,9 @@ class Step extends Model
         return $this->belongsTo(Goal::class, 'goalID');
     }
 
+    public function tinySteps()
+    {
+        return $this->hasMany(Tinystep::class, 'stepID');
+    }
+
 }

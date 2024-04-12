@@ -66,8 +66,8 @@
   </div>
   <section class="px-16 pb-12 flex justify-between">
     <div id='priority1' class="h-auto relative min-h-96 overflow-hidden py-16 w-64 border-2 border-blue-700 shadow-2xl border-opacity-75 p-3 space-y-3 rounded-3xl bg-transparent backdrop-filter backdrop-blur-md bg-opacity-25">
-      <div class="absolute top-0 left-0 w-full h-auto text-center rounded-b-2xl bg-white text-balck px-2 py-5 rounded-lg shadow shadow-blue-700">
-        Priority level 1
+      <div class="absolute top-0 left-0 w-full h-auto text-center rounded-b-lg bg-white text-black px-2 py-5 rounded-lg shadow shadow-blue-700">
+        high-priority
       </div>
       @foreach($steps as $step)
       <form class="relative w-full group h-auto pr-6 text-start bg-white text-gray-700 p-2 rounded-lg shadow shadow-blue-700 transition-all stepForm" draggable="true">
@@ -78,37 +78,16 @@
         <input type="hidden" name="goalID" value="{{ $goal->id }}">
         <input type="hidden" name="priority" value="1">
         <input type="hidden" name="stepID" value="{{$step->id}}">
-        <a onclick="openModal(1)" class="absolute right-2 bottom-1 opacity-0 group-hover:opacity-100 text-gray-400 cursor-pointer transition-all duration-300 ease-in">
+        <button onclick="save(this);" class="hidden submitBTN">save</button>
+        <a onclick="showStep(this)" data-id="{{$step->id}}" class="absolute right-2 bottom-1 opacity-0 group-hover:opacity-100 text-gray-400 cursor-pointer transition-all duration-300 ease-in">
           <i class="fa-regular fa-eye fa-lg ml-4"></i>
         </a>
-        <button onclick="save(this);" class="hidden submitBTN">save</button>
       </form>
-      <!-- step pop-up -->
-      <div id="modal1" class="modal hidden fixed w-full h-100 inset-0 z-50 overflow-hidden justify-center items-center animated fadeIn faster" style="background: rgba(0,0,0,.7);">
-        <div class="border border-teal-500 shadow-lg modal-container bg-white w-11/12 md:max-w-md mx-auto rounded-lg shadow-lg z-50 overflow-y-auto">
-          <div class="modal-content py-4 text-left px-6">
-            <!--Title-->
-            <div class="flex justify-between items-center pb-3">
-              <p class="text-2xl font-bold">Step Info</p>
-              <div onclick="modalClose(1)" class="modal-close cursor-pointer z-50">
-                <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
-                  <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
-                  </path>
-                </svg>
-              </div>
-            </div>
-            <!--Body-->
-            <div class="my-5">
-              <p>Je vais concevoir la maquette de page Home en mode Desktop et Smartphone.</p>
-            </div>
-            <!--Footer-->
-            <div class="flex justify-end pt-2">
-              <button onclick="modalClose(1)" class="focus:outline-none modal-close px-4 bg-gray-400 p-3 rounded-lg text-black hover:bg-gray-300">Cancel</button>
-              <button class="focus:outline-none px-4 bg-teal-500 p-3 ml-3 rounded-lg text-white hover:bg-teal-400">Confirm</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <form id="{{ $step->id }}">
+        @csrf
+        @method('GET')
+        <input type="hidden" value="{{$step->id}}" name="stepID">
+      </form>
       @endforeach
       <form class="absolute bottom-2 left-1/2 -translate-x-1/2 w-11/12 bg-transparent hover:bg-gray-300 text-white py-2 rounded-lg border-2 border-dashed border-gray-500 text-center transition-all" draggable="true">
         @csrf
@@ -123,8 +102,8 @@
     </div>
     <div id="test" class="fixed z-50"></div>
     <div id='priority2' class="h-auto relative overflow-hidden min-h-96 py-16 w-64 border-2 border-blue-700 shadow-2xl border-opacity-75 p-3 space-y-3 rounded-3xl bg-transparent backdrop-filter backdrop-blur-md bg-opacity-25">
-      <div class="absolute top-0 left-0 w-full h-auto text-center rounded-b-2xl bg-white text-balck px-2 py-5 rounded-lg shadow shadow-blue-700">
-        Priority level 2
+      <div class="absolute top-0 left-0 w-full h-auto text-center rounded-b-lg bg-white text-balck px-2 py-5 rounded-lg shadow shadow-blue-700">
+        medium-priority
       </div>
       <form class="absolute bottom-2 left-1/2 -translate-x-1/2 w-11/12 bg-transparent hover:bg-gray-300 text-white py-2 rounded-lg border-2 border-dashed border-gray-500 text-center transition-all" draggable="true">
         @csrf
@@ -138,8 +117,8 @@
       </form>
     </div>
     <div id='priority3' class="h-auto overflow-hidden relative min-h-96 py-16 w-64 border-2 border-blue-700 shadow-2xl border-opacity-75 p-3 space-y-3 rounded-3xl bg-transparent backdrop-filter backdrop-blur-md bg-opacity-25">
-      <div class="absolute top-0 left-0 w-full h-auto text-center rounded-b-2xl bg-white text-balck px-2 py-5 rounded-lg shadow shadow-blue-700">
-        Priority level 3
+      <div class="absolute top-0 left-0 w-full h-auto text-center rounded-b-lg bg-white text-balck px-2 py-5 rounded-lg shadow shadow-blue-700">
+        <span class="shadow-green-700 shadow-2xl ">low-priority</span>
       </div>
       <form class="absolute bottom-2 left-1/2 -translate-x-1/2 w-11/12 bg-transparent hover:bg-gray-300 text-white py-2 rounded-lg border-2 border-dashed border-gray-500 text-center transition-all" draggable="true">
         @csrf
@@ -153,10 +132,264 @@
       </form>
     </div>
   </section>
+  <div id="pop-up-section">
+      <!-- modal goes here with ajax -->
+    </div>
 
   <!-- <script src="{{ asset('js/goals.js') }}"></script> -->
   <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
   <script>
+    // Function to add a new task
+    function addTask(task) {
+      const todoList = document.getElementById("todo-list");
+      const li = document.createElement("li");
+      li.className =
+        "border-t border-gray-200 flex items-center justify-between py-4";
+      if (task.isComplete == 1) {
+        li.innerHTML = `
+        <label class="flex items-center">
+                      <input onchange="checkBoxes(this.parentElement.parentElement);" checked type="checkbox" class="mr-2">
+                      <span class="line-through">${task.title}</span>
+                    </label>
+                  <div class="flex gap-3">
+                      <button class="text-blue-500
+                       hover:text-blue-700 edit-btn">Edit</button>
+                      <form method="post">
+                        @csrf
+                        @method('DELETE')
+                        <input type="hidden" name="tinyStepID" value="${task.id}">
+                        <button onclick="deleteTinyStep(this);" class="text-red-500 hover:text-red-700
+                        mr-2 delete-btn">Delete</button>
+                      </form>
+                  </div>
+              `;
+      } else {
+        li.innerHTML = `
+                  <label class="flex items-center">
+                      <input onchange="checkBoxes(this.parentElement.parentElement);" type="checkbox" class="mr-2">
+                      <span>${task.title}</span>
+                  </label>
+                  <div class="flex gap-3">
+                      <button class="text-blue-500
+                       hover:text-blue-700 edit-btn">Edit</button>
+                      <form method="post">
+                        @csrf
+                        @method('DELETE')
+                        <input type="hidden" name="tinyStepID" value="${task.id}">
+                        <button onclick="deleteTinyStep(this);" class="text-red-500 hover:text-red-700
+                        mr-2 delete-btn">Delete</button>
+                      </form>
+                  </div>
+              `;
+      }
+      todoList.appendChild(li);
+    }
+
+    function checkBoxes(list) {
+      const checkbox = list.querySelector('input[type="checkbox"]');
+      const taskText = checkbox.nextElementSibling;
+      if (checkbox.checked) {
+        taskText.classList.add('line-through');
+      } else {
+        taskText.classList.remove('line-through');
+      }
+    }
+
+    // Event listener for form submission
+    // document.getElementById("todo-form").addEventListener("submit",
+    //   function(event) {
+    //     event.preventDefault();
+    //     const taskInput = document.getElementById("todo-input");
+    //     const task = taskInput.value.trim();
+    //     if (task !== "") {
+    //       addTask(task);
+    //       // taskInput.value = "";
+    //     }
+    //   });
+
+    /////////////////////////////////////////////
+    function addTinyStep(button) {
+      var form = button.closest('form');
+      $(form).on('submit', function(event) {
+        event.preventDefault();
+  
+        jQuery.ajax({
+          url: "{{ route('tinyStep.store') }}",
+          data: jQuery(form).serialize(),
+          type: 'post',
+  
+          success: function(result) {
+            // $('#goalAlert').css('display', 'flex');
+            // jQuery('#alertMessage').html(result.success);       
+            addTask(result.tinyStep);
+          }
+        })
+      });
+    }
+
+
+    ////////////////////////////////////////
+
+    function showStep(button) {
+      var stepID = button.getAttribute('data-id');
+      var form = document.getElementById(`${stepID}`);
+      var submitEvent = new Event('submit', {
+        bubbles: true,
+        cancelable: true,
+      });
+      form.dispatchEvent(submitEvent);
+      $(form).on('submit', function(event) {
+        event.preventDefault();
+
+        jQuery.ajax({
+          url: `{{ route('step.show') }}`,
+          data: jQuery(form).serialize(),
+          type: 'get',
+
+          success: function(result) {
+            let modal = `
+            <div id="modal${result.step[0].id}" class="modal fixed w-full h-100 inset-0 z-50 overflow-y-scroll justify-center items-center animated fadeIn faster" style="background: rgba(0,0,0,.7);">
+      <div class="border border-teal-500 shadow-lg modal-container bg-white w-11/12 md:max-w-xl mx-auto rounded-lg shadow-lg z-50 overflow-y-auto">
+        <div class="modal-content py-4 text-left px-6">
+          <!--Title-->
+          <div class="flex justify-between items-center pb-3">
+            <p class="text-2xl font-bold">${result.step[0].title}</p>
+            <div onclick="modalClose(${result.step[0].id})" class="modal-close cursor-pointer z-50">
+              <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
+                </path>
+              </svg>
+            </div>
+          </div>
+          <!--Body-->
+          <div class="flex justify-around gap-5">
+            <div class="my-5">
+              <form class="">
+                <label for="stepDescription" class="block text-gray-500 text-sm font-bold italic mb-2">Description</label>
+                <textarea id="stepDescription" name="stepDescription" rows="3" cols="50" class="w-full border-none focus:bg-gray-400 focus:outline-none focus:text-white p-2 rounded-lg transition-all duration-300">${result.step[0].description}</textarea>
+              </form>
+              <hr class="w-9/12 h-1 my-5 mx-auto bg-gray-500 rounded dark:bg-gray-700">
+              <div>
+                <div class="flex justify-between">
+                  <span class="text-gray-500 text-sm font-bold italic mb-2">Tiny Steps</span>
+                  <form id="addTinyStep">
+                    @csrf
+                    @method('POST')
+                    <input type="hidden" name="title" value="new Tiny Step" id="todo-input" class="step">
+                    <input type="hidden" name="stepID" value="1">
+                    <button onclick="addTinyStep()"><i class="fa-solid fa-circle-plus text-gray-500"></i></button>
+                  </form>
+                </div>
+                <ul id="todo-list">     
+                </ul>
+              </div>
+            </div>
+            <div class="flex-col w-7/12 my-5 justify-around">
+              <div class="mb-2 w-full">
+                <button class="focus:outline-none px-4 w-full bg-gray-300 p-2 rounded-full text-black hover:bg-gray-700 hover:text-white transition-all duration-300">option 1</button>
+              </div>
+              <div class="mb-2 w-full">
+                <button class="focus:outline-none px-4 w-full bg-gray-300 p-2 rounded-full text-black hover:bg-gray-700 hover:text-white transition-all duration-300">option 2</button>
+              </div>
+              <div class="mb-2 w-full">
+                <form method="post">
+                  @csrf
+                  @method('DELETE')
+                  <input type="hidden" name="stepID" value="${result.step[0].id}">
+                  <button onclick="deleteStep(this);" class="focus:outline-none px-4 w-full bg-gray-300 p-2 rounded-full text-black hover:bg-red-600 hover:text-white transition-all duration-300">Delete step</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Footer-->
+      <!-- <div class="flex justify-end pt-2">
+            <button onclick="modalClose(1)" class="focus:outline-none modal-close px-4 bg-gray-400 p-3 rounded-lg text-black hover:bg-gray-300">Cancel</button>
+            <button class="focus:outline-none px-4 bg-teal-500 p-3 ml-3 rounded-lg text-white hover:bg-teal-400">Confirm</button>
+          </div> -->
+    </div>
+            `;
+            jQuery('#pop-up-section').html(modal);
+            
+            if(result.step[0].tiny_steps.length > 0) {
+              for (var i = 0; i < result.step[0].tiny_steps.length; i++) {
+                addTask(result.step[0].tiny_steps[i]);
+              }  
+            }
+            openModal(result.step[0].id);
+          }
+        })
+
+      });
+    }
+    ////////////////////////////////////////
+
+    function deleteTinyStep(button) {
+      var form = button.closest('form');
+      $(form).on('submit', function(event) {
+        event.preventDefault();
+
+        jQuery.ajax({
+          url: `{{ route('tinyStep.destroy') }}`,
+          data: jQuery(form).serialize(),
+          type: 'delete',
+
+          success: function(result) {
+            form.parentElement.parentElement.remove();
+          }
+        })
+      });
+    }
+
+    ////////////////////////////////////////
+
+    function deleteStep(button) {
+      var form = button.closest('form');
+      $(form).on('submit', function(event) {
+        event.preventDefault();
+
+        jQuery.ajax({
+          url: `{{ route('step.destroy') }}`,
+          data: jQuery(form).serialize(),
+          type: 'delete',
+
+          success: function(result) {
+            // form.parentElement.parentElement.remove();
+            modalClose(1);
+          }
+        })
+      });
+    }
+
+    ////////////////////////////////////////
+
+    // Event listener for delete button click
+    // document.getElementById("todo-list")
+    //   .addEventListener("click",
+    //     function(event) {
+    //       if (event.target.classList.contains("delete-btn")) {
+    //         event.target.parentElement.parentElement.remove();
+    //       }
+    //     });
+
+    // Event listener for edit button click
+    // document.getElementById("todo-list")
+    //   .addEventListener("click",
+    //     function(event) {
+    //       if (event.target.classList.contains("edit-btn")) {
+    //         const taskText = event.target.
+    //         parentElement.parentElement.querySelector("span");
+    //         const newText =
+    //           prompt("Enter new task", taskText.textContent);
+    //         if (newText !== null) {
+    //           taskText.textContent = newText.trim();
+    //         }
+    //       }
+    //     });
+
+    /////////////////////////////////////
+
     function toggleDrawer() {
       var drawer = document.getElementById('drawer-right-example');
       drawer.classList.toggle('translate-x-full');
@@ -274,6 +507,8 @@
         "relative w-full group h-auto pr-6 text-start bg-white text-gray-700 p-2 rounded-lg shadow shadow-blue-700 transition-all stepForm"
       );
       newForm.setAttribute("draggable", "true");
+      var modalForm = document.createElement("form");
+      newForm.setAttribute("id", storedStep.id);
 
       let newStep = `
         @csrf
@@ -283,15 +518,22 @@
         <input type="hidden" name="goalID" value="{{ $goal->id }}">
         <input type="hidden" name="priority" value="1">
         <input type="hidden" name="stepID" value="${storedStep.id}">
-        <a onclick="openModal(1)" class="absolute right-2 bottom-1 opacity-0 group-hover:opacity-100 text-gray-400 cursor-pointer transition-all duration-300 ease-in">
+        <a onclick="showStep(this)" data-id="${storedStep.id}" class="absolute right-2 bottom-1 opacity-0 group-hover:opacity-100 text-gray-400 cursor-pointer transition-all duration-300 ease-in">
           <i class="fa-regular fa-eye fa-lg ml-4"></i>
         </a>
         <button onclick="save(this);" class="hidden submitBTN">save</button>`;
 
+      let modalFormContent = `
+          @csrf
+          @method('GET')
+          <input type="hidden" value="${storedStep.id}" name="stepID">
+      `;
       newForm.innerHTML = newStep;
+      modalForm.innerHTML = modalFormContent;
 
       var priorityDiv = document.getElementById(`priority${priority}`);
       priorityDiv.appendChild(newForm);
+      priorityDiv.appendChild(modalForm);
 
       // newDiv.addEventListener("dragstart", handleDragStart);
       // newDiv.addEventListener("dblclick", function(e) {

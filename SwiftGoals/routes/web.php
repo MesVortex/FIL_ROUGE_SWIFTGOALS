@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\StepController;
+use App\Http\Controllers\TinystepController;
+use App\Models\Step;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -56,9 +58,15 @@ Route::get('/dashboard', function () {
 })->name('dashboard');
 
 
+Route::resource('/goal', GoalController::class)->except('destroy');
 Route::get('/goal/ajax/index', [GoalController::class, 'ajaxIndex'])->name('goal.ajaxIndex');
 Route::delete('/goal/destroy', [GoalController::class, 'destroy'])->name('goal.destroy');
-Route::resource('/goal', GoalController::class)->except('destroy');
 
+Route::resource('/step', StepController::class)->except(['update', 'destroy', 'show']);
+Route::get('/step/show', [StepController::class, 'show'])->name('step.show');
+Route::delete('/step/destroy', [StepController::class, 'destroy'])->name('step.destroy');
 Route::put('/step/update', [StepController::class, 'update'])->name('step.update');
-Route::resource('/step', StepController::class)->except('update');
+
+Route::resource('/tinyStep', TinystepController::class)->except(['update', 'destroy']);
+Route::put('/tinyStep/update', [TinystepController::class, 'update'])->name('tinyStep.update');
+Route::delete('/tinyStep/destroy', [TinystepController::class, 'destroy'])->name('tinyStep.destroy');

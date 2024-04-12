@@ -1,7 +1,10 @@
 <x-main-layout>
   <x-goalsNavbar page='personal goals' />
   <div class="w-auto h-screen ml-32 py-14">
-    <h1 class="group mb-16 text-center text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Start Achieving Your Go<span class="underline underline-offset-3 decoration-8 decoration-blue-100 group-hover:decoration-blue-600 text-gray-100 group-hover:text-gray-900 transition-all ease-in duration-500">als and ambitions</span></h1>
+    <div class="h-20 justify-center flex items-center w-full mb-16" style="background-image: url('{{ asset('images/blue-washi-tape-with-white-line-png.png') }}'); background-size:cover; background-position: center;">
+      <h1 class="group text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl dark:text-white">Start Achieving Your Goals and ambitions</h1>
+      <span class="underline underline-offset-3 hidden decoration-8 decoration-blue-100 group-hover:decoration-blue-600 text-gray-900 group-hover:text-gray-900 transition-all ease-in duration-500">als and ambitions</span>
+    </div>
     <div id="goalAlert" class="relative flex mx-auto mb-5 w-1/2 px-4 py-4 text-base text-white bg-gray-900 rounded-lg font-regular hidden" data-dismissible="alert">
       <div id="alertMessage" class="mr-12 "></div>
       <button onclick="removeAlert();" data-dismissible-target="alert" class="!absolute  top-3 right-3 h-8 max-h-[32px] w-8 max-w-[32px] select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-white transition-all hover:bg-white/10 active:bg-white/30 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
@@ -21,10 +24,17 @@
         </a>
       </div>
       @foreach($goals as $goal)
-      <div class="w-full lg:flex h-28 max-w-sm overflow-hidden rounded-2xl border border-grey-light group shadow-xl">
-        <div class="h-40 lg:h-auto lg:w-32 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l lg:rounded-r-full text-center overflow-hidden" style="background-image: url('{{ asset('images/ronnie-overgoor-EdKCckXXRCI-unsplash.jpg') }}')" title="goal">
+      <div class="w-full relative lg:flex lg:justify-around text-white shadow-blue-700 h-28 max-w-sm overflow-hidden rounded-2xl border border-grey-light group shadow-lg" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('{{ asset('images/alvaro-reyes-qWwpHwip31M-unsplash.jpg') }}'); background-size:cover; background-position: center;">
+        <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full bg-transparent group-hover:backdrop-filter group-hover:backdrop-blur-sm group-hover:bg-opacity-40 transition-all duration-200"></div>
+        <div class="flex items-center justify-center" x-data="{ circumference: 2 * 22 / 7 * 120 }">
+          <svg class="transform -rotate-90 w-full h-72">
+            <circle cx="145" cy="145" r="50" stroke="currentColor" stroke-width="10" fill="transparent" class="text-gray-700" />
+
+            <circle cx="145" cy="145" r="50" stroke="currentColor" stroke-width="10" fill="transparent" :stroke-dasharray="circumference" :stroke-dashoffset="circumference - currentSkill.percent / 100 * circumference" class="text-blue-600 " />
+          </svg>
+          <span class="absolute text-3xl">90%</span>
         </div>
-        <div class="bg-white p-4 flex flex-col justify-around items-center leading-normal w-full">
+        <div class="bg-transparent p-4 flex flex-col justify-around items-center w-full">
           <div class="">
             <p class="text-3xl text-grey-dark flex items-center">
               {!! Str::limit($goal->title, 10, ' ...') !!}
@@ -33,22 +43,22 @@
               {!! Str::limit($goal->mainGoal, 20, ' ...') !!}
             </p>
           </div>
-          <div class="justify-around opacity-0 flex gap-10 group-hover:opacity-100 transition-all duration-300 ease-in">
-            <a href="">
-              <i class="fa-solid fa-map-pin"></i>
-            </a>
-            <a href="{{ route('goal.show', $goal->id) }}">
-              <i class="fa-solid fa-wand-magic-sparkles"></i>
-            </a>
-            <form action="{{ route('goal.destroy') }}" method="post">
-              @csrf
-              @method('DELETE')
-              <input type="hidden" name="goalID" value="{{$goal->id}}">
-              <button onclick="deleteGoal(this);">
-                <i class="fa-solid fa-square-minus text-red-600"></i>
-              </button>
-            </form>
-          </div>
+        </div>
+        <div class="justify-around absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 flex gap-10 group-hover:opacity-100 transition-all duration-300 ease-in">
+          <a href="">
+            <i class="fa-solid fa-map-pin fa-xl"></i>
+          </a>
+          <a href="{{ route('goal.show', $goal->id) }}">
+            <i class="fa-solid fa-wand-magic-sparkles fa-xl"></i>
+          </a>
+          <form action="{{ route('goal.destroy') }}" method="post">
+            @csrf
+            @method('DELETE')
+            <input type="hidden" name="goalID" value="{{$goal->id}}">
+            <button onclick="deleteGoal(this);">
+              <i class="fa-solid fa-square-minus text-red-600 fa-xl"></i>
+            </button>
+          </form>
         </div>
         <!-- Progress Vertical -->
         <!-- <div class="flex flex-col flex-nowrap justify-end place-self-center mr-3 w-2 h-32 bg-gray-200 rounded-full overflow-hidden dark:bg-gray-700" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
@@ -140,7 +150,7 @@
               @csrf
               @method('DELETE')
               <input type="hidden" name="goalID" value="${result.goal.id}">
-              <button type="submit">
+              <button onclick="deleteGoal(this);">
                 <i class="fa-solid fa-square-minus text-red-600"></i>
               </button>
             </form>
