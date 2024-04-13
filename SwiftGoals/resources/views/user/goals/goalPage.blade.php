@@ -151,7 +151,7 @@
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="stepID" value="${task.stepID}">
-                    <input onchange="checkBoxes(this); updateProgressBar(); markAsComplete(this);" checked type="checkbox" class="mr-2 tinyStep">
+                    <input onchange="checkBoxes(this); updateProgressBar(); markAsComplete(this);" data-id="${task.id}" checked type="checkbox" class="mr-2 tinyStep">
                     <input class="w-full focus:outline-none" type="hidden" name="title" value="${task.title}">
                     <div class="flex justify-between w-full mr-3">
                       <span class="line-through span">${task.title}</span>
@@ -174,7 +174,7 @@
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="stepID" value="${task.stepID}">
-                    <input onchange="checkBoxes(this); updateProgressBar(); markAsComplete(this);" type="checkbox" class="mr-2 tinyStep">
+                    <input onchange="checkBoxes(this); updateProgressBar(); markAsComplete(this);" data-id="${task.id}" type="checkbox" class="mr-2 tinyStep">
                     <input class="w-full focus:outline-none" type="hidden" name="title" value="${task.title}">
                     <div class="flex justify-between w-full mr-3">
                       <span class="span">${task.title}</span>
@@ -197,7 +197,8 @@
     }
 
     function checkBoxes(checkbox) {
-      const taskText = checkbox.nextElementSibling;
+      const form = checkbox.closest('form');
+      const taskText = form.querySelector('.span');
       if (checkbox.checked) {
         taskText.classList.add('line-through');
       } else {
@@ -237,6 +238,8 @@
       });
     }
 
+    ///////////////////////////////////////////
+
     function saveDescription(button) {
       var form = button.closest('form');
       $(form).on('submit', function(event) {
@@ -252,6 +255,24 @@
           }
         })
       });
+    }
+
+    ///////////////////////////////////////////
+
+    function markAsComplete(button) {
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+      jQuery.ajax({
+        url: "{{ route('tinystep.updateProgress', ':id') }}".replace(':id', button.getAttribute('data-id')),
+        type: 'patch',
+
+        success: function(result) {
+
+        }
+      })
     }
 
     ////////////////////////////////////////

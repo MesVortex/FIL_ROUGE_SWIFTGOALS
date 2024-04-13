@@ -64,6 +64,22 @@ class TinystepController extends Controller
         ]);
     }
 
+    public function updateProgress(Tinystep $tinystep)
+    {
+        if ($tinystep->isComplete) {
+            $success = $tinystep->update([
+                'isComplete' => false,
+            ]);
+        } else {
+            $success = $tinystep->update([
+                'isComplete' => true,
+            ]);
+        }
+        return response()->json([
+            'sucess' => $success,
+        ]);
+    }
+
     /**
      * Remove the specified resource from storage.
      */
