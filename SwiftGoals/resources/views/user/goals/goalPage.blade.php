@@ -147,38 +147,48 @@
         "border-b border-gray-200 flex items-center justify-between py-4";
       if (task.isComplete == 1) {
         li.innerHTML = `
-                  <label class="flex items-center">
-                      <input onchange="checkBoxes(this.parentElement.parentElement); updateProgressBar();" checked type="checkbox" class="mr-2 tinyStep">
-                      <span class="line-through">${task.title}</span>
-                  </label>
+                  <form ondblclick="getSpanContent(this);" data-id="${task.id}" class="flex items-center w-full">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="stepID" value="${task.stepID}">
+                    <input onchange="checkBoxes(this); updateProgressBar(); markAsComplete(this);" checked type="checkbox" class="mr-2 tinyStep">
+                    <input class="w-full focus:outline-none" type="hidden" name="title" value="${task.title}">
+                    <div class="flex justify-between w-full mr-3">
+                      <span class="line-through span">${task.title}</span>
+                      <button onclick="editTinyStep(this);" class="text-blue-500 hidden hover:text-blue-700 edit-btn">Save</button>
+                    </div>
+                  </form>
                   <div class="flex gap-3">
-                      <button class="text-blue-500
-                       hover:text-blue-700 edit-btn">Edit</button>
-                      <form method="post">
-                        @csrf
-                        @method('DELETE')
-                        <input type="hidden" name="tinyStepID" value="${task.id}">
-                        <button onclick="deleteTinyStep(this);" class="text-red-500 hover:text-red-700
-                        mr-2 delete-btn">Delete</button>
-                      </form>
+                    <form method="post">
+                      @csrf
+                      @method('DELETE')
+                      <input type="hidden" name="tinyStepID" value="${task.id}">
+                      <button onclick="deleteTinyStep(this);" class="text-red-500 hover:text-red-700
+                      mr-2 delete-btn">Delete</button>
+                    </form>
                   </div>
               `;
       } else {
         li.innerHTML = `
-                  <label class="flex items-center">
-                      <input onchange="checkBoxes(this.parentElement.parentElement); updateProgressBar();" type="checkbox" class="mr-2 tinyStep">
-                      <span>${task.title}</span>
-                  </label>
+                  <form ondblclick="getSpanContent(this);" data-id="${task.id}" class="flex items-center w-full">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="stepID" value="${task.stepID}">
+                    <input onchange="checkBoxes(this); updateProgressBar(); markAsComplete(this);" type="checkbox" class="mr-2 tinyStep">
+                    <input class="w-full focus:outline-none" type="hidden" name="title" value="${task.title}">
+                    <div class="flex justify-between w-full mr-3">
+                      <span class="span">${task.title}</span>
+                      <button onclick="editTinyStep(this);" class="text-blue-500 hidden hover:text-blue-700 edit-btn">Save</button>
+                    </div>
+                  </form>
                   <div class="flex gap-3">
-                      <button class="text-blue-500
-                       hover:text-blue-700 edit-btn">Edit</button>
-                      <form method="post">
-                        @csrf
-                        @method('DELETE')
-                        <input type="hidden" name="tinyStepID" value="${task.id}">
-                        <button onclick="deleteTinyStep(this);" class="text-red-500 hover:text-red-700
-                        mr-2 delete-btn">Delete</button>
-                      </form>
+                    <form method="post">
+                      @csrf
+                      @method('DELETE')
+                      <input type="hidden" name="tinyStepID" value="${task.id}">
+                      <button onclick="deleteTinyStep(this);" class="text-red-500 hover:text-red-700
+                      mr-2 delete-btn">Delete</button>
+                    </form>
                   </div>
               `;
       }
@@ -186,8 +196,7 @@
       updateProgressBar();
     }
 
-    function checkBoxes(list) {
-      const checkbox = list.querySelector('input[type="checkbox"]');
+    function checkBoxes(checkbox) {
       const taskText = checkbox.nextElementSibling;
       if (checkbox.checked) {
         taskText.classList.add('line-through');
@@ -215,7 +224,7 @@
         event.preventDefault();
 
         jQuery.ajax({
-          url: "{{ route('tinyStep.store') }}",
+          url: "{{ route('tinystep.store') }}",
           data: jQuery(form).serialize(),
           type: 'post',
 
@@ -242,6 +251,28 @@
             button.classList.add('hidden');
           }
         })
+      });
+    }
+
+    ////////////////////////////////////////
+
+    function editTinyStep(button) {
+      var form = button.closest('form');
+      var input = form.querySelector('input[name="title"]');
+      $(form).on('submit', function(event) {
+        event.preventDefault();
+        var tinyStepID = $(this).data('id');
+
+        jQuery.ajax({
+          url: "{{ route('tinystep.update', ':id') }}".replace(':id', tinyStepID),
+          data: jQuery(form).serialize(),
+          type: 'put',
+
+          success: function(result) {
+            getTinyStepTitle(input);
+          }
+        })
+
       });
     }
 
@@ -355,7 +386,7 @@
       var progressBar = document.getElementById("progress-bar");
       var progress = 0;
       for (var i = 0; i < tinyStepsInputs.length; i++) {
-        if(tinyStepsInputs[i].checked) {
+        if (tinyStepsInputs[i].checked) {
           progress++;
         }
       }
@@ -370,12 +401,13 @@
         event.preventDefault();
 
         jQuery.ajax({
-          url: `{{ route('tinyStep.destroy') }}`,
+          url: `{{ route('tinystep.destroy') }}`,
           data: jQuery(form).serialize(),
           type: 'delete',
 
           success: function(result) {
             form.parentElement.parentElement.remove();
+            updateProgressBar();
           }
         })
       });
@@ -513,6 +545,32 @@
 
     //////////////////////////////////////////////
 
+    function getSpanContent(form) {
+      var closestInput = form.querySelector('input[name="title"]');
+      var closestBTN = form.querySelector('.edit-btn');
+      var span = form.querySelector('.span');
+      closestInput.type = 'text';
+      closestInput.value = span.textContent;
+      span.style.display = 'none';
+      closestBTN.style.display = 'block';
+    }
+
+    //////////////////////////////////////////////
+
+    function getTinyStepTitle(input) {
+      var closestForm = input.closest('form');
+      if (closestForm) {
+        var closestSpan = closestForm.querySelector('.span');
+        var closestBTN = closestForm.querySelector('.edit-btn');
+        input.type = 'hidden';
+        closestSpan.textContent = input.value;
+        closestSpan.style.display = 'block';
+        closestBTN.style.display = 'none';
+      }
+    }
+
+    //////////////////////////////////////////////
+
     function getDivContent(div) {
       var closestForm = div.closest('form');
       if (closestForm) {
@@ -538,6 +596,7 @@
         closestBTN.style.display = 'none';
       }
     }
+
 
     function createStep(storedStep, priority) {
       var newForm = document.createElement("form");

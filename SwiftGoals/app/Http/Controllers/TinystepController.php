@@ -55,11 +55,10 @@ class TinystepController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tinystep $tinystep)
+    public function update(TinyStepRequest $request, Tinystep $tinystep)
     {
-        $tinyStep = Tinystep::find($request->tinyStepID);
         $data = $request->validated();
-        $updatedStep = $tinyStep->update($data);
+        $updatedStep = $tinystep->update($data);
         return response()->json([
             'tinyStep' => $updatedStep,
         ]);

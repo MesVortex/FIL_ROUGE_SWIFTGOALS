@@ -68,6 +68,5 @@ Route::delete('/step/destroy', [StepController::class, 'destroy'])->name('step.d
 Route::put('/step/update', [StepController::class, 'update'])->name('step.update');
 Route::patch('/step/description/update', [StepController::class, 'updateDescription'])->name('step.updateDescription');
 
-Route::resource('/tinyStep', TinystepController::class)->except(['update', 'destroy']);
-Route::put('/tinyStep/update', [TinystepController::class, 'update'])->name('tinyStep.update');
-Route::delete('/tinyStep/destroy', [TinystepController::class, 'destroy'])->name('tinyStep.destroy');
+Route::resource('/tinystep', TinystepController::class)->except('destroy');
+Route::delete('/tinystep/destroy', [TinystepController::class, 'destroy'])->name('tinystep.destroy');
