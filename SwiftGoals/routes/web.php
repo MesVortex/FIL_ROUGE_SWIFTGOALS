@@ -62,11 +62,10 @@ Route::resource('/goal', GoalController::class)->except('destroy');
 Route::get('/goal/ajax/index', [GoalController::class, 'ajaxIndex'])->name('goal.ajaxIndex');
 Route::delete('/goal/destroy', [GoalController::class, 'destroy'])->name('goal.destroy');
 
-Route::resource('/step', StepController::class)->except(['update', 'destroy', 'show']);
-Route::get('/step/show', [StepController::class, 'show'])->name('step.show');
-Route::delete('/step/destroy', [StepController::class, 'destroy'])->name('step.destroy');
+Route::resource('/step', StepController::class)->except(['update']);
 Route::put('/step/update', [StepController::class, 'update'])->name('step.update');
 Route::patch('/step/description/update', [StepController::class, 'updateDescription'])->name('step.updateDescription');
+Route::patch('/step/{step}/date/update', [StepController::class, 'updateDueDate'])->name('step.updateDueDate');
 
 Route::resource('/tinystep', TinystepController::class)->except('destroy');
 Route::patch('/tinystep/{tinystep}/updateprogress', [TinystepController::class, 'updateProgress'])->name('tinystep.updateProgress');

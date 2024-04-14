@@ -30,7 +30,6 @@ class StepController extends Controller
     public function store(StepRequest $request)
     {
         $data = $request->validated();
-        $data['description'] = 'jfkdjh';
         $newStep = Step::create($data);
         return response()->json([
             'step' => $newStep,
@@ -40,9 +39,9 @@ class StepController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request)
+    public function show(Step $step)
     {
-        $step = Step::where('id', $request->stepID)->with('tinySteps')->get();
+        $step = Step::where('id', $step->id)->with('tinySteps')->first();
         return response()->json([
             'step' => $step,
         ]);
@@ -63,7 +62,6 @@ class StepController extends Controller
     {
         $step = Step::find($request->stepID);
         $data = $request->validated();
-        $data['description'] = 'jfkdjh';
         $updatedStep = $step->update($data);
         return response()->json([
             'step' => $updatedStep,
@@ -81,12 +79,21 @@ class StepController extends Controller
         ]);
     }
 
+    public function updateDueDate(Request $request, Step $step)
+    {
+        $step->update([
+            'dueDate' => $request->date,
+        ]);
+        return response()->json([
+            'step' => $step,
+        ]);
+    }
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request)
+    public function destroy(Step $step)
     {
-        $step = Step::find($request->stepID);
         $step->delete();
         return response()->json([
             'success' => 'step deleted successfully!',

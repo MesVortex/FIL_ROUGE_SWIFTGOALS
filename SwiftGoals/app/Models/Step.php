@@ -12,6 +12,7 @@ class Step extends Model
     protected $fillable = [
         'title',
         'description',
+        'dueDate',
         'goalID',
         'isComplete',
         'priority',

@@ -66,11 +66,11 @@
   </div>
   <section class="px-16 pb-12 flex justify-between">
     <div id='priority1' class="h-auto relative min-h-96 overflow-hidden py-16 w-64 border-2 border-blue-700 shadow-2xl border-opacity-75 p-3 space-y-3 rounded-3xl bg-transparent backdrop-filter backdrop-blur-md bg-opacity-25">
-      <div class="absolute top-0 left-0 w-full h-auto text-center rounded-b-lg bg-white text-black px-2 py-5 rounded-lg shadow shadow-blue-700">
+      <div class="absolute top-0 font-bold text-white left-0 w-full text-lg h-auto text-center rounded-b-lg px-2 py-5 rounded-lg shadow shadow-blue-700" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{ asset('images/geometric-seamless-pattern-of-corners-and-circles-marine-motif-seamless-abstract-pattern-in-blue-tones-free-vector.jpg') }}'); background-size: cover; background-repeat: no-repeat;">
         high-priority
       </div>
       @foreach($steps as $step)
-      <form class="relative w-full group h-auto pr-6 text-start bg-white text-gray-700 p-2 rounded-lg shadow shadow-blue-700 transition-all stepForm" draggable="true">
+      <form id="{{$step->id}}" class="relative w-full group h-auto pr-6 text-start bg-white text-gray-700 p-2 rounded-lg shadow shadow-blue-700 transition-all stepForm" draggable="true">
         @csrf
         @method('PUT')
         <div ondblclick="getDivContent(this);" class="stepDiv">{{$step->title}}</div>
@@ -79,14 +79,9 @@
         <input type="hidden" name="priority" value="1">
         <input type="hidden" name="stepID" value="{{$step->id}}">
         <button onclick="save(this);" class="hidden submitBTN">save</button>
-        <a onclick="showStep(this)" data-id="{{$step->id}}" class="absolute right-2 bottom-1 opacity-0 group-hover:opacity-100 text-gray-400 cursor-pointer transition-all duration-300 ease-in">
+        <a onclick="showStep(this)" data-step-id="{{$step->id}}" class="absolute right-2 bottom-1 opacity-0 group-hover:opacity-100 text-gray-400 cursor-pointer transition-all duration-300 ease-in">
           <i class="fa-regular fa-eye fa-lg ml-4"></i>
         </a>
-      </form>
-      <form id="{{ $step->id }}">
-        @csrf
-        @method('GET')
-        <input type="hidden" value="{{$step->id}}" name="stepID">
       </form>
       @endforeach
       <form class="absolute bottom-2 left-1/2 -translate-x-1/2 w-11/12 bg-transparent hover:bg-gray-300 text-white py-2 rounded-lg border-2 border-dashed border-gray-500 text-center transition-all" draggable="true">
@@ -102,7 +97,7 @@
     </div>
     <div id="test" class="fixed z-50"></div>
     <div id='priority2' class="h-auto relative overflow-hidden min-h-96 py-16 w-64 border-2 border-blue-700 shadow-2xl border-opacity-75 p-3 space-y-3 rounded-3xl bg-transparent backdrop-filter backdrop-blur-md bg-opacity-25">
-      <div class="absolute top-0 left-0 w-full h-auto text-center rounded-b-lg bg-white text-balck px-2 py-5 rounded-lg shadow shadow-blue-700">
+      <div class="absolute top-0 left-0 w-full font-bold text-white h-auto text-center rounded-b-lg text-lg px-2 py-5 rounded-lg shadow shadow-blue-700" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{ asset('images/geometric-seamless-pattern-of-corners-and-circles-marine-motif-seamless-abstract-pattern-in-blue-tones-free-vector.jpg') }}'); background-size: cover; background-repeat: no-repeat;">
         medium-priority
       </div>
       <form class="absolute bottom-2 left-1/2 -translate-x-1/2 w-11/12 bg-transparent hover:bg-gray-300 text-white py-2 rounded-lg border-2 border-dashed border-gray-500 text-center transition-all" draggable="true">
@@ -117,8 +112,8 @@
       </form>
     </div>
     <div id='priority3' class="h-auto overflow-hidden relative min-h-96 py-16 w-64 border-2 border-blue-700 shadow-2xl border-opacity-75 p-3 space-y-3 rounded-3xl bg-transparent backdrop-filter backdrop-blur-md bg-opacity-25">
-      <div class="absolute top-0 left-0 w-full h-auto text-center rounded-b-lg bg-white text-balck px-2 py-5 rounded-lg shadow shadow-blue-700">
-        <span class="shadow-green-700 shadow-2xl ">low-priority</span>
+      <div class="absolute top-0 left-0 w-full font-bold text-white h-auto text-center rounded-b-lg text-lg px-2 py-5 rounded-lg shadow shadow-blue-700" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{ asset('images/geometric-seamless-pattern-of-corners-and-circles-marine-motif-seamless-abstract-pattern-in-blue-tones-free-vector.jpg') }}'); background-size: cover; background-repeat: no-repeat;">
+        low-priority
       </div>
       <form class="absolute bottom-2 left-1/2 -translate-x-1/2 w-11/12 bg-transparent hover:bg-gray-300 text-white py-2 rounded-lg border-2 border-dashed border-gray-500 text-center transition-all" draggable="true">
         @csrf
@@ -164,7 +159,7 @@
                       @method('DELETE')
                       <input type="hidden" name="tinyStepID" value="${task.id}">
                       <button onclick="deleteTinyStep(this);" class="text-red-500 hover:text-red-700
-                      mr-2 delete-btn">Delete</button>
+                      mr-2 delete-btn"><i class="fa-solid fa-eraser fa-lg"></i></button>
                     </form>
                   </div>
               `;
@@ -187,7 +182,7 @@
                       @method('DELETE')
                       <input type="hidden" name="tinyStepID" value="${task.id}">
                       <button onclick="deleteTinyStep(this);" class="text-red-500 hover:text-red-700
-                      mr-2 delete-btn">Delete</button>
+                      mr-2 delete-btn"><i class="fa-solid fa-eraser fa-lg"></i></button>
                     </form>
                   </div>
               `;
@@ -257,6 +252,41 @@
       });
     }
 
+    function saveDueDate(button) {
+      var form = button.closest('form');
+      var stepID = button.getAttribute('data-id');
+
+      $(form).on('submit', function(event) {
+        event.preventDefault();
+
+        jQuery.ajax({
+          url: "{{ route('step.updateDueDate', ':id') }}".replace(':id', stepID),
+          data: jQuery(form).serialize(),
+          type: 'patch',
+
+          success: function(result) {
+            const settingsDiv = document.getElementById('step-settings');
+            const dateDiv = document.getElementById('dateDiv');
+            console.log();
+            if (dateDiv == null) {
+              const newDate = document.createElement('div');
+              newDate.setAttribute('class', 'mb-2 w-full');
+              newDate.setAttribute('id', 'dateDiv');
+              const dateInfo = `
+                          <button class="focus:outline-none px-4 w-full bg-gray-300 p-2 rounded-full text-black hover:bg-green-600 hover:text-white transition-all duration-300 dateBtn">${result.step.dueDate}</button>
+                          `;
+              newDate.innerHTML = dateInfo;
+              settingsDiv.insertBefore(newDate, settingsDiv.children[1]);
+              dateDropdown(stepID);
+            } else {
+              dateDiv.querySelector('.dateBtn').innerText = result.step.dueDate;
+              dateDropdown(stepID);
+            }
+          }
+        })
+      })
+    }
+
     ///////////////////////////////////////////
 
     function markAsComplete(button) {
@@ -300,30 +330,25 @@
     ////////////////////////////////////////
 
     function showStep(button) {
-      var stepID = button.getAttribute('data-id');
-      var form = document.getElementById(`${stepID}`);
-      var submitEvent = new Event('submit', {
-        bubbles: true,
-        cancelable: true,
+      var stepID = button.getAttribute('data-step-id');
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
       });
-      form.dispatchEvent(submitEvent);
-      $(form).on('submit', function(event) {
-        event.preventDefault();
+      jQuery.ajax({
+        url: `{{ route('step.show', ':id') }}`.replace(':id', stepID),
+        type: 'get',
 
-        jQuery.ajax({
-          url: `{{ route('step.show') }}`,
-          data: jQuery(form).serialize(),
-          type: 'get',
-
-          success: function(result) {
-            let modal = `
-            <div id="modal${result.step[0].id}" class="modal fixed w-full h-100 inset-0 z-50 overflow-y-scroll justify-center items-center animated fadeIn faster" style="background: rgba(0,0,0,.7);">
+        success: function(result) {
+          let modal = `
+            <div id="modal${result.step.id}" class="modal fixed w-full h-100 inset-0 z-50 overflow-y-scroll justify-center items-center animated fadeIn faster" style="background: rgba(0,0,0,.7);">
       <div class="border border-teal-500 shadow-lg modal-container bg-white w-11/12 md:max-w-xl mx-auto rounded-lg shadow-lg z-50 overflow-y-auto">
         <div class="modal-content py-4 text-left px-6">
           <!--Title-->
           <div class="flex justify-between items-center pb-3">
-            <p class="text-2xl font-bold">${result.step[0].title}</p>
-            <div onclick="modalClose(${result.step[0].id})" class="modal-close cursor-pointer z-50">
+            <p class="text-2xl font-bold">${result.step.title}</p>
+            <div onclick="modalClose(${result.step.id})" class="modal-close cursor-pointer z-50">
               <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
                 <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
                 </path>
@@ -337,8 +362,8 @@
                 @csrf
                 @method('PATCH')
                 <label for="stepDescription" class="block text-gray-500 text-sm font-bold italic mb-2">Description</label>
-                <textarea onfocus="this.nextElementSibling.nextElementSibling.classList.remove('hidden');" type="text" id="stepDescription" name="stepDescription" rows="3" cols="50" class="w-full border-none focus:bg-gray-400 focus:outline-none focus:text-white p-2 rounded-lg transition-all duration-300">${result.step[0].description}</textarea>
-                <input type="hidden" name="stepID" value="${result.step[0].id}">
+                <textarea onfocus="this.nextElementSibling.nextElementSibling.classList.remove('hidden');" type="text" id="stepDescription" name="stepDescription" rows="3" cols="50" class="w-full border-none focus:bg-gray-400 focus:outline-none focus:text-white p-2 rounded-lg transition-all duration-300">${result.step.description}</textarea>
+                <input type="hidden" name="stepID" value="${result.step.id}">
                 <button onclick="saveDescription(this);" class="hidden">Save</button>
               </form>
               <hr class="w-9/12 h-1 my-5 mx-auto bg-gray-500 rounded dark:bg-gray-700">
@@ -349,8 +374,8 @@
                     @csrf
                     @method('POST')
                     <input type="hidden" name="title" value="new Tiny Step" id="todo-input" class="step">
-                    <input type="hidden" name="stepID" value="${result.step[0].id}">
-                    <button onclick="addTinyStep(this)"><i class="fa-solid fa-circle-plus text-gray-500"></i></button>
+                    <input type="hidden" name="stepID" value="${result.step.id}">
+                    <button onclick="addTinyStep(this)"><i class="fa-solid fa-circle-plus text-gray-500 hover:text-blue-600 transition-all duration-300"></i></button>
                   </form>
                 </div>
                 <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
@@ -360,20 +385,44 @@
                 </ul>
               </div>
             </div>
-            <div class="flex-col w-7/12 my-5 justify-around">
+            <div id="step-settings" class="flex-col w-7/12 my-5 justify-around">
+              <span class="text-gray-500 block text-sm font-bold italic mb-2">Step Settings</span>
+              ${result.step.dueDate ? 
+                `<div id='dateDiv' class="mb-2 w-full">
+                  <button class="focus:outline-none px-4 w-full bg-gray-300 p-2 rounded-full text-black hover:bg-green-600 hover:text-white transition-all duration-300 dateBtn">${result.step.dueDate}</button>
+                </div>
+                <div class="mb-2 w-full">
+                  <button onclick="dateDropdown(${result.step.id});" class="focus:outline-none px-4 w-full bg-gray-300 p-2 rounded-full text-black hover:bg-blue-600 hover:text-white transition-all duration-300">Update Due Date</button>
+                  <form id="dateRangeDropdown${result.step.id}" class="z-10 mb-10 relative hidden bg-white divide-gray-100 rounded-2xl shadow w-80 lg:w-full dark:bg-gray-700 dark:divide-gray-600">
+                    @csrf
+                    @method('PATCH')
+                    <input name="date" type="date" class="bg-gray-50 -mb-2 border border-gray-300 text-gray-900 text-sm rounded-t-2xl rounded-b-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Due-date">
+                    <button onclick="saveDueDate(this);" data-id="${result.step.id}" class="absolute w-full pt-2 -z-10 rounded-b-3xl hover:text-white hover:bg-blue-600 transition-all duration-300">Save</button>
+                  </form>
+                </div>` :
+                 `<div class="mb-2 w-full">
+                    <button onclick="dateDropdown(${result.step.id});" class="focus:outline-none px-4 w-full bg-gray-300 p-2 rounded-full text-black hover:bg-blue-600 hover:text-white transition-all duration-300">Add Due Date</button>
+                    <form id="dateRangeDropdown${result.step.id}" class="z-10 mb-10 relative hidden bg-white divide-gray-100 rounded-2xl shadow w-80 lg:w-full dark:bg-gray-700 dark:divide-gray-600">
+                      @csrf
+                      @method('PATCH')
+                      <input name="date" type="date" class="bg-gray-50 -mb-2 border border-gray-300 text-gray-900 text-sm rounded-t-2xl rounded-b-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Due-date">
+                      <button onclick="saveDueDate(this);" data-id="${result.step.id}" class="absolute w-full pt-2 -z-10 rounded-b-3xl hover:text-white hover:bg-blue-600 transition-all duration-300">Save</button>
+                    </form>
+                </div>` }             
               <div class="mb-2 w-full">
-                <button class="focus:outline-none px-4 w-full bg-gray-300 p-2 rounded-full text-black hover:bg-gray-700 hover:text-white transition-all duration-300">option 1</button>
+                <button onclick="confirmDelete(${result.step.id});"  class="focus:outline-none px-4 w-full bg-gray-300 p-2 rounded-full text-black hover:bg-red-600 hover:text-white transition-all duration-300">Delete step</button>
+              <div id="deleteDropdown${result.step.id}" class="z-10 hidden mx-auto bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="deleteDropdownButton">
+                  <li>
+                    <form method="post">
+                      @csrf
+                      @method('DELETE')
+                      <button onclick="deleteStep(this);" data-step-id="${result.step.id}" class="block w-full px-4 py-2 hover:bg-gray-100 hover:text-red-600 hover:font-bold transition-all duration-300 dark:hover:bg-gray-600 dark:hover:text-white">Confirm</button>
+                    </form>
+                    <button onclick="confirmDelete(${result.step.id});" class="block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Cancel</button>
+                  </li>
+                </ul>
               </div>
-              <div class="mb-2 w-full">
-                <button class="focus:outline-none px-4 w-full bg-gray-300 p-2 rounded-full text-black hover:bg-gray-700 hover:text-white transition-all duration-300">option 2</button>
-              </div>
-              <div class="mb-2 w-full">
-                <form method="post">
-                  @csrf
-                  @method('DELETE')
-                  <input type="hidden" name="stepID" value="${result.step[0].id}">
-                  <button onclick="deleteStep(this);" class="focus:outline-none px-4 w-full bg-gray-300 p-2 rounded-full text-black hover:bg-red-600 hover:text-white transition-all duration-300">Delete step</button>
-                </form>
               </div>
             </div>
           </div>
@@ -386,19 +435,18 @@
           </div> -->
     </div>
             `;
-            jQuery('#pop-up-section').html(modal);
+          jQuery('#pop-up-section').html(modal);
 
-            if (result.step[0].tiny_steps.length > 0) {
-              for (var i = 0; i < result.step[0].tiny_steps.length; i++) {
-                addTask(result.step[0].tiny_steps[i]);
-              }
+          if (result.step.tiny_steps.length > 0) {
+            for (var i = 0; i < result.step.tiny_steps.length; i++) {
+              addTask(result.step.tiny_steps[i]);
             }
-            openModal(result.step[0].id);
-            updateProgressBar();
           }
-        })
+          openModal(result.step.id);
+          updateProgressBar();
+        }
+      })
 
-      });
     }
     ////////////////////////////////////////
 
@@ -438,20 +486,26 @@
 
     function deleteStep(button) {
       var form = button.closest('form');
+      var stepID = button.getAttribute('data-step-id');
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+
       $(form).on('submit', function(event) {
         event.preventDefault();
-
         jQuery.ajax({
-          url: `{{ route('step.destroy') }}`,
-          data: jQuery(form).serialize(),
+          url: `{{ route('step.destroy', ':id') }}`.replace(':id', stepID),
           type: 'delete',
 
           success: function(result) {
-            // form.parentElement.parentElement.remove();
-            modalClose(1);
+            modalClose(stepID);
+            document.getElementById(stepID).remove();
           }
         })
-      });
+      })
+
     }
 
     ////////////////////////////////////////
@@ -485,6 +539,16 @@
     function toggleDrawer() {
       var drawer = document.getElementById('drawer-right-example');
       drawer.classList.toggle('translate-x-full');
+    }
+
+    function confirmDelete(id) {
+      var dropdown = document.getElementById(`deleteDropdown${id}`);
+      dropdown.classList.toggle('hidden');
+    }
+
+    function dateDropdown(id) {
+      var dropdown = document.getElementById(`dateRangeDropdown${id}`);
+      dropdown.classList.toggle('hidden');
     }
 
     /////////////////////////////////////
@@ -625,8 +689,6 @@
         "class",
         "relative w-full group h-auto pr-6 text-start bg-white text-gray-700 p-2 rounded-lg shadow shadow-blue-700 transition-all stepForm"
       );
-      newForm.setAttribute("draggable", "true");
-      var modalForm = document.createElement("form");
       newForm.setAttribute("id", storedStep.id);
 
       let newStep = `
@@ -637,55 +699,21 @@
         <input type="hidden" name="goalID" value="{{ $goal->id }}">
         <input type="hidden" name="priority" value="1">
         <input type="hidden" name="stepID" value="${storedStep.id}">
-        <a onclick="showStep(this)" data-id="${storedStep.id}" class="absolute right-2 bottom-1 opacity-0 group-hover:opacity-100 text-gray-400 cursor-pointer transition-all duration-300 ease-in">
+        <a onclick="showStep(this)" data-step-id="${storedStep.id}" class="absolute right-2 bottom-1 opacity-0 group-hover:opacity-100 text-gray-400 cursor-pointer transition-all duration-300 ease-in">
           <i class="fa-regular fa-eye fa-lg ml-4"></i>
         </a>
         <button onclick="save(this);" class="hidden submitBTN">save</button>`;
 
-      let modalFormContent = `
-          @csrf
-          @method('GET')
-          <input type="hidden" value="${storedStep.id}" name="stepID">
-      `;
       newForm.innerHTML = newStep;
-      modalForm.innerHTML = modalFormContent;
 
       var priorityDiv = document.getElementById(`priority${priority}`);
       priorityDiv.appendChild(newForm);
-      priorityDiv.appendChild(modalForm);
 
       // newDiv.addEventListener("dragstart", handleDragStart);
       // newDiv.addEventListener("dblclick", function(e) {
       //   changeToInput(e.target);
       // });
 
-      //   let html = `<div id="modal3" class="modal hidden fixed w-full h-100 inset-0 z-50 overflow-hidden justify-center items-center animated fadeIn faster" style="background: rgba(0,0,0,.7);">
-      // <div class="border border-teal-500 shadow-lg modal-container bg-white w-11/12 md:max-w-md mx-auto rounded-lg shadow-lg z-50 overflow-y-auto">
-      //   <div class="modal-content py-4 text-left px-6">
-      //     <!--Title-->
-      //     <div class="flex justify-between items-center pb-3">
-      //       <p class="text-2xl font-bold">Step Info</p>
-      //       <div onclick="modalClose(3)" class="modal-close cursor-pointer z-50">
-      //         <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
-      //           <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
-      //           </path>
-      //         </svg>
-      //       </div>
-      //     </div>
-      //     <!--Body-->
-      //     <div class="my-5">
-      //       <p>new step</p>
-      //     </div>
-      //     <!--Footer-->
-      //     <div class="flex justify-end pt-2">
-      //       <button onclick="modalClose(3)" class="focus:outline-none modal-close px-4 bg-gray-400 p-3 rounded-lg text-black hover:bg-gray-300">Cancel</button>
-      //       <button class="focus:outline-none px-4 bg-teal-500 p-3 ml-3 rounded-lg text-white hover:bg-teal-400">Confirm</button>
-      //     </div>
-      //   </div>
-      // </div>
-      // </div>`;
-
-      //   document.getElementById("test").innerHTML = html;
     }
   </script>
 

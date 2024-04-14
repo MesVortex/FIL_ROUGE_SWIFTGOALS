@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('steps', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->longText('description');
+            $table->longText('description')->nullable();
+            $table->date('dueDate')->nullable();
             $table->unsignedBigInteger('goalID');
             $table->foreign('goalID')->references('id')->on('goals')->onDelete('cascade');
             $table->boolean('isComplete')->default('0');
