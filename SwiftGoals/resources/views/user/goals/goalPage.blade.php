@@ -70,7 +70,13 @@
         high-priority
       </div>
       @foreach($steps as $step)
-      <form id="{{$step->id}}" class="relative w-full group h-auto pr-6 text-start bg-white text-gray-700 p-2 rounded-lg shadow shadow-blue-700 transition-all stepForm" draggable="true">
+      <form id="{{$step->id}}" class="relative w-full group h-auto pr-6 text-start bg-white text-gray-700 p-2 rounded-lg shadow shadow-blue-700 transition-all stepForm" 
+        @if($step->isComplete) 
+          style="background: green; color: white;"
+        @elseif($step->dueDate < Now() && $step->dueDate != null);
+          style="background: red; color: white;"
+        @endif
+        draggable="true">
         @csrf
         @method('PUT')
         <div ondblclick="getDivContent(this);" class="stepDiv">{{$step->title}}</div>
@@ -146,7 +152,7 @@
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="stepID" value="${task.stepID}">
-                    <input onchange="checkBoxes(this); updateProgressBar(); markAsComplete(this);" data-id="${task.id}" checked type="checkbox" class="mr-2 tinyStep">
+                    <input onchange="checkBoxes(this); updateProgressBar(); markAsComplete(this);" data-id="${task.id}" data-step-id="${task.stepID}" checked type="checkbox" class="mr-2 tinyStep">
                     <input class="w-full focus:outline-none" type="hidden" name="title" value="${task.title}">
                     <div class="flex justify-between w-full mr-3">
                       <span class="line-through span">${task.title}</span>
@@ -169,7 +175,7 @@
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="stepID" value="${task.stepID}">
-                    <input onchange="checkBoxes(this); updateProgressBar(); markAsComplete(this);" data-id="${task.id}" type="checkbox" class="mr-2 tinyStep">
+                    <input onchange="checkBoxes(this); updateProgressBar(); markAsComplete(this);" data-id="${task.id}" data-step-id="${task.stepID}" type="checkbox" class="mr-2 tinyStep">
                     <input class="w-full focus:outline-none" type="hidden" name="title" value="${task.title}">
                     <div class="flex justify-between w-full mr-3">
                       <span class="span">${task.title}</span>
@@ -300,7 +306,44 @@
         type: 'patch',
 
         success: function(result) {
+        }
+      })
+    }
 
+    ///////////////////////////////////////////
+
+    function markStepComplete(id) {
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+      jQuery.ajax({
+        url: "{{ route('step.completeProgress', ':id') }}".replace(':id', id),
+        type: 'patch',
+
+        success: function(result) {
+          document.getElementById(id).style.background = "green";
+          document.getElementById(id).style.color = "white";
+        }
+      })
+    }
+
+    ///////////////////////////////////////////
+
+    function markStepIncomplete(id) {
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+      jQuery.ajax({
+        url: "{{ route('step.incompleteProgress', ':id') }}".replace(':id', id),
+        type: 'patch',
+
+        success: function(result) {
+          document.getElementById(id).style.background = "white";
+          document.getElementById(id).style.color = "rgb(55, 65, 81)";
         }
       })
     }
@@ -454,11 +497,23 @@
       var tinyStepsInputs = document.querySelectorAll(".tinyStep");
       var progressBar = document.getElementById("progress-bar");
       var progress = 0;
+
       for (var i = 0; i < tinyStepsInputs.length; i++) {
         if (tinyStepsInputs[i].checked) {
           progress++;
         }
       }
+
+      if(tinyStepsInputs.length != 0){
+        var stepID = tinyStepsInputs[0].getAttribute('data-step-id');   
+        if(progress == tinyStepsInputs.length){
+          markStepComplete(stepID);
+        }else{
+          markStepIncomplete(stepID);
+        }
+      }
+
+
       progressBar.style.width = (progress / tinyStepsInputs.length) * 100 + "%";
       progressBar.textContent = Math.ceil((progress / tinyStepsInputs.length) * 100) + "%";
     }

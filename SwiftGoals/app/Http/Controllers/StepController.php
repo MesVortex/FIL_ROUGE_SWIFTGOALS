@@ -89,6 +89,26 @@ class StepController extends Controller
         ]);
     }
 
+    public function completeProgress(Step $step)
+    {
+        $step->update([
+            'isComplete' => true,
+        ]);
+        return response()->json([
+            'step' => $step,
+        ]);
+    }
+
+    public function incompleteProgress(Step $step)
+    {
+        $step->update([
+            'isComplete' => false,
+        ]);
+        return response()->json([
+            'step' => $step,
+        ]);
+    }
+
     /**
      * Remove the specified resource from storage.
      */

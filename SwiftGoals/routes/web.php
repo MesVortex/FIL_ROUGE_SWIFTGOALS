@@ -64,6 +64,8 @@ Route::delete('/goal/destroy', [GoalController::class, 'destroy'])->name('goal.d
 
 Route::resource('/step', StepController::class)->except(['update']);
 Route::put('/step/update', [StepController::class, 'update'])->name('step.update');
+Route::patch('/step/{step}/completeprogress', [StepController::class, 'completeProgress'])->name('step.completeProgress');
+Route::patch('/step/{step}/incompleteprogress', [StepController::class, 'incompleteProgress'])->name('step.incompleteProgress');
 Route::patch('/step/description/update', [StepController::class, 'updateDescription'])->name('step.updateDescription');
 Route::patch('/step/{step}/date/update', [StepController::class, 'updateDueDate'])->name('step.updateDueDate');
 
