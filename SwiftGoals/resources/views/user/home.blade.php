@@ -12,10 +12,10 @@
       </div>
       <div class="mt-20 flex justify-between">
         <div class="flex h-40">
-          <p class=" font-medium w-32">Start Your Own Goals Or Use</p>
+          <p class=" text-white font-medium w-32">Start Your Own Goals Or Use</p>
           <img class="self-end" src="{{ asset('images/arrow1.png') }}" alt="arrow">
         </div>
-        <p class="font-medium w-60">Hello, Welcome to SwiftGoals, an online product focusing on brand identity, advertising, and no-code instruments.</p>
+        <p class="font-medium w-60 text-white">Hello, Welcome to SwiftGoals, an online product focusing on brand identity, advertising, and no-code instruments.</p>
       </div>
       <div class="absolute bottom-0 left-0 -z-10 w-full h-auto -mb-1">
         <svg enable-background="new 0 0 1504 131.3" viewBox="0 0 1504 131.3" xmlns="http://www.w3.org/2000/svg">

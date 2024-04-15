@@ -79,6 +79,16 @@ class GoalController extends Controller
         // $goal->update($request->validated());
     }
 
+    public function makeTemplate(Step $step)
+    {
+        $step->update([
+            'isTemplate' => true,
+        ]);
+        return response()->json([
+            'step' => $step,
+        ]);
+    }
+
     /**
      * Remove the specified resource from storage.
      */

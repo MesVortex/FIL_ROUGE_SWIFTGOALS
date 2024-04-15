@@ -40,10 +40,14 @@
             <span class="absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-[#1C70EC] top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"></span>
             <span class="relative text-white transition duration-300 ease">Modify</span>
           </a>
-          <a href="#" class="rounded-md w-2/6 text-center px-3.5 py-2 m-1 overflow-hidden relative group cursor-pointer border-2 font-medium border-red-600 text-white">
-            <span class="absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-red-600 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"></span>
-            <span class="relative text-red-600 transition duration-300 group-hover:text-white ease">Logout</span>
-          </a>
+          <form action="{{ route('user.logout') }}" method="post">
+            @csrf
+            @method('POST')
+            <button class="rounded-md w-2/6 text-center px-3.5 py-2 m-1 overflow-hidden relative group cursor-pointer border-2 font-medium border-red-600 text-white">
+              <span class="absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-red-600 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"></span>
+              <span class="relative text-red-600 transition duration-300 group-hover:text-white ease">Logout</span>
+            </button>
+          </form>
         </div>
       </div>
       <a href="#">

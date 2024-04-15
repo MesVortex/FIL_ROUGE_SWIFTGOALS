@@ -34,12 +34,24 @@
         </a>
       </li>
       <li>
-        <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+        <a onclick="confirmTemplate();" class="flex cursor-pointer items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
           <svg class="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3" />
           </svg>
-          <span class="flex-1 ms-3 whitespace-nowrap">Sign In</span>
+          <span class="flex-1 ms-3 whitespace-nowrap">Make Template</span>
         </a>
+        <div id="confirmTemplateDropdown" class="z-10 hidden mx-auto bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+          <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="makeTemplateButton">
+            <li>
+              <form method="post">
+                @csrf
+                @method('patch')
+                <button onclick="makeTemplate();" data-step-id="" class="block w-full px-4 py-2 hover:bg-gray-100 hover:text-red-600 hover:font-bold transition-all duration-300 dark:hover:bg-gray-600 dark:hover:text-white">Confirm</button>
+              </form>
+              <button onclick="confirmDelete();" class="block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Cancel</button>
+            </li>
+          </ul>
+        </div>
       </li>
       <li>
         <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
@@ -70,24 +82,23 @@
         high-priority
       </div>
       @foreach($steps as $step)
-      <form id="{{$step->id}}" class="relative w-full group h-auto pr-6 text-start bg-white text-gray-700 p-2 rounded-lg shadow shadow-blue-700 transition-all stepForm" 
-        @if($step->isComplete) 
-          style="background: green; color: white;"
+      <form id="{{$step->id}}" class="relative w-full group h-auto pr-6 text-start bg-white text-gray-700 p-2 rounded-lg shadow shadow-blue-700 transition-all stepForm" @if($step->isComplete)
+        style="background: green; color: white;"
         @elseif($step->dueDate < Now() && $step->dueDate != null);
           style="background: red; color: white;"
-        @endif
-        draggable="true">
-        @csrf
-        @method('PUT')
-        <div ondblclick="getDivContent(this);" class="stepDiv">{{$step->title}}</div>
-        <input type="hidden" name="title" value="{{$step->title}}" class="step">
-        <input type="hidden" name="goalID" value="{{ $goal->id }}">
-        <input type="hidden" name="priority" value="1">
-        <input type="hidden" name="stepID" value="{{$step->id}}">
-        <button onclick="save(this);" class="hidden submitBTN">save</button>
-        <a onclick="showStep(this)" data-step-id="{{$step->id}}" class="absolute right-2 bottom-1 opacity-0 group-hover:opacity-100 text-gray-400 cursor-pointer transition-all duration-300 ease-in">
-          <i class="fa-regular fa-eye fa-lg ml-4"></i>
-        </a>
+          @endif
+          draggable="true">
+          @csrf
+          @method('PUT')
+          <div ondblclick="getDivContent(this);" class="stepDiv">{{$step->title}}</div>
+          <input type="hidden" name="title" value="{{$step->title}}" class="step">
+          <input type="hidden" name="goalID" value="{{ $goal->id }}">
+          <input type="hidden" name="priority" value="1">
+          <input type="hidden" name="stepID" value="{{$step->id}}">
+          <button onclick="save(this);" class="hidden submitBTN">save</button>
+          <a onclick="showStep(this)" data-step-id="{{$step->id}}" class="absolute right-2 bottom-1 opacity-0 group-hover:opacity-100 text-gray-400 cursor-pointer transition-all duration-300 ease-in">
+            <i class="fa-regular fa-eye fa-lg ml-4"></i>
+          </a>
       </form>
       @endforeach
       <form class="absolute bottom-2 left-1/2 -translate-x-1/2 w-11/12 bg-transparent hover:bg-gray-300 text-white py-2 rounded-lg border-2 border-dashed border-gray-500 text-center transition-all" draggable="true">
@@ -231,9 +242,8 @@
           type: 'post',
 
           success: function(result) {
-            // $('#goalAlert').css('display', 'flex');
-            // jQuery('#alertMessage').html(result.success);       
             addTask(result.tinyStep);
+            $(form).unbind();
           }
         })
       });
@@ -305,8 +315,7 @@
         url: "{{ route('tinystep.updateProgress', ':id') }}".replace(':id', button.getAttribute('data-id')),
         type: 'patch',
 
-        success: function(result) {
-        }
+        success: function(result) {}
       })
     }
 
@@ -418,7 +427,7 @@
                     @method('POST')
                     <input type="hidden" name="title" value="new Tiny Step" id="todo-input" class="step">
                     <input type="hidden" name="stepID" value="${result.step.id}">
-                    <button onclick="addTinyStep(this)"><i class="fa-solid fa-circle-plus text-gray-500 hover:text-blue-600 transition-all duration-300"></i></button>
+                    <button onclick="addTinyStep(this); console.log('clicked')"><i class="fa-solid fa-circle-plus text-gray-500 hover:text-blue-600 transition-all duration-300"></i></button>
                   </form>
                 </div>
                 <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
@@ -451,7 +460,7 @@
                       <input name="date" type="date" class="bg-gray-50 -mb-2 border border-gray-300 text-gray-900 text-sm rounded-t-2xl rounded-b-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Due-date">
                       <button onclick="saveDueDate(this);" data-id="${result.step.id}" class="absolute w-full pt-2 -z-10 rounded-b-3xl hover:text-white hover:bg-blue-600 transition-all duration-300">Save</button>
                     </form>
-                </div>` }             
+                </div>` }       
               <div class="mb-2 w-full">
                 <button onclick="confirmDelete(${result.step.id});"  class="focus:outline-none px-4 w-full bg-gray-300 p-2 rounded-full text-black hover:bg-red-600 hover:text-white transition-all duration-300">Delete step</button>
               <div id="deleteDropdown${result.step.id}" class="z-10 hidden mx-auto bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
@@ -504,11 +513,11 @@
         }
       }
 
-      if(tinyStepsInputs.length != 0){
-        var stepID = tinyStepsInputs[0].getAttribute('data-step-id');   
-        if(progress == tinyStepsInputs.length){
+      if (tinyStepsInputs.length != 0) {
+        var stepID = tinyStepsInputs[0].getAttribute('data-step-id');
+        if (progress == tinyStepsInputs.length) {
           markStepComplete(stepID);
-        }else{
+        } else {
           markStepIncomplete(stepID);
         }
       }
