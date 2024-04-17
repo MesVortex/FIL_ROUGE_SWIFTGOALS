@@ -33,26 +33,30 @@
           <span class="ms-3">Edit Background</span>
         </a>
       </li>
+      @if($goal->isTemplate == 0)
       <li>
-        <a onclick="confirmTemplate();" class="flex cursor-pointer items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+        <a onclick="TemplateDropdown();" class="flex cursor-pointer items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
           <svg class="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3" />
           </svg>
           <span class="flex-1 ms-3 whitespace-nowrap">Make Template</span>
         </a>
-        <div id="confirmTemplateDropdown" class="z-10 hidden mx-auto bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+        <div id="confirmTemplateDropdown" class="z-10 w-full hidden mx-auto bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600">
           <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="makeTemplateButton">
             <li>
               <form method="post">
                 @csrf
                 @method('patch')
-                <button onclick="makeTemplate();" data-step-id="" class="block w-full px-4 py-2 hover:bg-gray-100 hover:text-red-600 hover:font-bold transition-all duration-300 dark:hover:bg-gray-600 dark:hover:text-white">Confirm</button>
+                <button onclick="makeTemplate('{{$goal->id}}', this);" class="block w-full px-4 py-2 hover:bg-gray-100 hover:text-rgreen-600 hover:font-bold transition-all duration-300 dark:hover:bg-gray-600 dark:hover:text-white">Confirm</button>
               </form>
-              <button onclick="confirmDelete();" class="block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Cancel</button>
+            </li>
+            <li>
+              <button onclick="TemplateDropdown();" class="block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Cancel</button>
             </li>
           </ul>
         </div>
       </li>
+      @endif
       <li>
         <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
           <svg class="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -81,7 +85,7 @@
       <div class="absolute top-0 font-bold text-white left-0 w-full text-lg h-auto text-center rounded-b-lg px-2 py-5 rounded-lg shadow shadow-blue-700" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{ asset('images/geometric-seamless-pattern-of-corners-and-circles-marine-motif-seamless-abstract-pattern-in-blue-tones-free-vector.jpg') }}'); background-size: cover; background-repeat: no-repeat;">
         high-priority
       </div>
-      @foreach($steps as $step)
+      @foreach($highPrioritysteps as $step)
       <form id="{{$step->id}}" class="relative w-full group h-auto pr-6 text-start bg-white text-gray-700 p-2 rounded-lg shadow shadow-blue-700 transition-all stepForm" @if($step->isComplete)
         style="background: green; color: white;"
         @elseif($step->dueDate < Now() && $step->dueDate != null);
@@ -117,6 +121,26 @@
       <div class="absolute top-0 left-0 w-full font-bold text-white h-auto text-center rounded-b-lg text-lg px-2 py-5 rounded-lg shadow shadow-blue-700" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{ asset('images/geometric-seamless-pattern-of-corners-and-circles-marine-motif-seamless-abstract-pattern-in-blue-tones-free-vector.jpg') }}'); background-size: cover; background-repeat: no-repeat;">
         medium-priority
       </div>
+      @foreach($mediumPrioritysteps as $step)
+      <form id="{{$step->id}}" class="relative w-full group h-auto pr-6 text-start bg-white text-gray-700 p-2 rounded-lg shadow shadow-blue-700 transition-all stepForm" @if($step->isComplete)
+        style="background: green; color: white;"
+        @elseif($step->dueDate < Now() && $step->dueDate != null);
+          style="background: red; color: white;"
+          @endif
+          draggable="true">
+          @csrf
+          @method('PUT')
+          <div ondblclick="getDivContent(this);" class="stepDiv">{{$step->title}}</div>
+          <input type="hidden" name="title" value="{{$step->title}}" class="step">
+          <input type="hidden" name="goalID" value="{{ $goal->id }}">
+          <input type="hidden" name="priority" value="1">
+          <input type="hidden" name="stepID" value="{{$step->id}}">
+          <button onclick="save(this);" class="hidden submitBTN">save</button>
+          <a onclick="showStep(this)" data-step-id="{{$step->id}}" class="absolute right-2 bottom-1 opacity-0 group-hover:opacity-100 text-gray-400 cursor-pointer transition-all duration-300 ease-in">
+            <i class="fa-regular fa-eye fa-lg ml-4"></i>
+          </a>
+      </form>
+      @endforeach
       <form class="absolute bottom-2 left-1/2 -translate-x-1/2 w-11/12 bg-transparent hover:bg-gray-300 text-white py-2 rounded-lg border-2 border-dashed border-gray-500 text-center transition-all" draggable="true">
         @csrf
         @method('POST')
@@ -132,6 +156,26 @@
       <div class="absolute top-0 left-0 w-full font-bold text-white h-auto text-center rounded-b-lg text-lg px-2 py-5 rounded-lg shadow shadow-blue-700" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{ asset('images/geometric-seamless-pattern-of-corners-and-circles-marine-motif-seamless-abstract-pattern-in-blue-tones-free-vector.jpg') }}'); background-size: cover; background-repeat: no-repeat;">
         low-priority
       </div>
+      @foreach($lowPrioritysteps as $step)
+      <form id="{{$step->id}}" class="relative w-full group h-auto pr-6 text-start bg-white text-gray-700 p-2 rounded-lg shadow shadow-blue-700 transition-all stepForm" @if($step->isComplete)
+        style="background: green; color: white;"
+        @elseif($step->dueDate < Now() && $step->dueDate != null);
+          style="background: red; color: white;"
+          @endif
+          draggable="true">
+          @csrf
+          @method('PUT')
+          <div ondblclick="getDivContent(this);" class="stepDiv">{{$step->title}}</div>
+          <input type="hidden" name="title" value="{{$step->title}}" class="step">
+          <input type="hidden" name="goalID" value="{{ $goal->id }}">
+          <input type="hidden" name="priority" value="1">
+          <input type="hidden" name="stepID" value="{{$step->id}}">
+          <button onclick="save(this);" class="hidden submitBTN">save</button>
+          <a onclick="showStep(this)" data-step-id="{{$step->id}}" class="absolute right-2 bottom-1 opacity-0 group-hover:opacity-100 text-gray-400 cursor-pointer transition-all duration-300 ease-in">
+            <i class="fa-regular fa-eye fa-lg ml-4"></i>
+          </a>
+      </form>
+      @endforeach
       <form class="absolute bottom-2 left-1/2 -translate-x-1/2 w-11/12 bg-transparent hover:bg-gray-300 text-white py-2 rounded-lg border-2 border-dashed border-gray-500 text-center transition-all" draggable="true">
         @csrf
         @method('POST')
@@ -146,6 +190,25 @@
   </section>
   <div id="pop-up-section">
     <!-- modal goes here with ajax -->
+  </div>
+
+  <div id="buttonPlace" class="flex w-full justify-end gap-10 px-10">
+    @if($goal->userID != Auth::user()->id && $goal->isTemplate == 1)
+    <button onclick="copyTemplate(this, '{{$goal->id}}');" class="overflow-hidden relative mb-10 w-32 p-2 h-12 bg-white text-black border-none rounded-md text-md font-bold cursor-pointer relative z-10 group">
+      Use Template
+      <span class="absolute w-36 h-32 -top-8 -left-2 bg-white rotate-12 transform scale-x-0 group-hover:scale-x-100 transition-transform group-hover:duration-500 duration-1000 origin-left"></span>
+      <span class="absolute w-36 h-32 -top-8 -left-2 bg-blue-400 rotate-12 transform scale-x-0 group-hover:scale-x-100 transition-transform group-hover:duration-700 duration-700 origin-left"></span>
+      <span class="absolute w-36 h-32 -top-8 -left-2 bg-blue-600 rotate-12 transform scale-x-0 group-hover:scale-x-50 transition-transform group-hover:duration-1000 duration-500 origin-left"></span>
+      <span class="group-hover:opacity-100 group-hover:duration-1000 duration-100 opacity-0 text-white absolute top-2.5 left-3 z-10">Create Goal!</span>
+    </button>
+    <button class="overflow-hidden relative w-32 py-2 h-12 bg-white text-black border-none rounded-md text-md font-bold cursor-pointer relative z-10 group">
+      Add To
+      <span class="absolute w-36 h-32 -top-8 -left-2 bg-red-200 rotate-12 transform scale-x-0 group-hover:scale-x-100 transition-transform group-hover:duration-500 duration-1000 origin-right"></span>
+      <span class="absolute w-36 h-32 -top-8 -left-2 bg-red-400 rotate-12 transform scale-x-0 group-hover:scale-x-100 transition-transform group-hover:duration-700 duration-700 origin-right"></span>
+      <span class="absolute w-36 h-32 -top-8 -left-2 bg-red-600 rotate-12 transform scale-x-0 group-hover:scale-x-100 transition-transform group-hover:duration-1000 duration-500 origin-right"></span>
+      <span class="group-hover:opacity-100 group-hover:duration-1000 duration-100 text-white opacity-0 absolute top-3 left-6 z-10">Favorites!</span>
+    </button>
+    @endif
   </div>
 
   <!-- <script src="{{ asset('js/goals.js') }}"></script> -->
@@ -229,6 +292,25 @@
     //       // taskInput.value = "";
     //     }
     //   });
+
+    /////////////////////////////////////////////
+
+    function copyTemplate(button, goalID) {
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+      
+      jQuery.ajax({
+        url: "{{ route('template.copy', ':id') }}".replace(':id', goalID),
+        type: 'post',
+
+        success: function(result) {
+          window.location.href = 'http://127.0.0.1:8000/goal'
+        }
+      })
+    }
 
     /////////////////////////////////////////////
     function addTinyStep(button) {
@@ -336,6 +418,25 @@
           document.getElementById(id).style.color = "white";
         }
       })
+    }
+
+    function makeTemplate(id, button) {
+      var form = button.closest('form');
+
+      $(form).on('submit', function(event) {
+        event.preventDefault();
+
+        jQuery.ajax({
+          url: "{{ route('goal.makeTemplate', ':id') }}".replace(':id', id),
+          data: jQuery(form).serialize(),
+          type: 'patch',
+
+          success: function(result) {
+            toggleDrawer();
+            TemplateDropdown();
+          }
+        })
+      });
     }
 
     ///////////////////////////////////////////
@@ -615,6 +716,11 @@
       dropdown.classList.toggle('hidden');
     }
 
+    function TemplateDropdown() {
+      var dropdown = document.getElementById(`confirmTemplateDropdown`);
+      dropdown.classList.toggle('hidden');
+    }
+
     /////////////////////////////////////
 
     const modals = document.querySelectorAll('.modal');
@@ -684,7 +790,12 @@
           }
         });
 
+
       });
+      $(step).unbind();
+      $(priority1).unbind();
+      $(priority2).unbind();
+      $(priority3).unbind();
       // step.addEventListener("dragstart", handleDragStart);
 
       // step.addEventListener("dblclick", function (e) {

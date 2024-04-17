@@ -24,6 +24,7 @@ class goalRequest extends FormRequest
         return [
             'title' => 'required|string|max:150',
             'mainGoal' => 'required|string',
+            'userID' => 'required|integer|exists:users,id',
         ];
     }
 }

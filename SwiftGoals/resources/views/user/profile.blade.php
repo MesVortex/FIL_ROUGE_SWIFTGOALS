@@ -1,5 +1,5 @@
 <x-main-layout>
-  <section class="flex justify-center items-center py-10" style="background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url('{{ asset('images/profile_bg.jpg') }}'); background-size: cover; background-repeat: no-repeat;">
+  <section class="flex justify-center items-center py-10" style="">
     <div class="flex gap-5 justify-between items-start w-full max-md:flex-wrap max-md:mt-10 max-md:max-w-full">
       <a href="{{ route('home') }}">
         <i class="fa-solid fa-arrow-left fa-xl ml-10"></i>

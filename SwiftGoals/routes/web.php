@@ -38,8 +38,10 @@ Route::post('/register', [AuthController::class, 'registerUser'])->name('user.re
 
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::resource('/goal', GoalController::class)->except('destroy');
+    Route::get('/explore', [GoalController::class, 'explore'])->name('explore');
+    Route::post('/goal/{goal}/template', [GoalController::class, 'copyTemplate'])->name('template.copy');
     Route::get('/goal/ajax/index', [GoalController::class, 'ajaxIndex'])->name('goal.ajaxIndex');
-    Route::get('/goal/{step}/makeTemplate', [GoalController::class, 'makeTemplate'])->name('goal.makeTemplate');
+    Route::patch('/goal/{goal}/makeTemplate', [GoalController::class, 'makeTemplate'])->name('goal.makeTemplate');
     Route::delete('/goal/destroy', [GoalController::class, 'destroy'])->name('goal.destroy');
 
     Route::resource('/step', StepController::class)->except(['update']);
@@ -62,15 +64,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/goals/pinned', function () {
         return view('user.goals.pinnedGoals');
     })->name('pinned.goals');
-    
-    Route::get('/goals/id', function () {
-        return view('user.goals.goalPage');
-    })->name('goal.page');
-    
-    Route::get('/explore', function () {
-        return view('user.explore');
-    })->name('explore');
-    
+            
     Route::get('/community', function () {
         return view('user.community');
     })->name('community');

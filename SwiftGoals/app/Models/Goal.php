@@ -15,11 +15,22 @@ class Goal extends Model
         'userID',
         'categoryID',
         'isTemplate',
+        'isPinned',
         'isComplete',
     ];
 
     public function steps()
     {
         return $this->hasMany(Step::class, 'goalID');
+    }
+
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'userID');
+    }
+
+    public function categories()
+    {
+        return $this->belongsTo(Category::class, 'categoryID');
     }
 }
