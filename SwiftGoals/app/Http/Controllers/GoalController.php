@@ -7,6 +7,7 @@ use App\Models\Goal;
 use App\Models\Step;
 use App\Models\Tinystep;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GoalController extends Controller
 {
@@ -102,6 +103,9 @@ class GoalController extends Controller
         $lowPrioritysteps = Step::where('goalID', $goal->id)
             ->where('priority', 3)
             ->get();
+        if($goal->isTemplate == 1 && Auth::user()->id != $goal->userID){
+            return view('user.goals.template', compact('goal', 'highPrioritysteps', 'mediumPrioritysteps', 'lowPrioritysteps'));
+        }
         return view('user.goals.goalPage', compact('goal', 'highPrioritysteps', 'mediumPrioritysteps', 'lowPrioritysteps'));
     }
 

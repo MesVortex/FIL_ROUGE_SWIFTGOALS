@@ -152,7 +152,7 @@
         </button>
       </form>
     </div>
-    <div id='priority3' class="h-auto overflow-hidden relative min-h-96 py-16 w-64 border-2 border-blue-700 shadow-2xl border-opacity-75 p-3 space-y-3 rounded-3xl bg-transparent backdrop-filter backdrop-blur-md bg-opacity-25">
+    <div id='priority3' class="h-auto w- overflow-hidden relative min-h-96 py-16 w-64 border-2 border-blue-700 shadow-2xl border-opacity-75 p-3 space-y-3 rounded-3xl bg-transparent backdrop-filter backdrop-blur-md bg-opacity-25">
       <div class="absolute top-0 left-0 w-full font-bold text-white h-auto text-center rounded-b-lg text-lg px-2 py-5 rounded-lg shadow shadow-blue-700" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{ asset('images/geometric-seamless-pattern-of-corners-and-circles-marine-motif-seamless-abstract-pattern-in-blue-tones-free-vector.jpg') }}'); background-size: cover; background-repeat: no-repeat;">
         low-priority
       </div>
@@ -190,25 +190,6 @@
   </section>
   <div id="pop-up-section">
     <!-- modal goes here with ajax -->
-  </div>
-
-  <div id="buttonPlace" class="flex w-full justify-end gap-10 px-10">
-    @if($goal->userID != Auth::user()->id && $goal->isTemplate == 1)
-    <button onclick="copyTemplate(this, '{{$goal->id}}');" class="overflow-hidden relative mb-10 w-32 p-2 h-12 bg-white text-black border-none rounded-md text-md font-bold cursor-pointer relative z-10 group">
-      Use Template
-      <span class="absolute w-36 h-32 -top-8 -left-2 bg-white rotate-12 transform scale-x-0 group-hover:scale-x-100 transition-transform group-hover:duration-500 duration-1000 origin-left"></span>
-      <span class="absolute w-36 h-32 -top-8 -left-2 bg-blue-400 rotate-12 transform scale-x-0 group-hover:scale-x-100 transition-transform group-hover:duration-700 duration-700 origin-left"></span>
-      <span class="absolute w-36 h-32 -top-8 -left-2 bg-blue-600 rotate-12 transform scale-x-0 group-hover:scale-x-50 transition-transform group-hover:duration-1000 duration-500 origin-left"></span>
-      <span class="group-hover:opacity-100 group-hover:duration-1000 duration-100 opacity-0 text-white absolute top-2.5 left-3 z-10">Create Goal!</span>
-    </button>
-    <button class="overflow-hidden relative w-32 py-2 h-12 bg-white text-black border-none rounded-md text-md font-bold cursor-pointer relative z-10 group">
-      Add To
-      <span class="absolute w-36 h-32 -top-8 -left-2 bg-red-200 rotate-12 transform scale-x-0 group-hover:scale-x-100 transition-transform group-hover:duration-500 duration-1000 origin-right"></span>
-      <span class="absolute w-36 h-32 -top-8 -left-2 bg-red-400 rotate-12 transform scale-x-0 group-hover:scale-x-100 transition-transform group-hover:duration-700 duration-700 origin-right"></span>
-      <span class="absolute w-36 h-32 -top-8 -left-2 bg-red-600 rotate-12 transform scale-x-0 group-hover:scale-x-100 transition-transform group-hover:duration-1000 duration-500 origin-right"></span>
-      <span class="group-hover:opacity-100 group-hover:duration-1000 duration-100 text-white opacity-0 absolute top-3 left-6 z-10">Favorites!</span>
-    </button>
-    @endif
   </div>
 
   <!-- <script src="{{ asset('js/goals.js') }}"></script> -->
@@ -515,7 +496,11 @@
                 @csrf
                 @method('PATCH')
                 <label for="stepDescription" class="block text-gray-500 text-sm font-bold italic mb-2">Description</label>
+                ${result.step.description ? `
                 <textarea onfocus="this.nextElementSibling.nextElementSibling.classList.remove('hidden');" type="text" id="stepDescription" name="stepDescription" rows="3" cols="50" class="w-full border-none focus:bg-gray-400 focus:outline-none focus:text-white p-2 rounded-lg transition-all duration-300">${result.step.description}</textarea>
+                ` : 
+                `<textarea onfocus="this.nextElementSibling.nextElementSibling.classList.remove('hidden');" type="text" id="stepDescription" name="stepDescription" rows="3" cols="50" class="w-full border-none focus:bg-gray-400 focus:outline-none focus:text-white p-2 rounded-lg transition-all duration-300">This Step Has No Description</textarea>
+                `}
                 <input type="hidden" name="stepID" value="${result.step.id}">
                 <button onclick="saveDescription(this);" class="hidden">Save</button>
               </form>
