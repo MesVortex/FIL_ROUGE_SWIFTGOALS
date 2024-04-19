@@ -8,12 +8,14 @@ use Illuminate\View\Component;
 
 class goalLayout extends Component
 {
+    public $backgroundImage = null;
+
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($backgroundImage = null)
     {
-        //
+        $this->backgroundImage = $backgroundImage; 
     }
 
     /**

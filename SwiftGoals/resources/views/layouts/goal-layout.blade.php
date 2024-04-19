@@ -59,7 +59,7 @@
     </style>
 </head>
 
-<body class="font-lexend" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('{{ asset('images/sam-schooler-E9aetBe2w40-unsplash.jpg') }}'); background-size: cover; background-repeat: no-repeat;">
+<body class="font-lexend" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('{{ isset($backgroundImage) ? asset('storage/' . $backgroundImage) : asset('images/sam-schooler-E9aetBe2w40-unsplash.jpg') }}'); background-size: cover; background-repeat: no-repeat;">
     <!-- Page Content -->
 
 

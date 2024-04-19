@@ -1,4 +1,4 @@
-<x-goal-layout>
+<x-goal-layout :backgroundImage="$goal->image->path">
   <div class="mt-16">
     <div class="mx-10 flex justify-between text-blue-700">
       <a href="{{ route('goal.index') }}">
