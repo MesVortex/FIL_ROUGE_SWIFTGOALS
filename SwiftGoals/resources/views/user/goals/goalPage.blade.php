@@ -25,7 +25,7 @@
     </button>
     <ul class="space-y-2 font-medium">
       <li>
-        <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+        <a onclick="toggleEditBgDrawer();" class="flex cursor-pointer items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
           <svg class="w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
             <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
             <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
@@ -68,6 +68,47 @@
         </a>
       </li>
     </ul>
+  </div>
+  <div id="drawer-edit-bg" class="fixed top-0 right-0 z-50 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-blue-700 w-80 dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-right-label">
+    <div class="flex items-center justify-start mb-4">
+      <a onclick="toggleEditBgDrawer();" class="cursor-pointer mr-4">
+        <svg class="text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" color="#000000" fill="none">
+          <path d="M15 6C15 6 9.00001 10.4189 9 12C8.99999 13.5812 15 18 15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+      <h5 id="drawer-edit-bg-label" class="inline-flex items-center text-base font-semibold text-white dark:text-gray-400">
+        Edit Background</h5>
+    </div>
+    <button type="button" onclick="toggleDrawer(); toggleEditBgDrawer();" data-drawer-hide="drawer-right-example" aria-controls="drawer-right-example" class="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
+      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+      </svg>
+      <span class="sr-only">Close menu</span>
+    </button>
+    <form action="{{ route('goal.updateBackground') }}" method="post" class="mb-6" enctype="multipart/form-data">
+      @csrf
+      @method('POST')
+      <div class="w-full cursor-pointer relative border-2 border-gray-300 border-dashed rounded-lg p-6" id="dropzone">
+        <input type="file" name="image" class="absolute inset-0 w-full h-full opacity-0 z-50" />
+        <input type="hidden" name="goalID" value="{{ $goal->id }}">
+        <div class="text-center">
+          <img class="mx-auto h-12 w-12" src="https://www.svgrepo.com/show/357902/image-upload.svg" alt="">
+          <h3 class="mt-2 text-sm font-medium text-gray-900">
+            <label for="file-upload" class="relative cursor-pointer">
+              <span>Drag and drop</span>
+              <span class="text-white"> or browse</span>
+              <span>to upload</span>
+              <input id="file-upload" name="file-upload" type="file" class="sr-only">
+            </label>
+          </h3>
+          <p class="mt-1 text-xs text-white">
+            PNG, JPG, GIF up to 10MB
+          </p>
+        </div>
+        <img src="" class="mt-4 mx-auto max-h-40 hidden" id="preview">
+      </div>
+      <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 block">Send message</button>
+    </form>
   </div>
   <div class="flex justify-center">
     <div class="">
@@ -282,7 +323,7 @@
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
       });
-      
+
       jQuery.ajax({
         url: "{{ route('template.copy', ':id') }}".replace(':id', goalID),
         type: 'post',
@@ -691,6 +732,11 @@
       drawer.classList.toggle('translate-x-full');
     }
 
+    function toggleEditBgDrawer() {
+      var drawer = document.getElementById('drawer-edit-bg');
+      drawer.classList.toggle('translate-x-full');
+    }
+
     function confirmDelete(id) {
       var dropdown = document.getElementById(`deleteDropdown${id}`);
       dropdown.classList.toggle('hidden');
@@ -928,6 +974,44 @@
         })
 
       });
+    }
+  </script>
+  <script>
+    var dropzone = document.getElementById('dropzone');
+
+    dropzone.addEventListener('dragover', e => {
+      e.preventDefault();
+      dropzone.classList.add('border-black');
+    });
+
+    dropzone.addEventListener('dragleave', e => {
+      e.preventDefault();
+      dropzone.classList.remove('border-balck');
+    });
+
+    dropzone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropzone.classList.remove('border-black');
+      var file = e.dataTransfer.files[0];
+      displayPreview(file);
+    });
+
+    var input = document.getElementById('file-upload');
+
+    input.addEventListener('change', e => {
+      console.log(working);
+      var file = e.target.files[0];
+      displayPreview(file);
+    });
+
+    function displayPreview(file) {
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        var preview = document.getElementById('preview');
+        preview.src = reader.result;
+        preview.classList.remove('hidden');
+      };
     }
   </script>
 

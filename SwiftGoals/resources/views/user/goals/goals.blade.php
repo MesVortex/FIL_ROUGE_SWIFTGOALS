@@ -24,7 +24,7 @@
         </a>
       </div>
       @foreach($goals as $goal)
-      <div class="w-full relative lg:flex lg:justify-around text-white shadow-blue-700 h-28 max-w-sm overflow-hidden rounded-2xl border border-grey-light group shadow-lg" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('{{ asset('images/alvaro-reyes-qWwpHwip31M-unsplash.jpg') }}'); background-size:cover; background-position: center;">
+      <div class="w-full relative lg:flex lg:justify-around text-white shadow-blue-700 h-28 max-w-sm overflow-hidden rounded-2xl border border-grey-light group shadow-lg" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('{{asset('storage/' . $goal->image->path)}}'); background-size:cover; background-position: center;">
         <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full bg-transparent group-hover:backdrop-filter group-hover:backdrop-blur-sm group-hover:bg-opacity-40 transition-all duration-200"></div>
         <div class="flex items-center justify-center" x-data="{ circumference: 2 * 22 / 7 * 120 }">
           <svg class="transform -rotate-90 w-full h-72">
@@ -69,7 +69,7 @@
       @endforeach
     </section>
     <!-- drawer -->
-    <div id="drawerBackground" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden"></div>
+    <div id="drawerBackground" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
     <div id="drawer-form" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 dark:bg-gray-800" aria-labelledby="drawer-form-label">
       <h5 id="drawer-label" class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase dark:text-gray-400">New Goal</h5>
       <button type="button" onclick="toggleDrawer();" data-drawer-hide="drawer-form" aria-controls="drawer-form" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">

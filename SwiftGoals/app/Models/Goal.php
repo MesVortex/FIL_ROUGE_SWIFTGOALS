@@ -33,4 +33,9 @@ class Goal extends Model
     {
         return $this->belongsTo(Category::class, 'categoryID');
     }
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
+
 }

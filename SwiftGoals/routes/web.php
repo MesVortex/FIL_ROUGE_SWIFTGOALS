@@ -39,6 +39,8 @@ Route::post('/register', [AuthController::class, 'registerUser'])->name('user.re
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::resource('/goal', GoalController::class)->except('destroy');
     Route::get('/explore', [GoalController::class, 'explore'])->name('explore');
+    Route::get('/explore/filter/{id}', [GoalController::class, 'filter'])->name('template.filter');
+    Route::post('/goal/changeBackground', [GoalController::class, 'changeBackground'])->name('goal.updateBackground');
     Route::post('/goal/{goal}/template', [GoalController::class, 'copyTemplate'])->name('template.copy');
     Route::get('/goal/ajax/index', [GoalController::class, 'ajaxIndex'])->name('goal.ajaxIndex');
     Route::patch('/goal/{goal}/makeTemplate', [GoalController::class, 'makeTemplate'])->name('goal.makeTemplate');

@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\goalRequest;
+use App\Models\Category;
 use App\Models\Goal;
 use App\Models\Step;
 use App\Models\Tinystep;
+use App\trait\ImageUpload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class GoalController extends Controller
 {
+    use ImageUpload;
     /**
      * Display a listing of the resource.
      */
@@ -39,7 +42,30 @@ class GoalController extends Controller
         $templates = Goal::where('isTemplate', 1)
             ->with('categories', 'users')
             ->paginate(8);
-        return view('user.explore', compact('templates'));
+        $categories = Category::all();
+        return view('user.explore', compact('templates', 'categories'));
+    }
+
+    public function filter(int $id)
+    {
+        if($id == 0){
+            $templates = Goal::where('isTemplate', 1)
+                ->with('categories', 'users')
+                ->get();
+            return response()->json([
+                'templates' => $templates,
+                'currentFilter' => 'All',
+            ]);
+        }else{
+            $templates = Goal::where('isTemplate', 1)
+                ->where('categoryID', $id)
+                ->with('categories', 'users')
+                ->get();
+            return response()->json([
+                'templates' => $templates,
+                'currentFilter' => '',
+            ]);
+        }
     }
 
     /**
@@ -61,6 +87,20 @@ class GoalController extends Controller
             'success' => 'goal added successfully!',
             'goal' => $newGoal,
         ]);
+    }
+
+    public function changeBackground(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'goalID' => 'required|exists:goals,id',
+        ]);
+
+        $goal = Goal::where('id', $request->goalID)->first();
+        $this->storeImg($goal, $request->file('image'));
+
+        return redirect()->back()->with('success', 'Background Updated successfully!');
+       
     }
 
     public function copyTemplate(Goal $goal)
