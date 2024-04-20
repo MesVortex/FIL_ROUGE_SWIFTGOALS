@@ -25,7 +25,7 @@ class GoalController extends Controller
         $goals = Goal::select(DB::raw('COUNT(steps.id) as completedSteps'), 'goals.*')
             ->join('steps', 'steps.goalID', '=', 'goals.id')
             ->where('steps.isComplete', 1)
-            ->where('goals.userID', 4)
+            ->where('goals.userID', $userID)
             ->where('goals.isTemplate', 0)
             ->groupBy('goals.title', 'goals.mainGoal', 'goals.id', 'goals.userID', 'goals.categoryID', 'goals.isTemplate', 'goals.isPinned', 'goals.isComplete', 'goals.created_at', 'goals.updated_at')
             ->get();

@@ -38,7 +38,12 @@
         <i class="fa-solid fa-backward fa-2xl"></i>
       </a>
       <a class="cursor-pointer" onclick="toggleDrawer();">
-        <i class="fa-solid fa-ellipsis fa-2xl"></i>
+        <svg class="text-blue-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="28" color="#000000" fill="none">
+          <path d="M11.9959 12H12.0049" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M15.9998 12H16.0088" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M7.99981 12H8.00879" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z" stroke="currentColor" stroke-width="2" />
+        </svg>
       </a>
     </div>
     <div id='mainGoal' class="h-auto mx-auto text-white w-7/12 border-2 text-3xl text-center border-blue-700 shadow-2xl border-opacity-75 py-5 rounded-full bg-transparent backdrop-filter backdrop-blur-md bg-opacity-25">
@@ -73,17 +78,7 @@
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3" />
           </svg>
           <span class="flex-1 ms-3 whitespace-nowrap">Make Template</span>
-        </a>
-        <div id="confirmTemplateDropdown" class="z-10 w-full hidden mx-auto bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600">
-          <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="makeTemplateButton">
-            <li>
-
-            </li>
-            <li>
-              <button onclick="TemplateDropdown();" class="block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Cancel</button>
-            </li>
-          </ul>
-        </div>
+        </a>       
       </li>
       @endif
       <li>
@@ -808,7 +803,7 @@
       var drawer = document.getElementById('drawer-makeTemplate');
       drawer.classList.toggle('translate-x-full');
     }
-    
+
     function SuccessAlertToggle() {
       var drawer = document.getElementById('successAlert');
       drawer.classList.toggle('hidden');

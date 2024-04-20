@@ -48,39 +48,39 @@
       </ul>
     </div>
   </div>
-  <section id="templates" class="my-10 px-10 flex flex-wrap justify-around gap-10">
+  <section id="templates" class="my-10 px-32 flex flex-wrap justify-between gap-10">
     @foreach ($templates as $template)
-    <div class="w-96 rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark">
+    <div class="w-64 relative rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark">
       <div class="relative overflow-hidden bg-cover bg-no-repeat" data-twe-ripple-init data-twe-ripple-color="light">
-        <img class="rounded-t-3xl" src="https://tecdn.b-cdn.net/img/new/standard/nature/186.jpg" alt="" />
+        <div class="rounded-xl w-full border border-gray-500 h-32" style="background-image: url('{{isset($template->image->path) ? asset('storage/' . $template->image->path) : asset('/images/sam-schooler-E9aetBe2w40-unsplash.jpg')}}'); background-size: cover; background-repeat: no-repeat; background-position: center"></div>
         <a href="{{route('goal.show', $template->id)}}">
           <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
         </a>
-        <div class="absolute top-5 right-5 rounded-full bg-[#2A44AB] text-white py-1 px-4">
+        <div class="absolute top-2 right-2 text-sm rounded-full bg-[#2A44AB] text-white py-1 px-4">
           <p>{{ $template->categories->name }}</p>
         </div>
       </div>
-      <div class="p-6 text-surface bg-[#2A44AB] dark:text-white rounded-b-3xl shadow-2xl">
-        <h5 class="mb-2 text-xl text-white font-medium leading-tight">{{ $template->title }}</h5>
+      <div class="flex my-5 justify-between w-full px-2 text-[#666666]">
+        <p class="">by {{ $template->users->name }}</p>
+        <div class="flex">
+          <span class="mr-3 text-sm"><i class="fa-solid fa-clone fa-sm mr-1"></i>1k</span>
+          <span class="text-sm"><i class="fa-brands fa-gratipay fa-sm mr-1"></i>1.4k</span>
+        </div>
+      </div>
+      <div class="px-2 text-start bg-transparent text-[#666666] dark:text-white rounded-b-3xl ">
+        <h5 class="mb-2 text-md font-extrabold text-[#2A44AB] leading-tight">{{ $template->title }}</h5>
         @if($template->mainGoal != null)
-        <p class="mb-4 text-base text-white">
+        <p class="mb-4 text-sm">
           {{ $template->mainGoal }}
         </p>
         @else
-        <p class="mb-4 text-base text-white">
-          this user is lazy and didn't put any description yet
+        <p class="mb-4 text-sm ">
+          the creator haven't left any description
         </p>
         @endif
       </div>
-      <div class="flex justify-between p-5">
-        <div class="flex">
-          <img class="rounded-full bg-gray-600 h-6" src="{{ asset('images/default_profile.png') }}" alt="d">
-          <p class="ml-3">{{ $template->users->name }}</p>
-        </div>
-        <div class="flex text-[#666666]">
-          <span class="mr-3"><i class="fa-solid fa-clone mr-1"></i>1k</span>
-          <span><i class="fa-brands fa-gratipay mr-1"></i>1.4k</span>
-        </div>
+      <div class="absolute top-24 left-3">
+        <img class="rounded-full bg-gray-600 h-10" src="{{ asset('images/default_profile.png') }}" alt="d">
       </div>
     </div>
     @endforeach
@@ -91,21 +91,21 @@
   <script>
     function showFilter() {
       var list = document.getElementById("filterList");
-      if(list.classList.contains("-translate-x-full")) {
+      if (list.classList.contains("-translate-x-full")) {
         list.classList.remove("-translate-x-full");
         list.classList.add("translate-x-0");
         list.parentElement.style.height = 'auto';
-      }else if(list.classList.contains("translate-x-0")) {
+      } else if (list.classList.contains("translate-x-0")) {
         list.classList.remove("translate-x-0");
         list.classList.add("-translate-x-full");
         list.parentElement.style.height = '0px';
       }
     }
 
-    function filterCategory(id){
+    function filterCategory(id) {
       $.ajaxSetup({
         headers: {
-          'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
       })
 
@@ -115,10 +115,10 @@
 
         success: function(result) {
           document.getElementById("templates").innerHTML = "";
-          for(var i = 0; i < result.templates.length; i++) {
+          for (var i = 0; i < result.templates.length; i++) {
             createTemplate(result.templates[i]);
           }
-          if(result.currentFilter == 'All') {
+          if (result.currentFilter == 'All') {
             document.getElementById('currentFilter').innerHTML = 'All';
           }
         }
@@ -127,41 +127,45 @@
 
     function createTemplate(template) {
       const card = document.createElement("div");
-      card.setAttribute('class', 'w-96 rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark'); 
+      card.setAttribute('class', 'w-96 rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark');
       const cards = `
+      <div class="w-64 relative rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark">
       <div class="relative overflow-hidden bg-cover bg-no-repeat" data-twe-ripple-init data-twe-ripple-color="light">
-        <img class="rounded-t-3xl" src="https://tecdn.b-cdn.net/img/new/standard/nature/186.jpg" alt="" />
-        <a>
+        <div class="rounded-xl w-full border border-gray-500 h-32" style="background-image: url('${template.image && template.image.path ? `{{asset('storage/')}}${tamplate.image.path}` : `{{asset('/images/sam-schooler-E9aetBe2w40-unsplash.jpg')}}`}'); background-size: cover; background-repeat: no-repeat; background-position: center"></div>
+        <a href="">
           <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
         </a>
-        <div class="absolute top-5 right-5 rounded-full bg-[#2A44AB] text-white py-1 px-4">
-          <p class="">${template.categories.name}</p>
+        <div class="absolute top-2 right-2 text-sm rounded-full bg-[#2A44AB] text-white py-1 px-4">
+          <p>${template.categories.name}</p>
         </div>
       </div>
-      <div class="p-6 text-surface bg-[#2A44AB] dark:text-white rounded-b-3xl shadow-2xl">
-        <h5 class="mb-2 text-xl text-white font-medium leading-tight">${template.title}</h5>
-        ${template.description ? `
-        <p class="mb-4 text-base text-white">
-          ${template.description}
-        </p>` : 
-        `<p class="mb-4 text-base text-white">
-          this user is lazy and didn't put any description yet
-        </p>`}
-      </div>
-      <div class="flex justify-between p-5">
+      <div class="flex my-5 justify-between w-full px-2 text-[#666666]">
+        <p class="">by ${template.users.name}</p>
         <div class="flex">
-          <img class="rounded-full bg-gray-600 h-6" src="{{ asset('images/default_profile.png') }}" alt="">
-          <p class="ml-3">${template.users.name}</p>
-        </div>
-        <div class="flex text-[#666666]">
-          <span class="mr-3"><i class="fa-solid fa-clone mr-1"></i>1k</span>
-          <span><i class="fa-brands fa-gratipay mr-1"></i>1.4k</span>
+          <span class="mr-3 text-sm"><i class="fa-solid fa-clone fa-sm mr-1"></i>1k</span>
+          <span class="text-sm"><i class="fa-brands fa-gratipay fa-sm mr-1"></i>1.4k</span>
         </div>
       </div>
+      <div class="px-2 text-start bg-transparent text-[#666666] dark:text-white rounded-b-3xl ">
+        <h5 class="mb-2 text-md font-extrabold text-[#2A44AB] leading-tight">${template.title}</h5>
+        @if($template->mainGoal != null)
+        <p class="mb-4 text-sm">
+        ${template.mainGoal}
+        </p>
+        @else
+        <p class="mb-4 text-sm ">
+          the creator haven't left any description
+        </p>
+        @endif
+      </div>
+      <div class="absolute top-24 left-3">
+        <img class="rounded-full bg-gray-600 h-10" src="{{ asset('images/default_profile.png') }}" alt="d">
+      </div>
+    </div>
     `;
-    card.innerHTML = cards;
-    document.getElementById('templates').appendChild(card);
-    document.getElementById('currentFilter').innerHTML = `${template.categories.name}`;
+      card.innerHTML = cards;
+      document.getElementById('templates').appendChild(card);
+      document.getElementById('currentFilter').innerHTML = `${template.categories.name}`;
     }
   </script>
 </x-main-layout>

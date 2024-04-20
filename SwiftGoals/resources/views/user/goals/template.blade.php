@@ -1,19 +1,16 @@
-<x-goal-layout>
-  <!-- @if($goal->isTemplate == 1 && $goal->userID == Auth::user()->id)
-  <div class=" w-full flex justify-center items-center -mb-10 pt-6">
-    <svg class="w-4 h-4 me-2.5 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-      <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-    </svg>
-    <h3 class="italic font-bold text-gray-500 text-md ">If you want to edit this template <a href="{{ route('goal.show', $goal->id) }}" class="">Click Here</a></h3>
-  </div>
-  @endif -->
+<x-goal-layout :backgroundImage="isset($goal->image) ? $goal->image->path : null">
   <div class="mt-16">
     <div class="mx-10 flex justify-between text-blue-700">
       <a href="{{ route('goal.index') }}">
         <i class="fa-solid fa-backward fa-2xl"></i>
       </a>
       <a class="cursor-pointer" onclick="toggleDrawer();">
-        <i class="fa-solid fa-ellipsis fa-2xl"></i>
+        <svg class="text-blue-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32" color="#000000" fill="none">
+          <path d="M11.9959 12H12.0049" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M15.9998 12H16.0088" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M7.99981 12H8.00879" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z" stroke="currentColor" stroke-width="2" />
+        </svg>
       </a>
     </div>
     <div id='mainGoal' class="h-auto mx-auto text-white w-7/12 border-2 text-3xl text-center border-blue-700 shadow-2xl border-opacity-75 py-5 rounded-full bg-transparent backdrop-filter backdrop-blur-md bg-opacity-25">
@@ -21,11 +18,15 @@
     </div>
   </div>
   <!-- off canvas -->
-  <div id="drawer-right-example" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-blue-700 w-80 dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-right-label">
-    <h5 id="drawer-right-label" class="inline-flex items-center mb-4 text-base font-semibold text-white dark:text-gray-400"><svg class="w-4 h-4 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-      </svg>Manage Goal</h5>
-    <button type="button" onclick="toggleDrawer();" data-drawer-hide="drawer-right-example" aria-controls="drawer-right-example" class="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
+  <div id="drawer-right-example" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-right-label">
+    <h5 id="drawer-right-label" class="inline-flex items-center mb-4 text-base font-semibold text-gray-600 dark:text-gray-400">
+      <svg class="text-gray-600 mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#000000" fill="none">
+        <path d="M17.458 9.08015L17.1669 8.56619C16.9468 8.17749 16.8367 7.98314 16.6494 7.90564C16.4622 7.82814 16.2503 7.8893 15.8267 8.0116L15.1071 8.21782C14.8366 8.28127 14.5529 8.24528 14.3059 8.11619L14.1072 7.99956C13.8955 7.86157 13.7326 7.65811 13.6424 7.41896L13.4455 6.82053C13.316 6.42452 13.2512 6.22651 13.0971 6.11325C12.943 6 12.7382 6 12.3287 6H11.6713C11.2618 6 11.057 6 10.9029 6.11325C10.7488 6.22651 10.684 6.42452 10.5545 6.82053L10.3576 7.41896C10.2674 7.65811 10.1045 7.86157 9.89276 7.99956L9.69409 8.11619C9.44713 8.24528 9.16338 8.28127 8.89292 8.21782L8.17329 8.0116C7.74966 7.8893 7.53785 7.82814 7.35056 7.90564C7.16327 7.98314 7.0532 8.17749 6.83305 8.56619L6.54196 9.08015C6.3356 9.4445 6.23243 9.62667 6.25245 9.82061C6.27248 10.0145 6.4106 10.1708 6.68686 10.4834L7.29491 11.175C7.44352 11.3664 7.54903 11.7 7.54903 11.9999C7.54903 12.3 7.44355 12.6335 7.29492 12.8249L6.68686 13.5166L6.68686 13.5166C6.4106 13.8291 6.27248 13.9854 6.25245 14.1793C6.23243 14.3733 6.33561 14.5555 6.54196 14.9198L6.83304 15.4337C7.05319 15.8224 7.16327 16.0168 7.35056 16.0943C7.53785 16.1718 7.74967 16.1106 8.17331 15.9883L8.89289 15.7821C9.1634 15.7186 9.44721 15.7547 9.69419 15.8838L9.89284 16.0004C10.1046 16.1384 10.2674 16.3419 10.3576 16.581L10.5545 17.1795C10.684 17.5755 10.7488 17.7735 10.9029 17.8867C11.057 18 11.2618 18 11.6713 18H12.3287C12.7382 18 12.943 18 13.0971 17.8867C13.2512 17.7735 13.316 17.5755 13.4455 17.1795L13.6424 16.581C13.7326 16.3419 13.8954 16.1384 14.1072 16.0004L14.3058 15.8838C14.5528 15.7547 14.8366 15.7186 15.1071 15.7821L15.8267 15.9883C16.2503 16.1106 16.4621 16.1718 16.6494 16.0943C16.8367 16.0168 16.9468 15.8224 17.167 15.4338L17.167 15.4337L17.458 14.9198C17.6644 14.5555 17.7676 14.3733 17.7475 14.1793C17.7275 13.9854 17.5894 13.8291 17.3131 13.5166L16.7051 12.8249C16.5564 12.6335 16.451 12.3 16.451 11.9999C16.451 11.7 16.5565 11.3664 16.7051 11.175L17.3131 10.4834C17.5894 10.1708 17.7275 10.0145 17.7475 9.82061C17.7676 9.62667 17.6644 9.4445 17.458 9.08015Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+        <circle cx="12" cy="12" r="1.75" stroke="currentColor" stroke-width="1.5" />
+        <path d="M19 2V4.85857C17.1962 3.09032 14.7255 2 12 2C6.47715 2 2 6.47715 2 12C2 13.4222 2.29689 14.7751 2.83209 16M5 22V19.1414C6.80375 20.9097 9.27455 22 12 22C17.5228 22 22 17.5228 22 12C22 10.5778 21.7031 9.22492 21.1679 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>Template Menu
+    </h5>
+    <button type="button" onclick="toggleDrawer();" data-drawer-hide="drawer-right-example" aria-controls="drawer-right-example" class="text-gray-600 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
       <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
       </svg>
@@ -34,48 +35,72 @@
     <ul class="space-y-2 font-medium">
       <li>
         <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-          <svg class="w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
-            <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
-            <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
+          <svg class="text-gray-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#000000" fill="none">
+            <path d="M19.4626 3.99415C16.7809 2.34923 14.4404 3.01211 13.0344 4.06801C12.4578 4.50096 12.1696 4.71743 12 4.71743C11.8304 4.71743 11.5422 4.50096 10.9656 4.06801C9.55962 3.01211 7.21909 2.34923 4.53744 3.99415C1.01807 6.15294 0.221721 13.2749 8.33953 19.2834C9.88572 20.4278 10.6588 21 12 21C13.3412 21 14.1143 20.4278 15.6605 19.2834C23.7783 13.2749 22.9819 6.15294 19.4626 3.99415Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
           </svg>
-          <span class="ms-3">Edit Background</span>
+          <span class="ms-3">add favorites</span>
         </a>
       </li>
-      @if($goal->isTemplate == 0)
       <li>
-        <a onclick="TemplateDropdown();" class="flex cursor-pointer items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-          <svg class="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3" />
+        <a onclick="toggleReportDrawer();" class="flex cursor-pointer items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <svg class="text-gray-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#000000" fill="none">
+            <path d="M15.8785 3L10.2827 3C7.32099 3 5.84015 3 4.92007 3.87868C4 4.75736 4 6.17157 4 9L4.10619 15L15.8785 15C18.1016 15 19.2131 15 19.6847 14.4255C19.8152 14.2666 19.9108 14.0841 19.9656 13.889C20.1639 13.184 19.497 12.3348 18.1631 10.6364L18.1631 10.6364C17.6083 9.92985 17.3309 9.57659 17.2814 9.1751C17.2671 9.05877 17.2671 8.94123 17.2814 8.8249C17.3309 8.42341 17.6083 8.07015 18.1631 7.36364L18.1631 7.36364C19.497 5.66521 20.1639 4.816 19.9656 4.11098C19.9108 3.91591 19.8152 3.73342 19.6847 3.57447C19.2131 3 18.1016 3 15.8785 3L15.8785 3Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M4 21L4 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
           </svg>
-          <span class="flex-1 ms-3 whitespace-nowrap">Make Template</span>
-        </a>
-        <div id="confirmTemplateDropdown" class="z-10 w-full hidden mx-auto bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600">
-          <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="makeTemplateButton">
-            <li>
-              <form method="post">
-                @csrf
-                @method('patch')
-                <button onclick="makeTemplate('{{$goal->id}}', this);" class="block w-full px-4 py-2 hover:bg-gray-100 hover:text-rgreen-600 hover:font-bold transition-all duration-300 dark:hover:bg-gray-600 dark:hover:text-white">Confirm</button>
-              </form>
-            </li>
-            <li>
-              <button onclick="TemplateDropdown();" class="block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Cancel</button>
-            </li>
-          </ul>
-        </div>
-      </li>
-      @endif
-      <li>
-        <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-          <svg class="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.96 2.96 0 0 0 .13 5H5Z" />
-            <path d="M6.737 11.061a2.961 2.961 0 0 1 .81-1.515l6.117-6.116A4.839 4.839 0 0 1 16 2.141V2a1.97 1.97 0 0 0-1.933-2H7v5a2 2 0 0 1-2 2H0v11a1.969 1.969 0 0 0 1.933 2h12.134A1.97 1.97 0 0 0 16 18v-3.093l-1.546 1.546c-.413.413-.94.695-1.513.81l-3.4.679a2.947 2.947 0 0 1-1.85-.227 2.96 2.96 0 0 1-1.635-3.257l.681-3.397Z" />
-            <path d="M8.961 16a.93.93 0 0 0 .189-.019l3.4-.679a.961.961 0 0 0 .49-.263l6.118-6.117a2.884 2.884 0 0 0-4.079-4.078l-6.117 6.117a.96.96 0 0 0-.263.491l-.679 3.4A.961.961 0 0 0 8.961 16Zm7.477-9.8a.958.958 0 0 1 .68-.281.961.961 0 0 1 .682 1.644l-.315.315-1.36-1.36.313-.318Zm-5.911 5.911 4.236-4.236 1.359 1.359-4.236 4.237-1.7.339.341-1.699Z" />
-          </svg>
-          <span class="flex-1 ms-3 whitespace-nowrap">Sign Up</span>
+          <span class="flex-1 ms-3 whitespace-nowrap">report template</span>
         </a>
       </li>
     </ul>
+  </div>
+  <div id="drawer-report" class="fixed top-0 right-0 z-50 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-right-label">
+    <div class="flex items-center justify-start mb-4">
+      <a onclick="toggleReportDrawer();" class="cursor-pointer mr-4">
+        <svg class="text-gray-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" color="#000000" fill="none">
+          <path d="M15 6C15 6 9.00001 10.4189 9 12C8.99999 13.5812 15 18 15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+      <h5 id="drawer-report-label" class="inline-flex items-center text-base font-semibold text-gray-600">
+        Report Template</h5>
+    </div>
+    <button type="button" onclick="toggleDrawer(); toggleReportDrawer();" data-drawer-hide="drawer-right-example" aria-controls="drawer-right-example" class="text-gray-600 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
+      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+      </svg>
+      <span class="sr-only">Close menu</span>
+    </button>
+    <p class="text-center italic text-gray-600 mb-3"> Tell us why you are reporting this template</p>
+    <form method="post" class="flex-col items-center justify-center" enctype="multipart/form-data">
+      @csrf
+      @method('POST')
+      <div class="w-9/12 mx-auto mb-3">
+        <input onchange="toggleOtherReport();" type="radio" id="report1" name="report" value="" class="hidden peer" required />
+        <label for="report1" class="border-2 cursor-pointer text-sm peer-checked:border-blue-600 peer-checked:text-blue-600 border-gray-400 text-gray-400 text py-2 px-2 rounded-3xl flex justify-center items-center hover:text-blue-600 hover:border-blue-600 transition-all duration-150 ease-in">
+          reason 1
+        </label>
+      </div>
+      <div class="w-9/12 mx-auto mb-3">
+        <input onchange="toggleOtherReport();" type="radio" id="report2" name="report" value="" class="hidden peer" required />
+        <label for="report2" class="border-2 cursor-pointer text-sm peer-checked:border-blue-600 peer-checked:text-blue-600 border-gray-400 text-gray-400 text py-2 px-2 rounded-3xl flex justify-center items-center hover:text-blue-600 hover:border-blue-600 transition-all duration-150 ease-in">
+          reason 2
+        </label>
+      </div>
+      <div class="w-9/12 mx-auto mb-3">
+        <input onchange="toggleOtherReport();" type="radio" id="report3" name="report" value="" class="hidden peer" required />
+        <label for="report3" class="border-2 cursor-pointer text-sm peer-checked:border-blue-600 peer-checked:text-blue-600 border-gray-400 text-gray-400 text py-2 px-2 rounded-3xl flex justify-center items-center hover:text-blue-600 hover:border-blue-600 transition-all duration-150 ease-in">
+          reason 3
+        </label>
+      </div>
+      <div class="w-9/12 mx-auto mb-3">
+        <input onchange="toggleOtherReport();" type="radio" id="otherReport" name="report" value="" class="hidden peer" required />
+        <label for="otherReport" class="border-2 cursor-pointer text-sm peer-checked:border-blue-600 peer-checked:text-blue-600 border-gray-400 text-gray-400 text py-2 px-2 rounded-3xl flex justify-center items-center hover:text-blue-600 hover:border-blue-600 transition-all duration-150 ease-in">
+          other
+        </label>
+      </div>
+      <div class="w-9/12 mx-auto mb-3">
+        <textarea type="text" name="reportDescription" id="reportDescription" rows="4" class="w-full hidden rounded-xl p-4 text-sm focus:ring-blue-600 focus:outline-blue-600" placeholder="please describe why you want to report this template"></textarea>
+      </div>
+      <button onclick="makeTemplate(this);" class="text-white bg-red-600 hover:bg-red-700 w-full focus:ring-4 focus:ring-red-500 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 block">Report</button>
+    </form>
   </div>
   <div class="flex justify-center">
     <div class="">
@@ -98,7 +123,16 @@
         <div class="stepDiv">{{$step->title}}</div>
         <button type="button" class="hidden submitBTN">save</button>
         <a onclick="showStep(this)" data-step-id="{{$step->id}}" class="absolute right-2 bottom-1 opacity-0 group-hover:opacity-100 text-gray-400 cursor-pointer transition-all duration-300 ease-in">
-          <i class="fa-regular fa-eye fa-lg ml-4"></i>
+          <svg class="text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#000000" fill="none">
+            <path d="M8 3.09779C8 3.09779 4.03374 2.74194 3.38783 3.38785C2.74191 4.03375 3.09783 8 3.09783 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M8 20.9022C8 20.9022 4.03374 21.2581 3.38783 20.6122C2.74191 19.9662 3.09783 16 3.09783 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M16 3.09779C16 3.09779 19.9663 2.74194 20.6122 3.38785C21.2581 4.03375 20.9022 8 20.9022 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M16 20.9022C16 20.9022 19.9663 21.2581 20.6122 20.6122C21.2581 19.9662 20.9022 16 20.9022 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M14.0107 9.99847L20.0625 3.94678" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M9.99695 14.0024L3.63965 20.3807" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M9.99732 10.0024L3.8457 3.85889" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M13.9795 14.0024L20.5279 20.4983" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
         </a>
       </div>
       @endforeach
@@ -113,7 +147,16 @@
         <div class="stepDiv">{{$step->title}}</div>
         <button type="button" class="hidden submitBTN">save</button>
         <a onclick="showStep(this)" data-step-id="{{$step->id}}" class="absolute right-2 bottom-1 opacity-0 group-hover:opacity-100 text-gray-400 cursor-pointer transition-all duration-300 ease-in">
-          <i class="fa-regular fa-eye fa-lg ml-4"></i>
+          <svg class="text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" color="#000000" fill="none">
+            <path d="M8 3.09779C8 3.09779 4.03374 2.74194 3.38783 3.38785C2.74191 4.03375 3.09783 8 3.09783 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M8 20.9022C8 20.9022 4.03374 21.2581 3.38783 20.6122C2.74191 19.9662 3.09783 16 3.09783 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M16 3.09779C16 3.09779 19.9663 2.74194 20.6122 3.38785C21.2581 4.03375 20.9022 8 20.9022 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M16 20.9022C16 20.9022 19.9663 21.2581 20.6122 20.6122C21.2581 19.9662 20.9022 16 20.9022 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M14.0107 9.99847L20.0625 3.94678" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M9.99695 14.0024L3.63965 20.3807" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M9.99732 10.0024L3.8457 3.85889" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M13.9795 14.0024L20.5279 20.4983" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
         </a>
       </div>
       @endforeach
@@ -320,6 +363,20 @@
       modal.classList.remove('fadeOut');
       modal.classList.add('fadeIn');
       modal.style.display = 'flex';
+    }
+
+    function toggleReportDrawer() {
+      var drawer = document.getElementById('drawer-report');
+      drawer.classList.toggle('translate-x-full');
+    }
+
+    function toggleOtherReport(){
+      var otherRadio = document.getElementById('otherReport');
+      if(otherRadio.checked){
+        document.getElementById('reportDescription').classList.remove('hidden');
+      }else{
+        document.getElementById('reportDescription').classList.add('hidden');
+      }
     }
   </script>
 

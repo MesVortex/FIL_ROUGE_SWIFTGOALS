@@ -68,7 +68,7 @@
             border-radius: 50%;
             inset: 45%;
             background: var(--c);
-            transform: rotate(calc(var(--p)*3.6deg)) translateY(calc(50% - var(--w)/2));
+            transform: rotate(calc(var(--p)*3.6deg)) translateY(calc(100% - var(--w)/2.635));
         }
     </style>
 </head>
