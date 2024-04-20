@@ -46,4 +46,8 @@ class User extends Authenticatable
     public function goals(){
         return $this->hasMany(Goal::class, 'userID');
     }
+
+    public function reports(){
+        return $this->hasMany(Report::class, 'flaggerID');
+    }
 }

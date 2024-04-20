@@ -1,8 +1,43 @@
 <x-goal-layout :backgroundImage="isset($goal->image) ? $goal->image->path : null">
+  <div id="successAlert" class="bg-teal-50 border-t-2 hidden border-teal-500 rounded-lg p-4 dark:bg-teal-800/30 transition-all duration-300" role="alert">
+    <div class="flex">
+      <div class="flex-shrink-0">
+        <!-- Icon -->
+        <span class="inline-flex justify-center items-center size-8 rounded-full border-4 border-teal-100 bg-teal-200 text-teal-800 dark:border-teal-900 dark:bg-teal-800 dark:text-teal-400">
+          <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+            <path d="m9 12 2 2 4-4"></path>
+          </svg>
+        </span>
+        <!-- End Icon -->
+      </div>
+      <div class="ms-3">
+        <h3 id="alertTitle" class="text-gray-800 font-semibold dark:text-white">
+          Successfully updated.
+        </h3>
+        <p id="alertMessage" class="text-sm text-gray-700 capitalize dark:text-neutral-400">
+          Updated Successfully.
+        </p>
+      </div>
+      <div class="ps-3 ms-auto">
+        <div class="-mx-1.5 -my-1.5">
+          <button onclick="SuccessAlertToggle();" type="button" class="inline-flex bg-teal-50 rounded-lg p-1.5 text-teal-500 hover:bg-teal-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-teal-50 focus:ring-teal-600 dark:bg-transparent dark:hover:bg-teal-800/50 dark:text-teal-600" data-hs-remove-element="#dismiss-alert">
+            <span class="sr-only">Dismiss</span>
+            <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 6 6 18"></path>
+              <path d="m6 6 12 12"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="mt-16">
     <div class="mx-10 flex justify-between text-blue-700">
       <a href="{{ route('goal.index') }}">
-        <i class="fa-solid fa-backward fa-2xl"></i>
+        <svg class="text-blue-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="38" height="38" color="#000000" fill="none">
+          <path d="M4.80823 9.44118L6.77353 7.46899C8.18956 6.04799 8.74462 5.28357 9.51139 5.55381C10.4675 5.89077 10.1528 8.01692 10.1528 8.73471C11.6393 8.73471 13.1848 8.60259 14.6502 8.87787C19.4874 9.78664 21 13.7153 21 18C19.6309 17.0302 18.2632 15.997 16.6177 15.5476C14.5636 14.9865 12.2696 15.2542 10.1528 15.2542C10.1528 15.972 10.4675 18.0982 9.51139 18.4351C8.64251 18.7413 8.18956 17.9409 6.77353 16.5199L4.80823 14.5477C3.60275 13.338 3 12.7332 3 11.9945C3 11.2558 3.60275 10.6509 4.80823 9.44118Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
       </a>
       <a class="cursor-pointer" onclick="toggleDrawer();">
         <svg class="text-blue-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32" color="#000000" fill="none">
@@ -69,29 +104,29 @@
       <span class="sr-only">Close menu</span>
     </button>
     <p class="text-center italic text-gray-600 mb-3"> Tell us why you are reporting this template</p>
-    <form method="post" class="flex-col items-center justify-center" enctype="multipart/form-data">
+    <form method="post" class="flex-col items-center justify-center">
       @csrf
       @method('POST')
       <div class="w-9/12 mx-auto mb-3">
-        <input onchange="toggleOtherReport();" type="radio" id="report1" name="report" value="" class="hidden peer" required />
+        <input onchange="toggleOtherReport();" type="radio" id="report1" name="content" value="Sexual content" class="hidden peer" required />
         <label for="report1" class="border-2 cursor-pointer text-sm peer-checked:border-blue-600 peer-checked:text-blue-600 border-gray-400 text-gray-400 text py-2 px-2 rounded-3xl flex justify-center items-center hover:text-blue-600 hover:border-blue-600 transition-all duration-150 ease-in">
-          reason 1
+          Sexual content
         </label>
       </div>
       <div class="w-9/12 mx-auto mb-3">
-        <input onchange="toggleOtherReport();" type="radio" id="report2" name="report" value="" class="hidden peer" required />
+        <input onchange="toggleOtherReport();" type="radio" id="report2" name="content" value="Hateful or abusive content" class="hidden peer" required />
         <label for="report2" class="border-2 cursor-pointer text-sm peer-checked:border-blue-600 peer-checked:text-blue-600 border-gray-400 text-gray-400 text py-2 px-2 rounded-3xl flex justify-center items-center hover:text-blue-600 hover:border-blue-600 transition-all duration-150 ease-in">
-          reason 2
+          Hateful or abusive content
         </label>
       </div>
       <div class="w-9/12 mx-auto mb-3">
-        <input onchange="toggleOtherReport();" type="radio" id="report3" name="report" value="" class="hidden peer" required />
+        <input onchange="toggleOtherReport();" type="radio" id="report3" name="content" value="Promotes terrorism" class="hidden peer" required />
         <label for="report3" class="border-2 cursor-pointer text-sm peer-checked:border-blue-600 peer-checked:text-blue-600 border-gray-400 text-gray-400 text py-2 px-2 rounded-3xl flex justify-center items-center hover:text-blue-600 hover:border-blue-600 transition-all duration-150 ease-in">
-          reason 3
+          Promotes terrorism
         </label>
       </div>
       <div class="w-9/12 mx-auto mb-3">
-        <input onchange="toggleOtherReport();" type="radio" id="otherReport" name="report" value="" class="hidden peer" required />
+        <input onchange="toggleOtherReport();" type="radio" id="otherReport" name="content" value="other" class="hidden peer" required />
         <label for="otherReport" class="border-2 cursor-pointer text-sm peer-checked:border-blue-600 peer-checked:text-blue-600 border-gray-400 text-gray-400 text py-2 px-2 rounded-3xl flex justify-center items-center hover:text-blue-600 hover:border-blue-600 transition-all duration-150 ease-in">
           other
         </label>
@@ -99,7 +134,9 @@
       <div class="w-9/12 mx-auto mb-3">
         <textarea type="text" name="reportDescription" id="reportDescription" rows="4" class="w-full hidden rounded-xl p-4 text-sm focus:ring-blue-600 focus:outline-blue-600" placeholder="please describe why you want to report this template"></textarea>
       </div>
-      <button onclick="makeTemplate(this);" class="text-white bg-red-600 hover:bg-red-700 w-full focus:ring-4 focus:ring-red-500 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 block">Report</button>
+      <input type="hidden" name="goalID" value="{{ $goal->id }}">
+      <input type="hidden" name="flaggerID" value="{{ auth()->user()->id }}">
+      <button onclick="report(this);" class="text-white bg-red-600 hover:bg-red-700 w-full focus:ring-4 focus:ring-red-500 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 block">Report</button>
     </form>
   </div>
   <div class="flex justify-center">
@@ -147,15 +184,15 @@
         <div class="stepDiv">{{$step->title}}</div>
         <button type="button" class="hidden submitBTN">save</button>
         <a onclick="showStep(this)" data-step-id="{{$step->id}}" class="absolute right-2 bottom-1 opacity-0 group-hover:opacity-100 text-gray-400 cursor-pointer transition-all duration-300 ease-in">
-          <svg class="text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" color="#000000" fill="none">
-            <path d="M8 3.09779C8 3.09779 4.03374 2.74194 3.38783 3.38785C2.74191 4.03375 3.09783 8 3.09783 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M8 20.9022C8 20.9022 4.03374 21.2581 3.38783 20.6122C2.74191 19.9662 3.09783 16 3.09783 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M16 3.09779C16 3.09779 19.9663 2.74194 20.6122 3.38785C21.2581 4.03375 20.9022 8 20.9022 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M16 20.9022C16 20.9022 19.9663 21.2581 20.6122 20.6122C21.2581 19.9662 20.9022 16 20.9022 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M14.0107 9.99847L20.0625 3.94678" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M9.99695 14.0024L3.63965 20.3807" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M9.99732 10.0024L3.8457 3.85889" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M13.9795 14.0024L20.5279 20.4983" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        <svg class="text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#000000" fill="none">
+            <path d="M8 3.09779C8 3.09779 4.03374 2.74194 3.38783 3.38785C2.74191 4.03375 3.09783 8 3.09783 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M8 20.9022C8 20.9022 4.03374 21.2581 3.38783 20.6122C2.74191 19.9662 3.09783 16 3.09783 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M16 3.09779C16 3.09779 19.9663 2.74194 20.6122 3.38785C21.2581 4.03375 20.9022 8 20.9022 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M16 20.9022C16 20.9022 19.9663 21.2581 20.6122 20.6122C21.2581 19.9662 20.9022 16 20.9022 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M14.0107 9.99847L20.0625 3.94678" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M9.99695 14.0024L3.63965 20.3807" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M9.99732 10.0024L3.8457 3.85889" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M13.9795 14.0024L20.5279 20.4983" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </a>
       </div>
@@ -170,7 +207,16 @@
         <div class="stepDiv">{{$step->title}}</div>
         <button type="button" class="hidden submitBTN">save</button>
         <a onclick="showStep(this)" data-step-id="{{$step->id}}" class="absolute right-2 bottom-1 opacity-0 group-hover:opacity-100 text-gray-400 cursor-pointer transition-all duration-300 ease-in">
-          <i class="fa-regular fa-eye fa-lg ml-4"></i>
+        <svg class="text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#000000" fill="none">
+            <path d="M8 3.09779C8 3.09779 4.03374 2.74194 3.38783 3.38785C2.74191 4.03375 3.09783 8 3.09783 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M8 20.9022C8 20.9022 4.03374 21.2581 3.38783 20.6122C2.74191 19.9662 3.09783 16 3.09783 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M16 3.09779C16 3.09779 19.9663 2.74194 20.6122 3.38785C21.2581 4.03375 20.9022 8 20.9022 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M16 20.9022C16 20.9022 19.9663 21.2581 20.6122 20.6122C21.2581 19.9662 20.9022 16 20.9022 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M14.0107 9.99847L20.0625 3.94678" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M9.99695 14.0024L3.63965 20.3807" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M9.99732 10.0024L3.8457 3.85889" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M13.9795 14.0024L20.5279 20.4983" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
         </a>
       </div>
       @endforeach
@@ -370,14 +416,42 @@
       drawer.classList.toggle('translate-x-full');
     }
 
-    function toggleOtherReport(){
+    function toggleOtherReport() {
       var otherRadio = document.getElementById('otherReport');
-      if(otherRadio.checked){
+      if (otherRadio.checked) {
         document.getElementById('reportDescription').classList.remove('hidden');
-      }else{
+      } else {
         document.getElementById('reportDescription').classList.add('hidden');
       }
     }
+
+    function SuccessAlertToggle() {
+      var drawer = document.getElementById('successAlert');
+      drawer.classList.toggle('hidden');
+    }
+
+    function report(button) {
+      var form = button.closest('form');
+      $(form).on('submit', function(event) {
+        event.preventDefault();
+
+        jQuery.ajax({
+          url: `{{ route('report.store') }}`,
+          data: jQuery(form).serialize(),
+          type: 'post',
+
+          success: function(result) {
+            document.getElementById('alertTitle').innerHTML = result.success;
+            document.getElementById('alertMessage').innerHTML = result.message;
+            toggleReportDrawer();
+            toggleDrawer();
+            SuccessAlertToggle();
+          }
+        })
+      });
+      $(form).unbind();
+    }
+
   </script>
 
 </x-goal-layout>

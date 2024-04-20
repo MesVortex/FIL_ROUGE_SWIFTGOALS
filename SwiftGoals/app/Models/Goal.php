@@ -38,4 +38,9 @@ class Goal extends Model
         return $this->morphOne(Image::class, 'imageable');
     }
 
+    public function reports()
+    {
+        return $this->hasMany(Report::class, 'goalID');
+    }
+
 }

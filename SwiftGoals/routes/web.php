@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GoalController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StepController;
 use App\Http\Controllers\TinystepController;
 use App\Http\Controllers\UserController;
@@ -40,6 +41,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::resource('/goal', GoalController::class)->except('destroy');
     Route::get('/explore', [GoalController::class, 'explore'])->name('explore');
     Route::get('/explore/filter/{id}', [GoalController::class, 'filter'])->name('template.filter');
+    Route::get('/explore/search', [GoalController::class, 'search'])->name('template.search');
     Route::post('/goal/changeBackground', [GoalController::class, 'changeBackground'])->name('goal.updateBackground');
     Route::post('/goal/{goal}/template', [GoalController::class, 'copyTemplate'])->name('template.copy');
     Route::get('/goal/ajax/index', [GoalController::class, 'ajaxIndex'])->name('goal.ajaxIndex');
@@ -56,6 +58,8 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::resource('/tinystep', TinystepController::class)->except('destroy');
     Route::patch('/tinystep/{tinystep}/updateprogress', [TinystepController::class, 'updateProgress'])->name('tinystep.updateProgress');
     Route::delete('/tinystep/destroy', [TinystepController::class, 'destroy'])->name('tinystep.destroy');
+
+    Route::post('/report', [ReportController::class, 'store'])->name('report.store');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('user.logout');
 

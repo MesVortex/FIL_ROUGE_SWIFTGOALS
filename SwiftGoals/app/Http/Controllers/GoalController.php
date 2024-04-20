@@ -56,7 +56,7 @@ class GoalController extends Controller
     {
         if ($id == 0) {
             $templates = Goal::where('isTemplate', 1)
-                ->with('categories', 'users')
+                ->with('categories', 'users', 'image')
                 ->get();
             return response()->json([
                 'templates' => $templates,
@@ -65,11 +65,38 @@ class GoalController extends Controller
         } else {
             $templates = Goal::where('isTemplate', 1)
                 ->where('categoryID', $id)
-                ->with('categories', 'users')
+                ->with('categories', 'users', 'image')
                 ->get();
             return response()->json([
                 'templates' => $templates,
                 'currentFilter' => '',
+            ]);
+        }
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->search;
+
+        if ($query != '') {
+            $templates = Goal::where('isTemplate', 1)
+                ->where('title', 'like', '%' . $query . '%')
+                ->orWhere('mainGoal', 'like', '%' . $query . '%')
+                ->with('categories', 'users', 'image')
+                ->orderBy('id', 'desc')
+                ->get();
+
+            return response()->json([
+                'templates' => $templates,
+                'currentFilter' => $query,
+            ]);
+        } else {
+            $templates = Goal::where('isTemplate', 1)
+                ->with('categories', 'users', 'image')
+                ->get();
+            return response()->json([
+                'templates' => $templates,
+                'currentFilter' => 'All',
             ]);
         }
     }
