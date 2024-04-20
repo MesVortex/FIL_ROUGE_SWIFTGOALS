@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\goalRequest;
+use App\Http\Requests\ImageRequest;
 use App\Models\Category;
 use App\Models\Goal;
 use App\Models\Step;
@@ -10,6 +11,7 @@ use App\Models\Tinystep;
 use App\trait\ImageUpload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class GoalController extends Controller
 {
@@ -20,8 +22,12 @@ class GoalController extends Controller
     public function index()
     {
         $userID = auth()->user()->id;
-        $goals = Goal::where('userID', $userID)
-            ->where('isTemplate', 0)
+        $goals = Goal::select(DB::raw('COUNT(steps.id) as completedSteps'), 'goals.*')
+            ->join('steps', 'steps.goalID', '=', 'goals.id')
+            ->where('steps.isComplete', 1)
+            ->where('goals.userID', 4)
+            ->where('goals.isTemplate', 0)
+            ->groupBy('goals.title', 'goals.mainGoal', 'goals.id', 'goals.userID', 'goals.categoryID', 'goals.isTemplate', 'goals.isPinned', 'goals.isComplete', 'goals.created_at', 'goals.updated_at')
             ->get();
         return view('user.goals.goals', compact('goals'));
     }
@@ -48,7 +54,7 @@ class GoalController extends Controller
 
     public function filter(int $id)
     {
-        if($id == 0){
+        if ($id == 0) {
             $templates = Goal::where('isTemplate', 1)
                 ->with('categories', 'users')
                 ->get();
@@ -56,7 +62,7 @@ class GoalController extends Controller
                 'templates' => $templates,
                 'currentFilter' => 'All',
             ]);
-        }else{
+        } else {
             $templates = Goal::where('isTemplate', 1)
                 ->where('categoryID', $id)
                 ->with('categories', 'users')
@@ -89,18 +95,13 @@ class GoalController extends Controller
         ]);
     }
 
-    public function changeBackground(Request $request)
+    public function changeBackground(ImageRequest $request)
     {
-        $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'goalID' => 'required|exists:goals,id',
-        ]);
 
         $goal = Goal::where('id', $request->goalID)->first();
         $this->storeImg($goal, $request->file('image'));
 
         return redirect()->back()->with('success', 'Background Updated successfully!');
-       
     }
 
     public function copyTemplate(Goal $goal)
@@ -143,10 +144,13 @@ class GoalController extends Controller
         $lowPrioritysteps = Step::where('goalID', $goal->id)
             ->where('priority', 3)
             ->get();
-        if($goal->isTemplate == 1 && Auth::user()->id != $goal->userID){
+
+        $categories = Category::all();
+
+        if ($goal->isTemplate == 1 && Auth::user()->id != $goal->userID) {
             return view('user.goals.template', compact('goal', 'highPrioritysteps', 'mediumPrioritysteps', 'lowPrioritysteps'));
         }
-        return view('user.goals.goalPage', compact('goal', 'highPrioritysteps', 'mediumPrioritysteps', 'lowPrioritysteps'));
+        return view('user.goals.goalPage', compact('goal', 'highPrioritysteps', 'mediumPrioritysteps', 'lowPrioritysteps', 'categories'));
     }
 
     /**
@@ -165,13 +169,19 @@ class GoalController extends Controller
         // $goal->update($request->validated());
     }
 
-    public function makeTemplate(Goal $goal)
+    public function makeTemplate(Request $request, Goal $goal)
     {
+        $validation = $request->validate([
+            'category' => 'required|exists:categories,id',
+        ]);
+
         $goal->update([
             'isTemplate' => true,
+            'categoryID' => $validation['category'],
         ]);
         return response()->json([
             'step' => $goal,
+            'success' => 'this goal is now a template!',
         ]);
     }
 

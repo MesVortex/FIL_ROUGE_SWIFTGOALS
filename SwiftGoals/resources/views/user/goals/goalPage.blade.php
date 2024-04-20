@@ -1,4 +1,37 @@
-<x-goal-layout :backgroundImage="$goal->image->path">
+<x-goal-layout :backgroundImage="isset($goal->image) ? $goal->image->path : null">
+  <div id="successAlert" class="bg-teal-50 border-t-2 hidden border-teal-500 rounded-lg p-4 dark:bg-teal-800/30 transition-all duration-300" role="alert">
+    <div class="flex">
+      <div class="flex-shrink-0">
+        <!-- Icon -->
+        <span class="inline-flex justify-center items-center size-8 rounded-full border-4 border-teal-100 bg-teal-200 text-teal-800 dark:border-teal-900 dark:bg-teal-800 dark:text-teal-400">
+          <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+            <path d="m9 12 2 2 4-4"></path>
+          </svg>
+        </span>
+        <!-- End Icon -->
+      </div>
+      <div class="ms-3">
+        <h3 class="text-gray-800 font-semibold dark:text-white">
+          Successfully updated.
+        </h3>
+        <p id="alertMessage" class="text-sm text-gray-700 capitalize dark:text-neutral-400">
+          Updated Successfully.
+        </p>
+      </div>
+      <div class="ps-3 ms-auto">
+        <div class="-mx-1.5 -my-1.5">
+          <button onclick="SuccessAlertToggle();" type="button" class="inline-flex bg-teal-50 rounded-lg p-1.5 text-teal-500 hover:bg-teal-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-teal-50 focus:ring-teal-600 dark:bg-transparent dark:hover:bg-teal-800/50 dark:text-teal-600" data-hs-remove-element="#dismiss-alert">
+            <span class="sr-only">Dismiss</span>
+            <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 6 6 18"></path>
+              <path d="m6 6 12 12"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="mt-16">
     <div class="mx-10 flex justify-between text-blue-700">
       <a href="{{ route('goal.index') }}">
@@ -34,8 +67,8 @@
         </a>
       </li>
       @if($goal->isTemplate == 0)
-      <li>
-        <a onclick="TemplateDropdown();" class="flex cursor-pointer items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+      <li id="makeTemplateOption">
+        <a onclick="toggleTemplateDrawer();" class="flex cursor-pointer items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
           <svg class="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3" />
           </svg>
@@ -44,11 +77,7 @@
         <div id="confirmTemplateDropdown" class="z-10 w-full hidden mx-auto bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600">
           <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="makeTemplateButton">
             <li>
-              <form method="post">
-                @csrf
-                @method('patch')
-                <button onclick="makeTemplate('{{$goal->id}}', this);" class="block w-full px-4 py-2 hover:bg-gray-100 hover:text-rgreen-600 hover:font-bold transition-all duration-300 dark:hover:bg-gray-600 dark:hover:text-white">Confirm</button>
-              </form>
+
             </li>
             <li>
               <button onclick="TemplateDropdown();" class="block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Cancel</button>
@@ -107,9 +136,44 @@
         </div>
         <img src="" class="mt-4 mx-auto max-h-40 hidden" id="preview">
       </div>
-      <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 block">Send message</button>
+      <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 block">Update Background</button>
     </form>
   </div>
+  @if($goal->isTemplate == 0)
+  <div id="drawer-makeTemplate" class="fixed top-0 right-0 z-50 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-right-label">
+    <div class="flex items-center justify-start mb-4">
+      <a onclick="toggleTemplateDrawer();" class="cursor-pointer mr-4">
+        <svg class="text-gray-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" color="#000000" fill="none">
+          <path d="M15 6C15 6 9.00001 10.4189 9 12C8.99999 13.5812 15 18 15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+      <h5 id="drawer-makeTemplate-label" class="inline-flex items-center text-base font-semibold text-gray-600">
+        Make Template</h5>
+    </div>
+    <button type="button" onclick="toggleDrawer(); toggleTemplateDrawer();" data-drawer-hide="drawer-right-example" aria-controls="drawer-right-example" class="text-gray-600 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
+      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+      </svg>
+      <span class="sr-only">Close menu</span>
+    </button>
+    <p class="text-center italic text-gray-600"> to make this goal a template you must choose the category it belongs to</p>
+    <h5 id="drawer-makeTemplate-label" class="text-start font-medium my-5 text-gray-600 capitalize">
+      Categories:</h5>
+    <form method="post" class="flex-col items-center justify-center" enctype="multipart/form-data">
+      @csrf
+      @method('PATCH')
+      @foreach($categories as $category)
+      <div class="w-9/12 mx-auto mb-3">
+        <input type="radio" id="category-radio{{ $category->id }}" name="category" value="{{ $category->id }}" class="hidden peer" required />
+        <label for="category-radio{{ $category->id }}" class="border-2 cursor-pointer text-sm peer-checked:border-blue-600 peer-checked:text-blue-600 border-gray-400 text-gray-400 text py-2 px-2 rounded-3xl flex justify-center items-center hover:text-blue-600 hover:border-blue-600 transition-all duration-150 ease-in">
+          {{ $category->name }}
+        </label>
+      </div>
+      @endforeach
+      <button onclick="makeTemplate(this,'{{ $goal->id }}');" class="text-white bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 block">Update</button>
+    </form>
+  </div>
+  @endif
   <div class="flex justify-center">
     <div class="">
       <img class="" src="{{ asset('images/arrow_left.png') }}" alt="">
@@ -442,7 +506,7 @@
       })
     }
 
-    function makeTemplate(id, button) {
+    function makeTemplate(button, id) {
       var form = button.closest('form');
 
       $(form).on('submit', function(event) {
@@ -455,7 +519,10 @@
 
           success: function(result) {
             toggleDrawer();
-            TemplateDropdown();
+            toggleTemplateDrawer();
+            document.getElementById('makeTemplateOption').remove();
+            document.getElementById('alertMessage').innerHTML = result.success;
+            SuccessAlertToggle();
           }
         })
       });
@@ -737,6 +804,16 @@
       drawer.classList.toggle('translate-x-full');
     }
 
+    function toggleTemplateDrawer() {
+      var drawer = document.getElementById('drawer-makeTemplate');
+      drawer.classList.toggle('translate-x-full');
+    }
+    
+    function SuccessAlertToggle() {
+      var drawer = document.getElementById('successAlert');
+      drawer.classList.toggle('hidden');
+    }
+
     function confirmDelete(id) {
       var dropdown = document.getElementById(`deleteDropdown${id}`);
       dropdown.classList.toggle('hidden');
@@ -744,11 +821,6 @@
 
     function dateDropdown(id) {
       var dropdown = document.getElementById(`dateRangeDropdown${id}`);
-      dropdown.classList.toggle('hidden');
-    }
-
-    function TemplateDropdown() {
-      var dropdown = document.getElementById(`confirmTemplateDropdown`);
       dropdown.classList.toggle('hidden');
     }
 

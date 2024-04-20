@@ -62,9 +62,9 @@
       </div>
       <div class="p-6 text-surface bg-[#2A44AB] dark:text-white rounded-b-3xl shadow-2xl">
         <h5 class="mb-2 text-xl text-white font-medium leading-tight">{{ $template->title }}</h5>
-        @if($template->description != null)
+        @if($template->mainGoal != null)
         <p class="mb-4 text-base text-white">
-          {{ $template->description }}
+          {{ $template->mainGoal }}
         </p>
         @else
         <p class="mb-4 text-base text-white">
