@@ -25,6 +25,28 @@ class UserController extends Controller
         //
     }
 
+    public function search(Request $request)
+    {
+        $query = $request->search;
+
+        if ($query != '') {
+            $users = User::where('role', 'user')
+                ->where('name', 'like', '%' . $query . '%')
+                ->orWhere('email', 'like', '%' . $query . '%')
+                ->get();
+
+            return response()->json([
+                'users' => $users,
+            ]);
+        } else {
+            $users = User::where('role', 'user')
+                ->get();
+            return response()->json([
+                'users' => $users,
+            ]);
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      */
