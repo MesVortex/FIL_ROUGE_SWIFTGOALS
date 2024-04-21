@@ -47,7 +47,7 @@ class GoalController extends Controller
     {
         $templates = Goal::where('isTemplate', 1)
             ->with('categories', 'users')
-            ->paginate(8);
+            ->paginate(9);
         $categories = Category::all();
         return view('user.explore', compact('templates', 'categories'));
     }

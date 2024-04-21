@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StepController;
@@ -79,7 +80,13 @@ Route::middleware(['auth', 'role:user'])->group(function () {
         return view('user.profile');
     })->name('profile');
     
-    Route::get('/dashboard', function () {
-        return view('admin.categorie');
-    })->name('dashboard');
 });
+
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+
+    Route::get('/dashboard', [UserController::class, 'index'])->name('admin.dashboard');
+    Route::resource('/category', CategoryController::class);
+
+});
+    

@@ -25,7 +25,7 @@
 
 <body class="font-lexend bg-gray-100">
     <!-- Page Content -->
-    <div class="h-screen flex flex-row flex-wrap">
+    <div class="h-screen">
 
         <header>
             <x-dashboardNavbar />

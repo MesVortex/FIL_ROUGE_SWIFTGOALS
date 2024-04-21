@@ -1,5 +1,5 @@
 @props(['page'])
-<nav class="bg-transparent border-gray-200 dark:bg-gray-900">  
+<nav class="bg-transparent border-gray-200 dark:bg-gray-900">
   <div class="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto h-auto">
     <div class="flex items-center lg:order-2">
       <button data-collapse-toggle="mobile-menu-2" type="button" class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mobile-menu-2" aria-expanded="false">
@@ -14,16 +14,16 @@
     </div>
     <div class="items-center justify-between hidden w-full lg:flex lg:justify-center lg:my-5 lg:w-full lg:order-1" id="mobile-menu-2">
       <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:items-center lg:space-x-8 lg:mt-0 lg:bg-[#012E4A] p-1 rounded-full">
-        <li @if ($page === 'home') class="lg:bg-white lg:text-black lg:px-2.5 lg:py-1.5 lg:rounded-full" @else class="lg:hover:bg-white lg:hover:px-2.5 lg:text-[#C4C4C4] lg:hover:py-1.5 lg:ml-3 lg:hover:ml-0 lg:hover:rounded-full transition-all" @endif>
+        <li @if ($page==='home' ) class="lg:bg-white lg:text-black lg:px-2.5 lg:py-1.5 lg:rounded-full" @else class="lg:hover:bg-white lg:hover:px-2.5 lg:text-[#C4C4C4] lg:hover:py-1.5 lg:ml-3 lg:hover:ml-0 lg:hover:rounded-full transition-all" @endif>
           <a href="{{ route('home') }}" class="block py-2 pl-3 pr-4 bg-[#1C70EC] rounded lg:bg-transparent lg:hover:text-black lg:p-0 dark:text-white" aria-current="page">Home</a>
         </li>
-        <li @if ($page === 'goals') class="lg:bg-white lg:text-black lg:px-2.5 lg:py-1.5 lg:rounded-full" @else class="lg:hover:bg-white lg:hover:px-2.5 lg:text-[#C4C4C4] lg:hover:py-1.5 lg:hover:rounded-full transition-all" @endif>
+        <li @if ($page==='goals' ) class="lg:bg-white lg:text-black lg:px-2.5 lg:py-1.5 lg:rounded-full" @else class="lg:hover:bg-white lg:hover:px-2.5 lg:text-[#C4C4C4] lg:hover:py-1.5 lg:hover:rounded-full transition-all" @endif>
           <a href="{{ route('goal.index') }}" class="block py-2 pl-3 pr-4 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-black lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700 transition-all">Goals</a>
         </li>
-        <li @if ($page === 'explore') class="lg:bg-white lg:text-black lg:px-2.5 lg:py-1.5 lg:rounded-full" @else class="lg:hover:bg-white lg:hover:px-2.5 lg:text-[#C4C4C4] lg:hover:py-1.5 lg:hover:rounded-full transition-all" @endif>
+        <li @if ($page==='explore' ) class="lg:bg-white lg:text-black lg:px-2.5 lg:py-1.5 lg:rounded-full" @else class="lg:hover:bg-white lg:hover:px-2.5 lg:text-[#C4C4C4] lg:hover:py-1.5 lg:hover:rounded-full transition-all" @endif>
           <a href="{{ route('explore') }}" class="block py-2 pl-3 pr-4 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-black lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700 transition-all">Templates</a>
         </li>
-        <li @if ($page === 'community') class="lg:bg-white lg:text-black lg:px-2.5 lg:py-1.5 lg:rounded-full" @else class="lg:hover:bg-white lg:hover:px-2.5 lg:text-[#C4C4C4] lg:hover:py-1.5 lg:hover:rounded-full transition-all" @endif>
+        <li @if ($page==='community' ) class="lg:bg-white lg:text-black lg:px-2.5 lg:py-1.5 lg:rounded-full" @else class="lg:hover:bg-white lg:hover:px-2.5 lg:text-[#C4C4C4] lg:hover:py-1.5 lg:hover:rounded-full transition-all" @endif>
           <a href="{{ route('community') }}" class="block py-2 pl-3 pr-4 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-black lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700 transition-all">Community</a>
         </li>
         @if($page === 'explore')
@@ -40,10 +40,30 @@
           </form>
         </li>
         @endif
-        <li class="lg:bg-white lg:px-4 lg:py-1.5 lg:rounded-full">
+        <li class="lg:bg-white lg:px-4 lg:py-1.5 lg:rounded-full relative">
           <a href="{{ route('profile') }}" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:text-[#C4C4C4] lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
             <img class="rounded-full h-6" src="{{ asset('images/default_profile.png') }}" alt="">
           </a>
+          <div id="profileMenu" class="z-10 absolute hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+            <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+              <div>Bonnie Green</div>
+              <div class="font-medium truncate">name@flowbite.com</div>
+            </div>
+            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="profileMenu">
+              <li>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+              </li>
+              <li>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+              </li>
+              <li>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
+              </li>
+            </ul>
+            <div class="py-2">
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+            </div>
+          </div>
         </li>
       </ul>
     </div>

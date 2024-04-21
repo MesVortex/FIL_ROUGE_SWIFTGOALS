@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::all();
+
+        return view('admin.categories', compact('categories'));
     }
 
     /**
@@ -26,9 +29,17 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        //
+        $newCategory = Category::create([
+            'name' => $request->CategoryName,
+        ]);
+
+        return response()->json([
+            'success' => 'Complete!',
+            'message' => 'Category Added Successfully!',
+            'category' => $newCategory
+        ]);
     }
 
     /**
@@ -52,7 +63,15 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $category->update([
+            'name' => $request->CategoryName,
+        ]);
+
+        return response()->json([
+            'success' => 'Complete!',
+            'message' => 'Category Updated Successfully!',
+            'category' => $category
+        ]);
     }
 
     /**
@@ -60,6 +79,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect()->back()->with('success', 'Category deleted!');
     }
 }

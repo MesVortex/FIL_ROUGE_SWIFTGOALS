@@ -1,5 +1,5 @@
 <!-- start sidebar -->
-<div class="flex flex-row min-h-screen bg-gray-100 text-gray-800">
+<div class="flex fixed flex-row min-h-screen bg-gray-100 text-gray-800">
       <aside id="sidebar" class="sidebar w-64 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in bg-indigo-500 fixed">
         <div class="sidebar-header flex items-center justify-center py-4">
           <div class="inline-flex">
@@ -87,7 +87,7 @@
                     <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                   </svg>
                 </span>
-                <span class="ml-3">Notifications</span>
+                <span class="ml-3">Reports</span>
                 <span class="flex items-center justify-center text-xs text-red-500 font-semibold bg-red-100 h-6 px-2 rounded-full ml-auto">10</span>
               </a>
             </li>
