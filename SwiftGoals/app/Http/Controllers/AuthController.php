@@ -48,7 +48,7 @@ class AuthController extends Controller
             $user = Auth::user();
             if ($user->role == 'admin') {
                 return redirect('/dashboard');
-            } else if ($user->role == 'user') {
+            } else if ($user->role == 'client') {
                 return redirect()->intended('/home');
             }
         }
@@ -59,7 +59,7 @@ class AuthController extends Controller
     {
         $fields = $request->validated();
         $fields['password'] = Hash::make($fields['password']);
-        $fields['role'] = 'user';
+        $fields['role'] = 'client';
         $user = User::create($fields);
         if (!$user) {
             return redirect('/register')->with('error', 'Something went wrong');

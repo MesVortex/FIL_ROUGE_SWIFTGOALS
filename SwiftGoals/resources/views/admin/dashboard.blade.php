@@ -75,6 +75,7 @@
 			row.innerHTML = rowContent;
 			document.getElementById("usersTable").appendChild(row);
 		}
+		
 		document.getElementById('search').addEventListener('keyup', function() {
 			var searchValue = this.value;
 			var form = document.getElementById('searchForm');

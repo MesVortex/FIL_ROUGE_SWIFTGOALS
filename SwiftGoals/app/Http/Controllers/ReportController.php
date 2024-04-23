@@ -13,7 +13,9 @@ class ReportController extends Controller
      */
     public function index()
     {
-        //
+        $reports = Report::all();
+
+        return view('admin.reports', compact('reports'));
     }
 
     /**
@@ -75,6 +77,9 @@ class ReportController extends Controller
      */
     public function destroy(Report $report)
     {
-        //
+        $report->delete();
+        return response()->json([
+            'sucess' => 'report deleted!',
+        ]);
     }
 }

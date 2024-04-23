@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('categoryID')->nullable();
             $table->foreign('categoryID')->references('id')->on('categories')->onDelete('cascade');
             $table->boolean('isTemplate')->default('0');
-            $table->boolean('isComplete')->default('0');
+            $table->boolean('isBanned')->default('0');
             $table->boolean('isPinned')->default('0');
             $table->timestamps();
         });

@@ -50,4 +50,9 @@ class User extends Authenticatable
     public function reports(){
         return $this->hasMany(Report::class, 'flaggerID');
     }
+
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
 }

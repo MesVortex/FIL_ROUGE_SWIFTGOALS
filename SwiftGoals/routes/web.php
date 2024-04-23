@@ -83,11 +83,13 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 });
 
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::middleware(['auth', 'role:admin'])->group(function () {
 
-    Route::get('/dashboard', [UserController::class, 'index'])->name('admin.dashboard');
-    Route::get('/dashboard/users/search', [UserController::class, 'search'])->name('user.search');
-    Route::resource('/category', CategoryController::class);
+        Route::get('/dashboard', [UserController::class, 'index'])->name('admin.dashboard');
+        Route::get('/dashboard/users/search', [UserController::class, 'search'])->name('user.search');
+        Route::get('/reports', [ReportController::class, 'index'])->name('admin.reports');
+        Route::delete('/report/{report}/destroy', [ReportController::class, 'destroy'])->name('report.destroy');
+        Route::resource('/category', CategoryController::class);
 
-});
+    });
     
