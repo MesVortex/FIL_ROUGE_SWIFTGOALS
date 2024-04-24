@@ -19,9 +19,9 @@ return new class extends Migration
             $table->foreign('userID')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('categoryID')->nullable();
             $table->foreign('categoryID')->references('id')->on('categories')->onDelete('cascade');
-            $table->boolean('isTemplate')->default('0');
-            $table->boolean('isBanned')->default('0');
-            $table->boolean('isPinned')->default('0');
+            $table->boolean('isTemplate')->default(0);
+            $table->boolean('isBanned')->default(false);
+            $table->boolean('isPinned')->default(0);
             $table->timestamps();
         });
     }

@@ -12,7 +12,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::where('role', 'user')->get();
+        $users = User::where('role', 'client')->get();
 
         return view('admin.dashboard', compact('users'));
     }
@@ -85,5 +85,31 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function banUser(User $user)
+    {
+        if ($user->isBanned == 1) {
+            $user->update([
+                'isBanned' => 0,
+            ]);
+
+            return response()->json([
+                'success' => 'Complete!',
+                'message' => 'User Unblocked Successfully!',
+                'user' => $user,
+            ]);
+
+        } else {
+            $user->update([
+                'isBanned' => 1,
+            ]);
+
+            return response()->json([
+                'success' => 'Complete!',
+                'message' => 'Template Blocked Successfully!',
+                'user' => $user,
+            ]);
+        }
     }
 }

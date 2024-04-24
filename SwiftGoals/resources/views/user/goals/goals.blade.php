@@ -26,7 +26,11 @@
       @foreach($goals as $goal)
       <div class="w-full relative lg:flex lg:justify-around text-white shadow-blue-700 h-28 max-w-sm overflow-hidden rounded-2xl border border-grey-light group shadow-lg" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('{{ isset($goal->image->path) ? asset('storage/' . $goal->image->path) : asset('images/sam-schooler-E9aetBe2w40-unsplash.jpg') }}'); background-size:cover; background-position: center;">
       <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full bg-transparent group-hover:backdrop-filter group-hover:backdrop-blur-sm group-hover:bg-opacity-40 transition-all duration-200"></div>
-      <label class="progressLabel" style="--p:{{$goal->completedSteps/sizeof($goal->steps()->get())*100}};"> {{ceil($goal->completedSteps/sizeof($goal->steps()->get())*100)}}% <progress max="100" value="10">10%</progress></label>
+      @if(sizeof($goal->steps()->get()) != 0)
+        <label class="progressLabel" style="--p: {{$goal->steps_count/sizeof($goal->steps()->get())*100}};"> {{ceil($goal->steps_count/sizeof($goal->steps()->get())*100)}}% <progress max="100" value="10">10%</progress></label>
+      @else
+        <label class="progressLabel" style="--p: 0;"> 0% <progress max="100" value="10">10%</progress></label>
+      @endif  
         <div class="bg-transparent p-4 flex flex-col justify-around items-center w-full">
           <div class="">
             <p class="text-3xl text-grey-dark flex items-center">

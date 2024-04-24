@@ -16,7 +16,7 @@ class Goal extends Model
         'categoryID',
         'isTemplate',
         'isPinned',
-        'isComplete',
+        'isBanned',
     ];
 
     public function steps()

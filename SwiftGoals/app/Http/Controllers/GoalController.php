@@ -22,13 +22,14 @@ class GoalController extends Controller
     public function index()
     {
         $userID = auth()->user()->id;
-        $goals = Goal::select(DB::raw('COUNT(steps.id) as completedSteps'), 'goals.*')
-            ->join('steps', 'steps.goalID', '=', 'goals.id')
-            ->where('steps.isComplete', 1)
-            ->where('goals.userID', $userID)
-            ->where('goals.isTemplate', 0)
-            ->groupBy('goals.title', 'goals.mainGoal', 'goals.id', 'goals.userID', 'goals.categoryID', 'goals.isTemplate', 'goals.isPinned', 'goals.isComplete', 'goals.created_at', 'goals.updated_at')
+        $goals = Goal::withCount(['steps' => function ($query) {
+            $query->where('isComplete', 1);
+        }])
+            ->where('userID', $userID)
+            ->where('isTemplate', 0)
+            ->where('isBanned', 0)
             ->get();
+
         return view('user.goals.goals', compact('goals'));
     }
 
@@ -222,5 +223,29 @@ class GoalController extends Controller
         return response()->json([
             'success' => 'goal deleted successfully!',
         ]);
+    }
+
+    public function banTemplate(Goal $goal)
+    {
+        if ($goal->isBanned == 1) {
+            $goal->update([
+                'isBanned' => 0,
+            ]);
+
+            return response()->json([
+                'success' => 'Complete!',
+                'message' => 'Template Restored Successfully!',
+            ]);
+
+        } else {
+            $goal->update([
+                'isBanned' => 1,
+            ]);
+
+            return response()->json([
+                'success' => 'Complete!',
+                'message' => 'Template Banned Successfully!',
+            ]);
+        }
     }
 }
