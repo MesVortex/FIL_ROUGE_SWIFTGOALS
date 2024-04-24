@@ -30,7 +30,7 @@ class UserController extends Controller
         $query = $request->search;
 
         if ($query != '') {
-            $users = User::where('role', 'user')
+            $users = User::where('role', 'client')
                 ->where('name', 'like', '%' . $query . '%')
                 ->orWhere('email', 'like', '%' . $query . '%')
                 ->get();
@@ -39,7 +39,7 @@ class UserController extends Controller
                 'users' => $users,
             ]);
         } else {
-            $users = User::where('role', 'user')
+            $users = User::where('role', 'client')
                 ->get();
             return response()->json([
                 'users' => $users,

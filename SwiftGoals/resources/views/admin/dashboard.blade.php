@@ -68,7 +68,7 @@
                                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <td class="py-4 px-6">{{ $user->name }}</td>
                                     <td class="py-4 px-6">{{ $user->email }}</td>
-                                    @if ($user->isBanned)
+                                    @if (!$user->isBanned)
                                         <td id="banStatus{{ $user->id }}" class="py-4 px-6">Active</td>
                                     @else
                                         <td id="banStatus{{ $user->id }}" class="py-4 px-6">Banned</td>
@@ -131,9 +131,9 @@
 						<td class="py-4 px-6">${user.name}</td>
               <td class="py-4 px-6">${user.email}</td>
 							${user.isBanned ? `
-                  <td id="banStatus${user.id}" class="py-4 px-6">Active</td>`
+                  <td id="banStatus${user.id}" class="py-4 px-6">Banned</td>`
 							: `
-    							<td id="banStatus${user.id}" class="py-4 px-6">Banned</td>
+    							<td id="banStatus${user.id}" class="py-4 px-6">Active</td>
     						`}
               <td class="py-4 flex justify-center">
 								${user.isBanned ? `
