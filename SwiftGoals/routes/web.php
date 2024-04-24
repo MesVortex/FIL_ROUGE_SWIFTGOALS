@@ -43,6 +43,7 @@ Route::middleware(['auth', 'role:client'])->group(function () {
     Route::get('/explore', [GoalController::class, 'explore'])->name('explore');
     Route::get('/explore/filter/{id}', [GoalController::class, 'filter'])->name('template.filter');
     Route::get('/explore/search', [GoalController::class, 'search'])->name('template.search');
+    Route::get('/goal/{goal}/favorite', [GoalController::class, 'addToFavorite'])->name('template.favorite.add');
     Route::post('/goal/changeBackground', [GoalController::class, 'changeBackground'])->name('goal.updateBackground');
     Route::post('/goal/{goal}/template', [GoalController::class, 'copyTemplate'])->name('template.copy');
     Route::get('/goal/ajax/index', [GoalController::class, 'ajaxIndex'])->name('goal.ajaxIndex');

@@ -102,6 +102,14 @@ class GoalController extends Controller
         }
     }
 
+    public function addToFavorite(Goal $goal){
+        $goal->favoriteList()->attach(auth()->user()->id);
+        return response()->json([
+            'success' => 'Complete!',
+            'message' => 'Template Added To Favorite List!',
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

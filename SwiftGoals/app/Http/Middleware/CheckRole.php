@@ -15,7 +15,7 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
-        if(!$request->user() || !in_array($request->user()->role, $roles)) {
+        if(!$request->user() || !in_array($request->user()->role, $roles) || $request->user()->isBanned) {
             abort(403);
         }
         return $next($request);

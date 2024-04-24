@@ -43,4 +43,9 @@ class Goal extends Model
         return $this->hasMany(Report::class, 'goalID');
     }
 
+    public function favoriteList()
+    {
+        return $this->belongsToMany(User::class, 'favorites', 'goal_id', 'client_id');
+    }
+
 }

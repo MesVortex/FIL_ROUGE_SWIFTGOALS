@@ -246,7 +246,6 @@
                     document.getElementById('alertTitle').innerHTML = result.success;
                     document.getElementById('alertMessage').innerHTML = result.message;
                     SuccessAlertToggle();
-                    $(form).unbind();
                 }
             })
         }
