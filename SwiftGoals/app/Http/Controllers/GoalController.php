@@ -11,7 +11,6 @@ use App\Models\Tinystep;
 use App\trait\ImageUpload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class GoalController extends Controller
 {
@@ -42,6 +41,13 @@ class GoalController extends Controller
         return response()->json([
             'goals' => $goals,
         ]);
+    }
+
+    public function favorites()
+    {
+        $user = auth()->user();
+        $favoriteTemplates = $user->favorites()->get();
+        return view('user.favorites', compact('favoriteTemplates'));
     }
 
     public function explore()
