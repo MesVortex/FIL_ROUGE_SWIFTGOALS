@@ -111,7 +111,9 @@
       </svg>
       <span class="sr-only">Close menu</span>
     </button>
-    <form action="{{ route('goal.updateBackground') }}" method="post" class="mb-6" enctype="multipart/form-data">
+
+    @if(!$goal->image)
+    <form action="{{ route('goal.addBackground') }}" method="post" class="mb-6" enctype="multipart/form-data">
       @csrf
       @method('POST')
       <div class="w-full cursor-pointer relative border-2 border-gray-300 border-dashed rounded-lg p-6" id="dropzone">
@@ -133,8 +135,33 @@
         </div>
         <img src="" class="mt-4 mx-auto max-h-40 hidden" id="preview">
       </div>
+      <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 block">Add Background</button>
+    </form>
+    @else
+    <form action="{{ route('goal.updateBackground', $goal->id) }}" method="post" class="mb-6" enctype="multipart/form-data">
+      @csrf
+      @method('PATCH')
+      <div class="w-full cursor-pointer relative border-2 border-gray-300 border-dashed rounded-lg p-6" id="dropzone">
+        <input type="file" name="image" class="absolute inset-0 w-full h-full opacity-0 z-50" />
+        <div class="text-center">
+          <img class="mx-auto h-12 w-12" src="https://www.svgrepo.com/show/357902/image-upload.svg" alt="">
+          <h3 class="mt-2 text-sm font-medium text-gray-900">
+            <label for="file-upload" class="relative cursor-pointer">
+              <span>Drag and drop</span>
+              <span class="text-white"> or browse</span>
+              <span>to upload</span>
+              <input id="file-upload" name="file-upload" type="file" class="sr-only">
+            </label>
+          </h3>
+          <p class="mt-1 text-xs text-white">
+            PNG, JPG, GIF up to 10MB
+          </p>
+        </div>
+        <img src="" class="mt-4 mx-auto max-h-40 hidden" id="preview">
+      </div>
       <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 block">Update Background</button>
     </form>
+    @endif
   </div>
   @if($goal->isTemplate == 0)
   <div id="drawer-makeTemplate" class="fixed top-0 right-0 z-50 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-right-label">

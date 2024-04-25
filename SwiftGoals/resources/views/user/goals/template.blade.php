@@ -68,6 +68,17 @@
       <span class="sr-only">Close menu</span>
     </button>
     <ul class="space-y-2 font-medium">
+      @if($isfavorite)
+      
+      <li>
+        <a onclick="removeFromFavorites(this, {{ $goal->id }});" class="flex cursor-pointer items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <svg class="text-gray-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#000000" fill="none">
+            <path d="M19.4626 3.99415C16.7809 2.34923 14.4404 3.01211 13.0344 4.06801C12.4578 4.50096 12.1696 4.71743 12 4.71743C11.8304 4.71743 11.5422 4.50096 10.9656 4.06801C9.55962 3.01211 7.21909 2.34923 4.53744 3.99415C1.01807 6.15294 0.221721 13.2749 8.33953 19.2834C9.88572 20.4278 10.6588 21 12 21C13.3412 21 14.1143 20.4278 15.6605 19.2834C23.7783 13.2749 22.9819 6.15294 19.4626 3.99415Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+          <span class="ms-3 capitalize">remove from favorites</span>
+        </a>
+      </li>
+      @else
       <li>
         <a onclick="addToFavorites(this, {{ $goal->id }});" class="flex cursor-pointer items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
           <svg class="text-gray-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#000000" fill="none">
@@ -76,6 +87,7 @@
           <span class="ms-3 capitalize">add to favorites</span>
         </a>
       </li>
+      @endif
       <li>
         <a onclick="toggleReportDrawer();" class="flex cursor-pointer items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
           <svg class="text-gray-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#000000" fill="none">
@@ -461,6 +473,26 @@
 
       jQuery.ajax({
         url: `{{ route('template.favorite.add', ':id') }}`.replace(':id', id),
+        type: 'get',
+
+        success: function(result) {
+          document.getElementById('alertTitle').innerHTML = result.success;
+          document.getElementById('alertMessage').innerHTML = result.message;
+          toggleDrawer();
+          SuccessAlertToggle();
+        }
+      })
+    }
+
+    function removeFromFavorites(button, id){
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+
+      jQuery.ajax({
+        url: `{{ route('template.favorite.remove', ':id') }}`.replace(':id', id),
         type: 'get',
 
         success: function(result) {

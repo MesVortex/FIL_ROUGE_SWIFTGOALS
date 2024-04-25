@@ -116,6 +116,15 @@ class GoalController extends Controller
         ]);
     }
 
+    public function removeFromFavorite(Goal $goal){
+        $user = auth()->user();
+        $user->favorites()->detach($goal->id);
+        return response()->json([
+            'success' => 'Complete!',
+            'message' => 'Template Removed From Favorite List!',
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -142,6 +151,16 @@ class GoalController extends Controller
 
         $goal = Goal::where('id', $request->goalID)->first();
         $this->storeImg($goal, $request->file('image'));
+
+        return redirect()->back()->with('success', 'Background Updated successfully!');
+    }
+
+    public function updateBackground(Request $request, Goal $goal)
+    {
+            $request->validate([
+                'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            ]);
+        $this->updateImg($goal, $request->file('image'));
 
         return redirect()->back()->with('success', 'Background Updated successfully!');
     }
@@ -190,7 +209,8 @@ class GoalController extends Controller
         $categories = Category::all();
 
         if ($goal->isTemplate == 1 && Auth::user()->id != $goal->userID) {
-            return view('user.goals.template', compact('goal', 'highPrioritysteps', 'mediumPrioritysteps', 'lowPrioritysteps'));
+            $isfavorite = $goal->favoriteList()->where('client_id', Auth::user()->id)->exists();
+            return view('user.goals.template', compact('goal', 'highPrioritysteps', 'isfavorite', 'mediumPrioritysteps', 'lowPrioritysteps'));
         }
         return view('user.goals.goalPage', compact('goal', 'highPrioritysteps', 'mediumPrioritysteps', 'lowPrioritysteps', 'categories'));
     }
