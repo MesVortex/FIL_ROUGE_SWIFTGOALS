@@ -43,6 +43,15 @@ class GoalController extends Controller
         return view('user.goals.userTemplates', compact('templates'));
     }
 
+    public function adminTemplates()
+    {
+        $userID = auth()->user()->id;
+        $templates = Goal::where('userID', $userID)
+            ->get();
+
+        return view('admin.adminTemplates', compact('templates'));
+    }
+
     public function ajaxIndex()
     {
         $userID = auth()->user()->id;

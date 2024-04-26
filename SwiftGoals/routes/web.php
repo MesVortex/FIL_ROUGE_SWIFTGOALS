@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\ForgetPassword;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GoalController;
@@ -31,7 +32,11 @@ Route::get('/', function () {
 // Route::get('/register', function () {
 //     return view('auth.register');
 // })->name('register');
-
+//forget password
+Route::get('/forget-password',[ForgetPassword::class,'index']);
+Route::post('/forget-password',[ForgetPassword::class,'forgetPassword'])->name('forgetPassword');
+Route::get('/reset-password/{token}',[ForgetPassword::class,'ResetPassword'])->name('ResetPassword');
+Route::post('/reset-password',[ForgetPassword::class,'NewPassword'])->name('NewPassword');
 Route::get('/register', [AuthController::class, 'register'])->name('register');
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 
@@ -39,7 +44,6 @@ Route::post('/login', [AuthController::class, 'loginUser'])->name('user.login');
 Route::post('/register', [AuthController::class, 'registerUser'])->name('user.register');
 
 Route::middleware(['auth', 'role:client'])->group(function () {
-    Route::resource('/goal', GoalController::class)->except('destroy');
     Route::get('/explore', [GoalController::class, 'explore'])->name('explore');
     Route::get('/explore/filter/{id}', [GoalController::class, 'filter'])->name('template.filter');
     
@@ -92,6 +96,7 @@ Route::middleware(['auth', 'role:client'])->group(function () {
     Route::middleware(['auth', 'role:admin'])->group(function () {
 
         Route::get('/dashboard', [UserController::class, 'index'])->name('admin.dashboard');
+        Route::get('/templates', [GoalController::class, 'adminTemplates'])->name('admin.templates');
         Route::get('/dashboard/users/search', [UserController::class, 'search'])->name('user.search');
         Route::patch('/user/{user}/ban', [UserController::class, 'banUser'])->name('user.ban');
         Route::get('/reports', [ReportController::class, 'index'])->name('admin.reports');
@@ -101,3 +106,4 @@ Route::middleware(['auth', 'role:client'])->group(function () {
 
     });
     
+    Route::resource('/goal', GoalController::class)->except('destroy');
