@@ -707,6 +707,13 @@
                     </form>
                 </div>` }       
               <div class="mb-2 w-full">
+                ${result.step.isComplete ? `
+                <button onclick="markStepIncomplete(${result.step.id});"  class="focus:outline-none px-4 w-full bg-gray-300 p-2 rounded-full text-black hover:bg-green-600 hover:text-white transition-all duration-300">Mark as incomplete</button>
+                ` : `
+                <button onclick="markStepComplete(${result.step.id});"  class="focus:outline-none px-4 w-full bg-gray-300 p-2 rounded-full text-black hover:bg-green-600 hover:text-white transition-all duration-300">Mark as complete</button>
+                `}
+              </div>
+              <div class="mb-2 w-full">
                 <button onclick="confirmDelete(${result.step.id});"  class="focus:outline-none px-4 w-full bg-gray-300 p-2 rounded-full text-black hover:bg-red-600 hover:text-white transition-all duration-300">Delete step</button>
               <div id="deleteDropdown${result.step.id}" class="z-10 hidden mx-auto bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="deleteDropdownButton">

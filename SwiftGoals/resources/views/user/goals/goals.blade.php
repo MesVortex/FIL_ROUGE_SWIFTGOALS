@@ -245,5 +245,8 @@
         }
       });
     }
+  document.getElementById('profileDropdown').addEventListener('click', function() {
+    document.getElementById('dropdownContent').classList.toggle('hidden');
+  });
   </script>
 </x-main-layout>
