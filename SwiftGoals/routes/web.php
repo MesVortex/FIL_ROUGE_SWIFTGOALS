@@ -42,6 +42,7 @@ Route::middleware(['auth', 'role:client'])->group(function () {
     Route::resource('/goal', GoalController::class)->except('destroy');
     Route::get('/explore', [GoalController::class, 'explore'])->name('explore');
     Route::get('/explore/filter/{id}', [GoalController::class, 'filter'])->name('template.filter');
+    
     Route::get('/explore/search', [GoalController::class, 'search'])->name('template.search');
     Route::get('/favorite/{goal}/add', [GoalController::class, 'addToFavorite'])->name('template.favorite.add');
     Route::get('/favorite/{goal}/remove', [GoalController::class, 'removeFromFavorite'])->name('template.favorite.remove');
@@ -50,6 +51,7 @@ Route::middleware(['auth', 'role:client'])->group(function () {
     Route::patch('/goal/{goal}/changeBackground', [GoalController::class, 'updateBackground'])->name('goal.updateBackground');
     Route::post('/goal/{goal}/template', [GoalController::class, 'copyTemplate'])->name('template.copy');
     Route::get('/goal/ajax/index', [GoalController::class, 'ajaxIndex'])->name('goal.ajaxIndex');
+    Route::get('/goal/personal/templates', [GoalController::class, 'userTemplates'])->name('user.templates');
     Route::patch('/goal/{goal}/makeTemplate', [GoalController::class, 'makeTemplate'])->name('goal.makeTemplate');
     Route::delete('/goal/destroy', [GoalController::class, 'destroy'])->name('goal.destroy');
 

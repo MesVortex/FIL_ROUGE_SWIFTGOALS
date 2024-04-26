@@ -32,6 +32,17 @@ class GoalController extends Controller
         return view('user.goals.goals', compact('goals'));
     }
 
+    public function userTemplates()
+    {
+        $userID = auth()->user()->id;
+        $templates = Goal::where('userID', $userID)
+            ->where('isTemplate', 1)
+            ->where('isBanned', 0)
+            ->get();
+
+        return view('user.goals.userTemplates', compact('templates'));
+    }
+
     public function ajaxIndex()
     {
         $userID = auth()->user()->id;
