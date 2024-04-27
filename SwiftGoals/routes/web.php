@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\Auth\ForgetPassword;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GoalController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StepController;
 use App\Http\Controllers\TinystepController;
@@ -70,6 +72,10 @@ Route::middleware(['auth', 'role:client'])->group(function () {
     Route::patch('/tinystep/{tinystep}/updateprogress', [TinystepController::class, 'updateProgress'])->name('tinystep.updateProgress');
     Route::delete('/tinystep/destroy', [TinystepController::class, 'destroy'])->name('tinystep.destroy');
 
+    Route::resource('/question', QuestionController::class);
+
+    Route::resource('/answer', AnswerController::class);
+
     Route::post('/report', [ReportController::class, 'store'])->name('report.store');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('user.logout');
@@ -82,9 +88,9 @@ Route::middleware(['auth', 'role:client'])->group(function () {
         return view('user.goals.pinnedGoals');
     })->name('pinned.goals');
             
-    Route::get('/community', function () {
-        return view('user.community');
-    })->name('community');
+    // Route::get('/community', function () {
+    //     return view('user.community');
+    // })->name('community');
     
     Route::get('/profile', function () {
         return view('user.profile');

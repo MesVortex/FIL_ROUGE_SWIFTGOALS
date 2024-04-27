@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\QuestionRequest;
 use App\Models\Question;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,10 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        //
+        $userID = auth()->user()->id;
+        $questions = Question::all();
+        $userQuestions = Question::where('clientID', $userID)->get();
+        return view('user.community', compact('questions', 'userQuestions'));
     }
 
     /**
@@ -26,9 +30,12 @@ class QuestionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(QuestionRequest $request)
     {
-        //
+        $fields = $request->validated();
+        $fields['clientID'] = auth()->user()->id;
+        $newQuestion = Question::create($fields);
+        return redirect()->back()->with('success', 'question added successfully!');
     }
 
     /**

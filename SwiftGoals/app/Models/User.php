@@ -61,4 +61,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Goal::class, 'favorites', 'client_id', 'goal_id',);
     }
+
+    public function questions()
+    {
+        return $this->hasMany(Question::class, 'clientID');
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class, 'clientID');
+    }
 }
