@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('answers', function (Blueprint $table) {
             $table->id();
+            $table->longText('content');
+            $table->unsignedBigInteger('clientID');
+            $table->foreign('clientID')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('questionID');
+            $table->foreign('questionID')->references('id')->on('questions')->onDelete('cascade');
             $table->timestamps();
         });
     }
