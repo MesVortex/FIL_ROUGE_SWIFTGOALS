@@ -31,7 +31,8 @@ class AnswerController extends Controller
     {
         $fields = $request->validated();
         $fields['clientID'] = auth()->user()->id;
-        $newAnswer = Answer::create($fields);
+        $Answer = Answer::create($fields);
+        $newAnswer = Answer::where('id', $Answer->id)->with('user')->first();
         return response()->json([
             'answer' => $newAnswer
         ]);
@@ -67,6 +68,7 @@ class AnswerController extends Controller
      */
     public function destroy(Answer $answer)
     {
-        //
+        $answer->delete();
+        return response()->json(['success' => 'answer deleted successfully']);
     }
 }

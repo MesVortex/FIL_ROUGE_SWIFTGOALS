@@ -44,9 +44,10 @@ class QuestionController extends Controller
      */
     public function show(Question $question)
     {
-        $question = Question::where('id',$question->id)->with('answers')->first();
+        $answers = Answer::where('questionID',$question->id)->with('user')->get();
         return response()->json([
-            'question' => $question
+            'question' => $question,
+            'answers' => $answers,
         ]);
     }
 

@@ -135,7 +135,7 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
         crossorigin="anonymous"></script>
-    <script>        
+    <script>
         function toggleCommentsModal(id) {
             document.getElementById(`comments_modal${id}`).classList.toggle('hidden');
         }
@@ -146,16 +146,15 @@
 
         function createAnswer(answer) {
             const article = document.createElement('article');
-            article.setAttribute('class', 'p-6 mb-5 text-base bg-white rounded-lg dark:bg-gray-900');
-            console.log(answer.content);
+            article.setAttribute('class', 'p-6 text-base bg-white rounded-lg dark:bg-gray-900');
             var answer = `
             <footer class="flex relative justify-between items-center mb-2">
                 <div class="flex items-center">
                     <p
                         class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
                         <img class="mr-2 w-6 h-6 rounded-full"
-                            src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
-                            alt="Michael Gough">Michael Gough
+                            src="{{ asset('images/default_profile.png') }}"
+                            alt="Michael Gough">${answer.user.name}
                     </p>
                     <p class="text-sm text-gray-600 dark:text-gray-400"><time pubdate
                             datetime="${answer.created_at}" title="${answer.created_at}">${new Date(answer.created_at).toLocaleDateString()}</time>
@@ -169,7 +168,7 @@
                         <path
                             d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
                     </svg>
-                    <span class="sr-only">Comment settings</span>
+                    <span class="sr-only">Answer settings</span>
                 </button>
                 <!-- Dropdown menu -->
                 <div id="dropdownComment${answer.id}"
@@ -177,8 +176,8 @@
                     <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
                         aria-labelledby="dropdownMenuIconHorizontalButton">
                         <li>
-                            <a href="#"
-                                class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Report</a>
+                            <a onclick="deleteAnswer(this, ${answer.id});"
+                                class="block cursor-pointer py-2 px-4 hover:bg-gray-200 hover:text-red-600 transition-all duration-300">Delete</a>
                         </li>
                     </ul>
                 </div>
@@ -204,7 +203,7 @@
                     const modal = `
                     <div id="comments_modal${result.question.id}" tabindex="-1" aria-hidden="true"
                   class="hidden overflow-y-auto bg-black bg-opacity-50 overflow-x-hidden flex fixed z-50 justify-center items-center w-full md:inset-0 h-screen max-h-full">
-                  <div class="relative p-4 w-full max-w-md max-h-full">
+                  <div class="relative p-4 w-7/12 max-h-full">
                       <!-- Modal content -->
                       <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                           <!-- Modal header -->
@@ -213,7 +212,7 @@
                               <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
                                   Comments
                               </h3>
-                              <button onclick="toggleCommentsModal(1);" type="button"
+                              <button onclick="toggleCommentsModal(${result.question.id});" type="button"
                                   class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                                   data-modal-toggle="comments_modal">
                                   <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -227,6 +226,7 @@
                           <div id="answers">   
                                                
                           </div>
+                          <hr>
                           <form class="p-4 md:p-5 flex justify-between">
                             @csrf
                             @method('POST')
@@ -237,22 +237,19 @@
                               </div>
                               <input type="hidden" name="questionID" value="${result.question.id}">
                               <button type="submit" onclick="addAnswer(this);"
-                                  class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                  <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                                      xmlns="http://www.w3.org/2000/svg">
-                                      <path fill-rule="evenodd"
-                                          d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                                          clip-rule="evenodd"></path>
-                                  </svg>
-                                  Add new answer
+                                class="text-white inline-flex items-center bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm pl-1.5 pr-2 pt-2 pb-1.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                <svg class="text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#000000" fill="none">
+                                  <path d="M21.0477 3.05293C18.8697 0.707363 2.48648 6.4532 2.50001 8.551C2.51535 10.9299 8.89809 11.6617 10.6672 12.1581C11.7311 12.4565 12.016 12.7625 12.2613 13.8781C13.3723 18.9305 13.9301 21.4435 15.2014 21.4996C17.2278 21.5892 23.1733 5.342 21.0477 3.05293Z" stroke="currentColor" stroke-width="2" />
+                                  <path d="M11.5 12.5L15 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
                               </button>
                           </form>
                       </div>
                   </div>
                     `;
                     jQuery('#answers-section').html(modal);
-                    for (i = 0; i < result.question.answers.length; i++) {
-                        createAnswer(result.question.answers[i]);
+                    for (i = 0; i < result.answers.length; i++) {
+                        createAnswer(result.answers[i]);
                     }
                     toggleCommentsModal(result.question.id);
                 }
@@ -275,6 +272,25 @@
                 })
                 $(form).unbind();
             });
+        }
+
+        function deleteAnswer(button, id) {
+            const article = button.closest('article');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            jQuery.ajax({
+                url: `{{ route('answer.destroy', ':id') }}`.replace(':id', id),
+                type: 'delete',
+
+                success: function(result) {
+                    article.remove();
+                }
+            })
+
         }
     </script>
 </x-main-layout>
