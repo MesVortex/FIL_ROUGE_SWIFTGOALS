@@ -35,10 +35,10 @@ Route::get('/', function () {
 //     return view('auth.register');
 // })->name('register');
 //forget password
-Route::get('/forget-password',[ForgetPassword::class,'index']);
-Route::post('/forget-password',[ForgetPassword::class,'forgetPassword'])->name('forgetPassword');
-Route::get('/reset-password/{token}',[ForgetPassword::class,'ResetPassword'])->name('ResetPassword');
-Route::post('/reset-password',[ForgetPassword::class,'NewPassword'])->name('NewPassword');
+// Route::get('/forget-password',[ForgetPassword::class,'index']);
+// Route::post('/forget-password',[ForgetPassword::class,'forgetPassword'])->name('forgetPassword');
+// Route::get('/reset-password/{token}',[ForgetPassword::class,'ResetPassword'])->name('ResetPassword');
+// Route::post('/reset-password',[ForgetPassword::class,'NewPassword'])->name('NewPassword');
 Route::get('/register', [AuthController::class, 'register'])->name('register');
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 

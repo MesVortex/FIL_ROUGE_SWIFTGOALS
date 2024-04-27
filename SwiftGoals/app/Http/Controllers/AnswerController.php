@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AnswerRequest;
 use App\Models\Answer;
 use Illuminate\Http\Request;
 
@@ -26,9 +27,15 @@ class AnswerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AnswerRequest $request)
     {
-        //
+        $fields = $request->validated();
+        $fields['clientID'] = auth()->user()->id;
+        $newAnswer = Answer::create($fields);
+        return response()->json([
+            'answer' => $newAnswer
+        ]);
+
     }
 
     /**

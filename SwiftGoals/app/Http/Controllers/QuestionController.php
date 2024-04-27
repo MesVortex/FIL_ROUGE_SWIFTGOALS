@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\QuestionRequest;
+use App\Models\Answer;
 use App\Models\Question;
 use Illuminate\Http\Request;
 
@@ -43,7 +44,10 @@ class QuestionController extends Controller
      */
     public function show(Question $question)
     {
-        //
+        $question = Question::where('id',$question->id)->with('answers')->first();
+        return response()->json([
+            'question' => $question
+        ]);
     }
 
     /**
