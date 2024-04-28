@@ -18,6 +18,10 @@ class Question extends Model
         return $this->hasMany(Answer::class, 'questionID');
     }
 
+    public function votes(){
+        return $this->hasMany(Vote::class, 'questionID');
+    }
+
     public function user(){
         return $this->belongsTo(User::class, 'clientID');
     }

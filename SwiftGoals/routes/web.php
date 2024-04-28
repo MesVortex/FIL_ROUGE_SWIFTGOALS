@@ -10,6 +10,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StepController;
 use App\Http\Controllers\TinystepController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VoteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -75,6 +76,9 @@ Route::middleware(['auth', 'role:client'])->group(function () {
     Route::resource('/question', QuestionController::class);
 
     Route::resource('/answer', AnswerController::class);
+
+    Route::resource('/vote', VoteController::class)->except('destroy');
+    Route::delete('/vote/destroy', [VoteController::class, 'destroy'])->name('vote.destroy');
 
     Route::post('/report', [ReportController::class, 'store'])->name('report.store');
 

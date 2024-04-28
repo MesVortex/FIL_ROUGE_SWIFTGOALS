@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\VoteRequest;
 use App\Models\Vote;
 use Illuminate\Http\Request;
 
@@ -26,9 +27,15 @@ class VoteController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(VoteRequest $request)
     {
-        //
+        $fields = $request->validated();
+        $fields['clientID'] = auth()->user()->id;
+        $fields['type'] = 'upVote';
+        $newVote = Vote::create($fields);
+        return response()->json([
+            'vote' => $newVote
+        ]);
     }
 
     /**
@@ -58,7 +65,7 @@ class VoteController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Vote $vote)
+    public function destroy()
     {
         //
     }
