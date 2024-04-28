@@ -11,6 +11,7 @@ use App\Http\Controllers\StepController;
 use App\Http\Controllers\TinystepController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoteController;
+use App\Http\Controllers\ForgotPasswordController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,7 +36,21 @@ Route::get('/', function () {
 // Route::get('/register', function () {
 //     return view('auth.register');
 // })->name('register');
-//forget password
+//forget passwordRoute::get('/forget-password', [ForgotPasswordLinkController::class, 'index'])->name('forgetPassword');
+
+Route::post('/forget-password', [ForgotPasswordController::class, 'forgetPasswordPost'])->name('forget');
+
+Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'ResetPassword'])->name('getRsetPassword');
+Route::get('/forget-password', [ForgotPasswordController::class, 'index'])->name('forget.index');
+
+Route::post('/new-password', [ForgotPasswordController::class, 'NewPassword'])->name('NewPassword');
+
+
+
+
+
+
+
 // Route::get('/forget-password',[ForgetPassword::class,'index']);
 // Route::post('/forget-password',[ForgetPassword::class,'forgetPassword'])->name('forgetPassword');
 // Route::get('/reset-password/{token}',[ForgetPassword::class,'ResetPassword'])->name('ResetPassword');

@@ -14,7 +14,9 @@
         <input type="password" id="password" name="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 px-3.5 " placeholder="Password">
         <p class=" hidden mt-2 text-sm font-bold text-red-700" id="PasswordInputHelp">Your password must be at least 8 characters!</p>
       </div>
+      <a href="{{route('forget.index')}}">
       <p class="mb-8 text-xs font-normal text-white ">Forgot Password?</p>
+    </a>
       <button type="submit" class="text-white bg-[#012E4A] font-medium rounded-lg text-sm w-full py-2 text-center">Sign in</button>
       <div class="w-full text-center my-5">
         <p class="block text-xs font-normal text-white ">or continue with</p>
@@ -25,7 +27,7 @@
         <a href="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg py-1.5 text-center w-full"><i class="fa-brands fa-facebook"></i></a>
       </div>
       <div class="flex justify-center my-5">
-        <p class=" text-xs font-normal text-white ">Don't have an account yet?<a href="{{ route('register') }}" class="font-bold ms-3 text-white hover:underline ">Register for free</a></p>
+        <p class=" text-xs fdont-normal text-white ">Don't have an account yet?<a href="{{ route('register') }}" class="font-bold ms-3 text-white hover:underline ">Register for free</a></p>
       </div>
     </form>
   </section>
