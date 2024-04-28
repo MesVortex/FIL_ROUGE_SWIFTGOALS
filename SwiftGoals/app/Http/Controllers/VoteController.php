@@ -65,8 +65,9 @@ class VoteController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy()
+    public function destroy(VoteRequest $request)
     {
-        //
+        Vote::where('clientID', auth()->user()->id)->where('questionID', $request->questionID)->delete();
+        return redirect()->back()->with('success', 'vote removed successfully!');
     }
 }

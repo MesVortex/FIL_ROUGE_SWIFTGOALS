@@ -69,7 +69,7 @@
                                             @csrf
                                             @method('POST')
                                             <input type="hidden" name="questionID" value="{{ $question->id }}">
-                                            <button onclick="upVote(this)" class="">
+                                            <button onclick="upVote(this, {{ $question->id }})" class="">
                                                 <svg class="text-[#012E4A]" xmlns="http://www.w3.org/2000/svg"
                                                     viewBox="0 0 24 24" width="28" height="28" color="#000000"
                                                     fill="none">
@@ -86,7 +86,8 @@
                                         <form title="downvote">
                                             @csrf
                                             @method('DELETE')
-                                            <button onclick="downVote(this)" title="downvote" class="">
+                                            <input type="hidden" name="questionID" value="{{ $question->id }}">
+                                            <button onclick="downVote(this, {{ $question->id }})" title="downvote" class="">
                                                 <svg class="text-[#012E4A]" xmlns="http://www.w3.org/2000/svg"
                                                     viewBox="0 0 24 24" width="28" height="28" color="#000000"
                                                     fill="none">
@@ -346,7 +347,7 @@
             })
         }
 
-        function upVote(button) {
+        function upVote(button, id) {
             var form = button.closest('form');
             $(form).on('submit', function(event) {
                 event.preventDefault();
@@ -362,7 +363,8 @@
                             form.innerHTML = `
                             @csrf
                                 @method('DELETE')
-                                <button onclick="downVote(this)" title="downvote"
+                                <input type="hidden" name="questionID" value="${id}">
+                                <button onclick="downVote(this, ${id})" title="downvote"
                                     class="">
                                     <svg class="text-[#012E4A]" xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 24 24" width="28" height="28" color="#000000"
@@ -371,6 +373,43 @@
                                             stroke-width="2" />
                                         <path
                                             d="M12 16L12 8M12 16C11.2998 16 9.99153 14.0057 9.5 13.5M12 16C12.7002 16 14.0085 14.0057 14.5 13.5"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                </button>
+                            `;
+                        }
+                    }
+                })
+                $(form).unbind();
+            });
+        }
+
+        function downVote(button, id) {
+            var form = button.closest('form');
+            $(form).on('submit', function(event) {
+                event.preventDefault();
+
+                jQuery.ajax({
+                    url: `{{ route('vote.destroy') }}`,
+                    data: jQuery(form).serialize(),
+                    type: 'delete',
+
+                    success: function(result) {
+                        if (form.title == 'downvote') {
+                            form.title = 'upvote';
+                            form.innerHTML = `
+                            @csrf
+                                @method('POST')
+                                <input type="hidden" name="questionID" value="${id}">
+                                <button onclick="upVote(this, ${id})" class="">
+                                    <svg class="text-[#012E4A]" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24" width="28" height="28" color="#000000"
+                                        fill="none">
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor"
+                                            stroke-width="2" />
+                                        <path
+                                            d="M12 8L12 16M12 8C11.2998 8 9.99153 9.9943 9.5 10.5M12 8C12.7002 8 14.0085 9.9943 14.5 10.5"
                                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                             stroke-linejoin="round" />
                                     </svg>
