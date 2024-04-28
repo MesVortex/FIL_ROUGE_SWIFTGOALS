@@ -41,7 +41,7 @@
                             class="flex flex-col shadow-lg p-5 w-full bg-white rounded-md max-md:px-5 max-md:mt-10 max-md:max-w-full">
                             <header class="flex gap-5 text-center max-md:flex-wrap">
                                 <img loading="lazy" src="{{ asset('images/default_profile.png') }}" alt="User avatar"
-                                    class="shrink-0 w-14 h-14" />
+                                    class="shrink-0 w-10 h-10" />
                                 <div class="flex flex-col grow shrink-0 my-auto basis-0 w-fit max-md:max-w-full">
                                     <div class="flex justify-between max-md:flex-wrap max-md:max-w-full">
                                         <h3 class="text-lg font-bold capitalize text-slate-900">
@@ -58,21 +58,34 @@
                                     </div>
                                 </div>
                             </header>
-                            <div class="flex gap-5 text-slate-500 max-md:flex-wrap">
+                            <div class="flex gap-5 text-slate-500 max-md:flex-wrap items-center">
                                 <p
                                     class="flex-auto self-start mt-2.5 text-base font-medium leading-7 max-md:max-w-full">
                                     <span class="text-slate-500">{{ $question->content }}</span>
                                 </p>
-                                <div>
-                                    <button class="mb-3">
-                                        <i class="fa-solid fa-circle-arrow-up fa-2xl text-[#012E4A]"></i>
+                                <div class="flex items-center gap-2">
+                                    <button class="">
+                                        <svg class="text-[#012E4A]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                            width="28" height="28" color="#000000" fill="none">
+                                            <circle cx="12" cy="12" r="10" stroke="currentColor"
+                                                stroke-width="2" />
+                                            <path
+                                                d="M12 8L12 16M12 8C11.2998 8 9.99153 9.9943 9.5 10.5M12 8C12.7002 8 14.0085 9.9943 14.5 10.5"
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
                                     </button>
                                     <span>1.4k</span>
-                                    <button class="mt-3">
-                                        <i class="fa-solid fa-circle-arrow-down fa-2xl text-[#012E4A]"></i>
-                                    </button>
-                                    <button type="button" onclick="showComments({{ $question->id }})" class="mt-4">
-                                        <i class="fa-regular fa-comment fa-2xl text-[#012E4A]"></i>
+                                    <button type="button" onclick="showComments({{ $question->id }})" class="">
+                                        <svg class=" text-[#012E4A]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                            width="28" height="28" color="#000000" fill="none">
+                                            <path
+                                                d="M22 11.5667C22 16.8499 17.5222 21.1334 12 21.1334C11.3507 21.1343 10.7032 21.0742 10.0654 20.9545C9.60633 20.8682 9.37678 20.8251 9.21653 20.8496C9.05627 20.8741 8.82918 20.9948 8.37499 21.2364C7.09014 21.9197 5.59195 22.161 4.15111 21.893C4.69874 21.2194 5.07275 20.4112 5.23778 19.5448C5.33778 19.0148 5.09 18.5 4.71889 18.1231C3.03333 16.4115 2 14.1051 2 11.5667C2 6.28357 6.47778 2 12 2C17.5222 2 22 6.28357 22 11.5667Z"
+                                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                                            <path d="M11.9955 12H12.0045M15.991 12H16M8 12H8.00897"
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
                                     </button>
                                     <span class="">100</span>
                                 </div>
@@ -89,7 +102,7 @@
                             class="flex flex-col shadow-xl p-5 w-full bg-gradient-to-r from-[#7CB8F7] to-[#2A8BF2] rounded-md max-md:px-5 max-md:mt-10 max-md:max-w-full">
                             <header class="flex gap-5 text-center max-md:flex-wrap">
                                 <img loading="lazy" src="{{ asset('images/default_profile.png') }}" alt="User avatar"
-                                    class="shrink-0 w-14 h-14" />
+                                    class="shrink-0 w-10 h-10" />
                                 <div class="flex flex-col grow shrink-0 my-auto basis-0 w-fit max-md:max-w-full">
                                     <div class="flex justify-between max-md:flex-wrap max-md:max-w-full">
                                         <h3 class="text-lg font-bold capitalize text-black">{{ auth()->user()->name }}
@@ -106,21 +119,36 @@
                                     </div>
                                 </div>
                             </header>
-                            <div class="flex gap-5 text-black max-md:flex-wrap">
+                            <div class="flex gap-5 text-black max-md:flex-wrap items-center">
                                 <p
                                     class="flex-auto self-start mt-2.5 text-base font-medium leading-7 max-md:max-w-full">
                                     <span class="text-white">{{ $userQuestion->content }}</span>
                                 </p>
-                                <div>
-                                    <button class="mb-3">
-                                        <i class="fa-solid fa-circle-arrow-up fa-2xl text-white"></i>
+                                <div class="flex items-center gap-2">
+                                    <button class="">
+                                        <svg class="text-white" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24" width="28" height="28" color="#000000"
+                                            fill="none">
+                                            <circle cx="12" cy="12" r="10" stroke="currentColor"
+                                                stroke-width="2" />
+                                            <path
+                                                d="M12 8L12 16M12 8C11.2998 8 9.99153 9.9943 9.5 10.5M12 8C12.7002 8 14.0085 9.9943 14.5 10.5"
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
                                     </button>
                                     <span>1.4k</span>
-                                    <button class="mt-3">
-                                        <i class="fa-solid fa-circle-arrow-down fa-2xl text-white"></i>
-                                    </button>
-                                    <button class="mt-4">
-                                        <i class="fa-regular fa-comment fa-2xl text-white"></i>
+                                    <button class="">
+                                        <svg class="text-white" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24" width="28" height="28" color="#000000"
+                                            fill="none">
+                                            <path
+                                                d="M22 11.5667C22 16.8499 17.5222 21.1334 12 21.1334C11.3507 21.1343 10.7032 21.0742 10.0654 20.9545C9.60633 20.8682 9.37678 20.8251 9.21653 20.8496C9.05627 20.8741 8.82918 20.9948 8.37499 21.2364C7.09014 21.9197 5.59195 22.161 4.15111 21.893C4.69874 21.2194 5.07275 20.4112 5.23778 19.5448C5.33778 19.0148 5.09 18.5 4.71889 18.1231C3.03333 16.4115 2 14.1051 2 11.5667C2 6.28357 6.47778 2 12 2C17.5222 2 22 6.28357 22 11.5667Z"
+                                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                                            <path d="M11.9955 12H12.0045M15.991 12H16M8 12H8.00897"
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
                                     </button>
                                     <span class="">100</span>
                                 </div>
