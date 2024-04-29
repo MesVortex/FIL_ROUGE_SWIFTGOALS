@@ -12,6 +12,7 @@ use App\Http\Controllers\TinystepController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoteController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\GoogleAuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +29,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback']);
+Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])->name('auth.google');
+
 
 // Route::get('/login', function () {
 //     return view('auth.login');
@@ -94,7 +98,7 @@ Route::middleware(['auth', 'role:client'])->group(function () {
 
     Route::resource('/vote', VoteController::class)->except('destroy');
     Route::delete('/vote/destroy', [VoteController::class, 'destroy'])->name('vote.destroy');
-
+   
     Route::get('/profile', [UserController::class, 'show'])->name('profile');
     Route::patch('/profile/update', [UserController::class, 'update'])->name('profile.update');
     Route::patch('/profile/update/password', [UserController::class, 'changePassword'])->name('profile.changePassword');

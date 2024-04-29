@@ -147,15 +147,15 @@
       </div>
       <div class="px-2 text-start bg-transparent text-[#666666] dark:text-white rounded-b-3xl ">
         <h5 class="mb-2 text-md font-extrabold text-[#2A44AB] leading-tight">${template.title}</h5>
-        @if($template->mainGoal != null)
+        ${template.mainGoal != null ? `
         <p class="mb-4 text-sm">
         ${template.mainGoal}
         </p>
-        @else
+        ` : `
         <p class="mb-4 text-sm ">
           the creator haven't left any description
         </p>
-        @endif
+        `}
       </div>
       <div class="absolute top-24 left-3">
         <img class="rounded-full bg-gray-600 h-10" src="{{ asset('images/default_profile.png') }}" alt="d">

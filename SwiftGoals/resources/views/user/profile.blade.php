@@ -105,17 +105,7 @@
                             <span
                                 class="absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-[#1C70EC] top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"></span>
                             <span class="relative text-white transition duration-300 ease">Modify</span>
-                        </button>
-                        {{-- <form action="{{ route('user.logout') }}" method="post"
-                        class="button rounded-md w-2/6 text-center px-3.5 py-2 m-1 overflow-hidden relative group cursor-pointer border-2 font-medium border-white text-white hover:border-[#ff3f31] transition duration-300 ease">
-                        @csrf
-                        @method('POST')
-                        <button type="submit">
-                            <span
-                                class="absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-[#ff3f31] top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"></span>
-                            <span class="relative text-white transition duration-300 ease">Logout</span>
-                        </button>
-                    </form> --}}
+                        </button>                       
                     </div>
                 </form>
             </div>
