@@ -501,7 +501,6 @@
 
         const draggables = document.querySelectorAll(".draggable");
         const containers = document.querySelectorAll(".container");
-        console.log(draggables, containers);
         draggables.forEach(draggable => {
 
             draggable.addEventListener("dragstart", () => {
@@ -515,10 +514,26 @@
         });
 
         containers.forEach(container => {
-            container.addEventListener("dragover", e => {
+            container.addEventListener("dragover", function handleDragOver(e) {
                 e.preventDefault();
                 const draggable = document.querySelector(".dragging");
                 container.appendChild(draggable);
+                const button = draggable.querySelector(".submitBTN");
+                const priority = draggable.querySelector(".priority");
+                if (container.id == 'priority1') {
+                    priority.value = 1;
+                    save(button);
+                } else if (container.id == 'priority2') {
+                    priority.value = 2;
+                    save(button);
+                } else {
+                    priority.value = 3;
+                    save(button);
+                }
+
+                containers.forEach(container => {
+                    container.removeEventListener("dragover", handleDragOver);
+                });
             });
         });
 
@@ -830,10 +845,10 @@
                 @method('PATCH')
                 <label for="stepDescription" class="block text-gray-500 text-sm font-bold italic mb-2">Description</label>
                 ${result.step.description ? `
-                            <textarea onfocus="this.nextElementSibling.nextElementSibling.classList.remove('hidden');" type="text" id="stepDescription" name="stepDescription" rows="3" cols="50" class="w-full border-none focus:bg-gray-400 focus:outline-none focus:text-white p-2 rounded-lg transition-all duration-300">${result.step.description}</textarea>
-                            ` : 
+                                <textarea onfocus="this.nextElementSibling.nextElementSibling.classList.remove('hidden');" type="text" id="stepDescription" name="stepDescription" rows="3" cols="50" class="w-full border-none focus:bg-gray-400 focus:outline-none focus:text-white p-2 rounded-lg transition-all duration-300">${result.step.description}</textarea>
+                                ` : 
                 `<textarea onfocus="this.nextElementSibling.nextElementSibling.classList.remove('hidden');" type="text" id="stepDescription" name="stepDescription" rows="3" cols="50" class="w-full border-none focus:bg-gray-400 focus:outline-none focus:text-white p-2 rounded-lg transition-all duration-300">This Step Has No Description</textarea>
-                            `}
+                                `}
                 <input type="hidden" name="stepID" value="${result.step.id}">
                 <button onclick="saveDescription(this);" class="hidden">Save</button>
               </form>
@@ -860,32 +875,32 @@
               <span class="text-gray-500 block text-sm font-bold italic mb-2">Step Settings</span>
               ${result.step.dueDate ? 
                 `<div id='dateDiv' class="mb-2 w-full">
-                              <button class="focus:outline-none px-4 w-full bg-gray-300 p-2 rounded-full text-black hover:bg-green-600 hover:text-white transition-all duration-300 dateBtn">${result.step.dueDate}</button>
-                            </div>
-                            <div class="mb-2 w-full">
-                              <button onclick="dateDropdown(${result.step.id});" class="focus:outline-none px-4 w-full bg-gray-300 p-2 rounded-full text-black hover:bg-blue-600 hover:text-white transition-all duration-300">Update Due Date</button>
-                              <form id="dateRangeDropdown${result.step.id}" class="z-10 mb-10 relative hidden bg-white divide-gray-100 rounded-2xl shadow w-80 lg:w-full dark:bg-gray-700 dark:divide-gray-600">
-                                @csrf
-                                @method('PATCH')
-                                <input name="date" type="date" class="bg-gray-50 -mb-2 border border-gray-300 text-gray-900 text-sm rounded-t-2xl rounded-b-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Due-date">
-                                <button onclick="saveDueDate(this);" data-id="${result.step.id}" class="absolute w-full pt-2 -z-10 rounded-b-3xl hover:text-white hover:bg-blue-600 transition-all duration-300">Save</button>
-                              </form>
-                            </div>` :
+                                  <button class="focus:outline-none px-4 w-full bg-gray-300 p-2 rounded-full text-black hover:bg-green-600 hover:text-white transition-all duration-300 dateBtn">${result.step.dueDate}</button>
+                                </div>
+                                <div class="mb-2 w-full">
+                                  <button onclick="dateDropdown(${result.step.id});" class="focus:outline-none px-4 w-full bg-gray-300 p-2 rounded-full text-black hover:bg-blue-600 hover:text-white transition-all duration-300">Update Due Date</button>
+                                  <form id="dateRangeDropdown${result.step.id}" class="z-10 mb-10 relative hidden bg-white divide-gray-100 rounded-2xl shadow w-80 lg:w-full dark:bg-gray-700 dark:divide-gray-600">
+                                    @csrf
+                                    @method('PATCH')
+                                    <input name="date" type="date" class="bg-gray-50 -mb-2 border border-gray-300 text-gray-900 text-sm rounded-t-2xl rounded-b-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Due-date">
+                                    <button onclick="saveDueDate(this);" data-id="${result.step.id}" class="absolute w-full pt-2 -z-10 rounded-b-3xl hover:text-white hover:bg-blue-600 transition-all duration-300">Save</button>
+                                  </form>
+                                </div>` :
                  `<div class="mb-2 w-full">
-                                <button onclick="dateDropdown(${result.step.id});" class="focus:outline-none px-4 w-full bg-gray-300 p-2 rounded-full text-black hover:bg-blue-600 hover:text-white transition-all duration-300">Add Due Date</button>
-                                <form id="dateRangeDropdown${result.step.id}" class="z-10 mb-10 relative hidden bg-white divide-gray-100 rounded-2xl shadow w-80 lg:w-full dark:bg-gray-700 dark:divide-gray-600">
-                                  @csrf
-                                  @method('PATCH')
-                                  <input name="date" type="date" class="bg-gray-50 -mb-2 border border-gray-300 text-gray-900 text-sm rounded-t-2xl rounded-b-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Due-date">
-                                  <button onclick="saveDueDate(this);" data-id="${result.step.id}" class="absolute w-full pt-2 -z-10 rounded-b-3xl hover:text-white hover:bg-blue-600 transition-all duration-300">Save</button>
-                                </form>
-                            </div>` }       
+                                    <button onclick="dateDropdown(${result.step.id});" class="focus:outline-none px-4 w-full bg-gray-300 p-2 rounded-full text-black hover:bg-blue-600 hover:text-white transition-all duration-300">Add Due Date</button>
+                                    <form id="dateRangeDropdown${result.step.id}" class="z-10 mb-10 relative hidden bg-white divide-gray-100 rounded-2xl shadow w-80 lg:w-full dark:bg-gray-700 dark:divide-gray-600">
+                                      @csrf
+                                      @method('PATCH')
+                                      <input name="date" type="date" class="bg-gray-50 -mb-2 border border-gray-300 text-gray-900 text-sm rounded-t-2xl rounded-b-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Due-date">
+                                      <button onclick="saveDueDate(this);" data-id="${result.step.id}" class="absolute w-full pt-2 -z-10 rounded-b-3xl hover:text-white hover:bg-blue-600 transition-all duration-300">Save</button>
+                                    </form>
+                                </div>` }       
               <div class="mb-2 w-full">
                 ${result.step.isComplete ? `
-                            <button onclick="markStepIncomplete(${result.step.id});"  class="focus:outline-none px-4 w-full bg-gray-300 p-2 rounded-full text-black hover:bg-green-600 hover:text-white transition-all duration-300">Mark as incomplete</button>
-                            ` : `
-                            <button onclick="markStepComplete(${result.step.id});"  class="focus:outline-none px-4 w-full bg-gray-300 p-2 rounded-full text-black hover:bg-green-600 hover:text-white transition-all duration-300">Mark as complete</button>
-                            `}
+                                <button onclick="markStepIncomplete(${result.step.id});"  class="focus:outline-none px-4 w-full bg-gray-300 p-2 rounded-full text-black hover:bg-green-600 hover:text-white transition-all duration-300">Mark as incomplete</button>
+                                ` : `
+                                <button onclick="markStepComplete(${result.step.id});"  class="focus:outline-none px-4 w-full bg-gray-300 p-2 rounded-full text-black hover:bg-green-600 hover:text-white transition-all duration-300">Mark as complete</button>
+                                `}
               </div>
               <div class="mb-2 w-full">
                 <button onclick="confirmDelete(${result.step.id});"  class="focus:outline-none px-4 w-full bg-gray-300 p-2 rounded-full text-black hover:bg-red-600 hover:text-white transition-all duration-300">Delete step</button>
