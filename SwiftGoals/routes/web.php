@@ -95,6 +95,8 @@ Route::middleware(['auth', 'role:client'])->group(function () {
     Route::resource('/vote', VoteController::class)->except('destroy');
     Route::delete('/vote/destroy', [VoteController::class, 'destroy'])->name('vote.destroy');
 
+    Route::patch('/profile/update', [UserController::class, 'update'])->name('profile.update');
+
     Route::post('/report', [ReportController::class, 'store'])->name('report.store');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('user.logout');

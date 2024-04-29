@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -74,9 +76,11 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UserRequest $request)
     {
-        //
+        $fields = $request->validated();
+        $success = Auth::user()->update($fields);
+        return redirect()->back()->with('success', 'personal info updated successfully!');
     }
 
     /**
