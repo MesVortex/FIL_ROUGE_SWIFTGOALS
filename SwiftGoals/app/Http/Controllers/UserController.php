@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PasswordRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -60,9 +62,9 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
-        //
+        return view('user.profile');
     }
 
     /**
@@ -79,8 +81,17 @@ class UserController extends Controller
     public function update(UserRequest $request)
     {
         $fields = $request->validated();
-        $success = Auth::user()->update($fields);
+        Auth::user()->update($fields);
         return redirect()->back()->with('success', 'personal info updated successfully!');
+    }
+
+    public function changePassword(PasswordRequest $request)
+    {
+        $request->user()->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->back()->with('success', 'password updated successfully!');
     }
 
     /**
@@ -103,7 +114,6 @@ class UserController extends Controller
                 'message' => 'User Unblocked Successfully!',
                 'user' => $user,
             ]);
-
         } else {
             $user->update([
                 'isBanned' => 1,
@@ -111,7 +121,7 @@ class UserController extends Controller
 
             return response()->json([
                 'success' => 'Complete!',
-                'message' => 'Template Blocked Successfully!',
+                'message' => 'User Blocked Successfully!',
                 'user' => $user,
             ]);
         }

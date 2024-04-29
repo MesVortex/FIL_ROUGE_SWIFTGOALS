@@ -95,7 +95,9 @@ Route::middleware(['auth', 'role:client'])->group(function () {
     Route::resource('/vote', VoteController::class)->except('destroy');
     Route::delete('/vote/destroy', [VoteController::class, 'destroy'])->name('vote.destroy');
 
+    Route::get('/profile', [UserController::class, 'show'])->name('profile');
     Route::patch('/profile/update', [UserController::class, 'update'])->name('profile.update');
+    Route::patch('/profile/update/password', [UserController::class, 'changePassword'])->name('profile.changePassword');
 
     Route::post('/report', [ReportController::class, 'store'])->name('report.store');
 
@@ -113,9 +115,9 @@ Route::middleware(['auth', 'role:client'])->group(function () {
     //     return view('user.community');
     // })->name('community');
     
-    Route::get('/profile', function () {
-        return view('user.profile');
-    })->name('profile');
+    // Route::get('/profile', function () {
+    //     return view('user.profile');
+    // })->name('profile');
     
 });
 

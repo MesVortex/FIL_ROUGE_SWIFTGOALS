@@ -62,7 +62,7 @@
                     </form> --}}
                     </div>
                 </form>
-                <form class="w-5/12">
+                <form method="POST" action="{{ route('profile.changePassword') }}" class="w-5/12">
                     @csrf
                     @method('PATCH')
                     <label for="current_password"
