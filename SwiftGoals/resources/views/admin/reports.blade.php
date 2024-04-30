@@ -1,4 +1,5 @@
 <x-dashboard-layout>
+    <x-sidebar current='reports'/>
     <div class="flex-grow p-6 pt-36 lg:pl-80">
         <div id="successAlert"
             class="bg-teal-50 border-t-2 hidden mb-5 border-teal-500 rounded-lg p-4 dark:bg-teal-800/30 transition-all duration-300"

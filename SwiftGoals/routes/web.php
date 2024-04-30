@@ -104,8 +104,6 @@ Route::middleware(['auth', 'role:client'])->group(function () {
 
     Route::post('/report', [ReportController::class, 'store'])->name('report.store');
 
-    Route::post('/logout', [AuthController::class, 'logout'])->name('user.logout');
-
     Route::get('/home', [GoalController::class, 'home'])->name('home');
                 
     // Route::get('/community', function () {
@@ -133,3 +131,5 @@ Route::middleware(['auth', 'role:client'])->group(function () {
     });
     
     Route::resource('/goal', GoalController::class);
+    Route::post('/logout', [AuthController::class, 'logout'])->name('user.logout');
+

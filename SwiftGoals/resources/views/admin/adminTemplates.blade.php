@@ -1,4 +1,5 @@
 <x-dashboard-layout>
+    <x-sidebar current='templates'/>
     <div class="flex-grow p-6 pt-36 lg:pl-80">
         <div
             class="h-28 w-full max-w-sm border-2 border-dashed flex items-center justify-center hover:bg-gray-100 transition-all duration-300 ease-in rounded-2xl relative">

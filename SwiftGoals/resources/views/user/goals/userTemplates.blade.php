@@ -1,6 +1,6 @@
 <x-main-layout>
     <x-goalsNavbar page='Your Templates' />
-    <section id="templates" class="my-10 px-32 flex flex-wrap justify-between gap-10">
+    <section id="templates" class="my-10 px-48 flex flex-wrap justify-between gap-10">
         <div class="h-20 mx-auto justify-center flex items-center w-full mb-16"
             style="background-image: url('{{ asset('images/blue-washi-tape-with-white-line-png.png') }}'); background-size:cover; background-position: center;">
             <h1
