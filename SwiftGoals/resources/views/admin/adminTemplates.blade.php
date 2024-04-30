@@ -1,5 +1,5 @@
 <x-dashboard-layout>
-    <x-sidebar current='templates'/>
+    <x-sidebar current='templates' />
     <div class="flex-grow p-6 pt-36 lg:pl-80">
         <div
             class="h-28 w-full max-w-sm border-2 border-dashed flex items-center justify-center hover:bg-gray-100 transition-all duration-300 ease-in rounded-2xl relative">
@@ -26,7 +26,7 @@
                 </svg>
                 <span class="sr-only">Close menu</span>
             </button>
-            <form id="addTemplate" class="mb-6" method="POST" action="{{ route('goal.store') }}">
+            <form id="addTemplate" class="mb-6" method="POST" action="{{ route('template.store') }}">
                 @csrf
                 @method('POST')
                 <div class="mb-6">
@@ -44,8 +44,17 @@
                         placeholder="becoming the the best piano player"></textarea>
                 </div>
                 <input type="hidden" name="userID" value="{{ Auth::user()->id }}">
+                <label for="categories" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select template
+                    category</label>
+                <select id="categories"
+                    name="categoryID"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    @foreach ($categories as $category)
+                    <option value="{{$category->id}}">{{$category->name}}</option>
+                    @endforeach
+                </select>
                 <button type="submit"
-                    class="text-white justify-center flex items-center bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"><svg
+                    class="text-white mt-4 justify-center flex items-center bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"><svg
                         class="w-3.5 h-3.5 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                         fill="currentColor" viewBox="0 0 20 20">
                         <path
@@ -69,14 +78,12 @@
                             </div>
                         </a>
                         <div class="absolute top-2 right-2 text-sm rounded-full bg-[#2A44AB] text-white py-1 px-4">
-                            <p>null</p>
+                            <p>{{$template->categories->name}}</p>
                         </div>
                     </div>
                     <div class="flex my-5 justify-between w-full px-2 text-[#666666]">
                         <p class="">by You</p>
                         <div class="flex">
-                            <span class="mr-3 text-sm"><i class="fa-solid fa-clone fa-sm mr-1"></i>1k</span>
-                            <span class="text-sm"><i class="fa-brands fa-gratipay fa-sm mr-1"></i>1.4k</span>
                         </div>
                     </div>
                     <div class="px-2 text-start bg-transparent text-[#666666] dark:text-white rounded-b-3xl ">
@@ -100,7 +107,8 @@
         </section>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous"></script>
     <script>
         function toggleDrawer() {
             var drawer = document.getElementById('drawer-form');
@@ -110,59 +118,59 @@
             drawerBackground.classList.toggle('hidden');
         }
 
-        $(document).ready(function() {
-            $('#addTemplate').on('submit', function(event) {
-                event.preventDefault();
+        // $(document).ready(function() {
+        //     $('#addTemplate').on('submit', function(event) {
+        //         event.preventDefault();
 
-                jQuery.ajax({
-                    url: "{{ route('goal.store') }}",
-                    data: jQuery('#addTemplate').serialize(),
-                    type: 'post',
+        //         jQuery.ajax({
+        //             url: "{{ route('goal.store') }}",
+        //             data: jQuery('#addTemplate').serialize(),
+        //             type: 'post',
 
-                    success: function(result) {
-                        const cardDiv = document.createElement("div");
-                        cardDiv.setAttribute('class',
-                            'w-64 relative rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark'
-                            );
-                        const cardContent = `
-                          <div class="relative overflow-hidden bg-cover bg-no-repeat" data-twe-ripple-init data-twe-ripple-color="light">
-                            <div class="rounded-xl w-full border border-gray-500 h-32" style="background-image: url('${template.image && template.image.path ? `{{ asset('storage') }}/${template.image.path}` : `{{ asset('/images/sam-schooler-E9aetBe2w40-unsplash.jpg') }}`}'); background-size: cover; background-repeat: no-repeat; background-position: center"></div>
-                            <a href="">
-                              <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
-                            </a>
-                            <div class="absolute top-2 right-2 text-sm rounded-full bg-[#2A44AB] text-white py-1 px-4">
-                              <p>null</p>
-                            </div>
-                          </div>
-                          <div class="flex my-5 justify-between w-full px-2 text-[#666666]">
-                            <p class="">by ${result.goal.users.name}</p>
-                            <div class="flex">
-                              <span class="mr-3 text-sm"><i class="fa-solid fa-clone fa-sm mr-1"></i>1k</span>
-                              <span class="text-sm"><i class="fa-brands fa-gratipay fa-sm mr-1"></i>1.4k</span>
-                            </div>
-                          </div>
-                          <div class="px-2 text-start bg-transparent text-[#666666] dark:text-white rounded-b-3xl ">
-                            <h5 class="mb-2 text-md font-extrabold text-[#2A44AB] leading-tight">${goal.title}</h5>
-                            ${result.goal.mainGoal ? `
-                            <p class="mb-4 text-sm">
-                            ${result.goal.mainGoal}
-                            </p>
-                            ` : `
-                            <p class="mb-4 text-sm ">
-                              the creator haven't left any description
-                            </p>
-                            `}
-                          </div>
-                          <div class="absolute top-24 left-3">
-                            <img class="rounded-full bg-gray-600 h-10" src="{{ asset('images/default_profile.png') }}" alt="d">
-                          </div>`;
-                        cardDiv.innerHTML = templateCard;
-                        jQuery('#templates').append(cardDiv);
-                        jQuery('#addTemplate')[0].reset();
-                        toggleDrawer();
-                    }
-                })
-            });
-        });
+        //             success: function(result) {
+        //                 const cardDiv = document.createElement("div");
+        //                 cardDiv.setAttribute('class',
+        //                     'w-64 relative rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark'
+        //                     );
+        //                 const cardContent = `
+    //                   <div class="relative overflow-hidden bg-cover bg-no-repeat" data-twe-ripple-init data-twe-ripple-color="light">
+    //                     <div class="rounded-xl w-full border border-gray-500 h-32" style="background-image: url('${template.image && template.image.path ? `{{ asset('storage') }}/${template.image.path}` : `{{ asset('/images/sam-schooler-E9aetBe2w40-unsplash.jpg') }}`}'); background-size: cover; background-repeat: no-repeat; background-position: center"></div>
+    //                     <a href="">
+    //                       <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
+    //                     </a>
+    //                     <div class="absolute top-2 right-2 text-sm rounded-full bg-[#2A44AB] text-white py-1 px-4">
+    //                       <p>null</p>
+    //                     </div>
+    //                   </div>
+    //                   <div class="flex my-5 justify-between w-full px-2 text-[#666666]">
+    //                     <p class="">by ${result.goal.users.name}</p>
+    //                     <div class="flex">
+    //                       <span class="mr-3 text-sm"><i class="fa-solid fa-clone fa-sm mr-1"></i>1k</span>
+    //                       <span class="text-sm"><i class="fa-brands fa-gratipay fa-sm mr-1"></i>1.4k</span>
+    //                     </div>
+    //                   </div>
+    //                   <div class="px-2 text-start bg-transparent text-[#666666] dark:text-white rounded-b-3xl ">
+    //                     <h5 class="mb-2 text-md font-extrabold text-[#2A44AB] leading-tight">${goal.title}</h5>
+    //                     ${result.goal.mainGoal ? `
+        //                     <p class="mb-4 text-sm">
+        //                     ${result.goal.mainGoal}
+        //                     </p>
+        //                     ` : `
+        //                     <p class="mb-4 text-sm ">
+        //                       the creator haven't left any description
+        //                     </p>
+        //                     `}
+    //                   </div>
+    //                   <div class="absolute top-24 left-3">
+    //                     <img class="rounded-full bg-gray-600 h-10" src="{{ asset('images/default_profile.png') }}" alt="d">
+    //                   </div>`;
+        //                 cardDiv.innerHTML = templateCard;
+        //                 jQuery('#templates').append(cardDiv);
+        //                 jQuery('#addTemplate')[0].reset();
+        //                 toggleDrawer();
+        //             }
+        //         })
+        //     });
+        // });
     </script>
 </x-dashboard-layout>

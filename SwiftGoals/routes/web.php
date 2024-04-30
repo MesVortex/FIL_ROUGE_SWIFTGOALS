@@ -121,6 +121,7 @@ Route::middleware(['auth', 'role:client'])->group(function () {
 
         Route::get('/dashboard', [UserController::class, 'index'])->name('admin.dashboard');
         Route::get('/templates', [GoalController::class, 'adminTemplates'])->name('admin.templates');
+        Route::post('/template/store', [GoalController::class, 'templateStore'])->name('template.store');
         Route::get('/dashboard/users/search', [UserController::class, 'search'])->name('user.search');
         Route::patch('/user/{user}/ban', [UserController::class, 'banUser'])->name('user.ban');
         Route::get('/reports', [ReportController::class, 'index'])->name('admin.reports');

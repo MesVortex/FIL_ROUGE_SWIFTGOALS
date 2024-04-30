@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\goalRequest;
 use App\Http\Requests\ImageRequest;
+use App\Http\Requests\templateRequest;
 use App\Models\Category;
 use App\Models\Goal;
 use App\Models\Step;
@@ -56,8 +57,9 @@ class GoalController extends Controller
         $userID = auth()->user()->id;
         $templates = Goal::where('userID', $userID)
             ->get();
+        $categories = Category::all();
 
-        return view('admin.adminTemplates', compact('templates'));
+        return view('admin.adminTemplates', compact('templates', 'categories'));
     }
 
     public function ajaxIndex()
@@ -169,6 +171,15 @@ class GoalController extends Controller
         $data = $request->validated();
         $newGoal = Goal::create($data);
         return redirect()->back()->with('success', 'Goal Created successfully!');
+    }
+
+    public function templateStore(templateRequest $request)
+    {
+        $fields = $request->validated();
+        $fields['userID'] = auth()->user()->id;
+        $fields['isTemplate'] = 1;
+        $newTemplate = Goal::create($fields);
+        return redirect()->back()->with('success', 'Template Created successfully!');
     }
 
     public function changeBackground(ImageRequest $request)
