@@ -1,6 +1,15 @@
 <x-main-layout>
     <x-goalsNavbar page='Your Templates' />
     <section id="templates" class="my-10 px-32 flex flex-wrap justify-between gap-10">
+        <div class="h-20 mx-auto justify-center flex items-center w-full mb-16"
+            style="background-image: url('{{ asset('images/blue-washi-tape-with-white-line-png.png') }}'); background-size:cover; background-position: center;">
+            <h1
+                class="group text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl dark:text-white">
+                Make Templates and Inspire Others</h1>
+            <span
+                class="underline underline-offset-3 hidden decoration-8 decoration-blue-100 group-hover:decoration-blue-600 text-gray-900 group-hover:text-gray-900 transition-all ease-in duration-500">als
+                and ambitions</span>
+        </div>
         @foreach ($templates as $template)
             <div class="w-64 relative rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark">
                 <div class="relative overflow-hidden bg-cover bg-no-repeat" data-twe-ripple-init
@@ -19,10 +28,6 @@
                 </div>
                 <div class="flex my-5 justify-between w-full px-2 text-[#666666]">
                     <p class="">by You</p>
-                    <div class="flex">
-                        <span class="mr-3 text-sm"><i class="fa-solid fa-clone fa-sm mr-1"></i>1k</span>
-                        <span class="text-sm"><i class="fa-brands fa-gratipay fa-sm mr-1"></i>1.4k</span>
-                    </div>
                 </div>
                 <div class="px-2 text-start bg-transparent text-[#666666] dark:text-white rounded-b-3xl ">
                     <h5 class="mb-2 text-md font-extrabold text-[#2A44AB] leading-tight">{{ $template->title }}</h5>
@@ -44,7 +49,7 @@
         @endforeach
     </section>
     <script>
-                document.getElementById('profileDropdown').addEventListener('click', function() {
+        document.getElementById('profileDropdown').addEventListener('click', function() {
             document.getElementById('dropdownContent').classList.toggle('hidden');
         });
     </script>
