@@ -79,7 +79,6 @@ Route::middleware(['auth', 'role:client'])->group(function () {
     Route::get('/goal/ajax/index', [GoalController::class, 'ajaxIndex'])->name('goal.ajaxIndex');
     Route::get('/goal/personal/templates', [GoalController::class, 'userTemplates'])->name('user.templates');
     Route::patch('/goal/{goal}/makeTemplate', [GoalController::class, 'makeTemplate'])->name('goal.makeTemplate');
-    Route::delete('/goal/destroy', [GoalController::class, 'destroy'])->name('goal.destroy');
 
     Route::resource('/step', StepController::class)->except(['update']);
     Route::put('/step/update', [StepController::class, 'update'])->name('step.update');
@@ -107,14 +106,8 @@ Route::middleware(['auth', 'role:client'])->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('user.logout');
 
-    Route::get('/home', function () {
-        return view('user.home');
-    })->name('home');
-    
-    Route::get('/goals/pinned', function () {
-        return view('user.goals.pinnedGoals');
-    })->name('pinned.goals');
-            
+    Route::get('/home', [GoalController::class, 'home'])->name('home');
+                
     // Route::get('/community', function () {
     //     return view('user.community');
     // })->name('community');
@@ -139,4 +132,4 @@ Route::middleware(['auth', 'role:client'])->group(function () {
 
     });
     
-    Route::resource('/goal', GoalController::class)->except('destroy');
+    Route::resource('/goal', GoalController::class);

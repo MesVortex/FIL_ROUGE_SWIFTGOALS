@@ -32,6 +32,14 @@ class GoalController extends Controller
         return view('user.goals.goals', compact('goals'));
     }
 
+    public function home(){
+        $templates = Goal::where('isTemplate', 1)
+            ->orderBy('id', 'desc')
+            ->limit(3)
+            ->get();
+            return view('user.home', compact('templates'));
+    }
+
     public function userTemplates()
     {
         $userID = auth()->user()->id;
@@ -160,10 +168,7 @@ class GoalController extends Controller
     {
         $data = $request->validated();
         $newGoal = Goal::create($data);
-        return response()->json([
-            'success' => 'goal added successfully!',
-            'goal' => $newGoal,
-        ]);
+        return redirect()->back()->with('success', 'Goal Created successfully!');
     }
 
     public function changeBackground(ImageRequest $request)
@@ -270,13 +275,10 @@ class GoalController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request)
+    public function destroy(Goal $goal)
     {
-        $goal = Goal::find($request->goalID);
         $goal->delete();
-        return response()->json([
-            'success' => 'goal deleted successfully!',
-        ]);
+        return redirect()->back()->with('success', 'goal deleted successfully!');
     }
 
     public function banTemplate(Goal $goal)

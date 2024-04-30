@@ -26,121 +26,48 @@
     <div class="px-32">
       <h2 class="font-semibold text-3xl mb-5">Templates</h2>
       <div class="flex justify-between">
-        <p class="w-80">As a seasoned creator of contemporary, user-friendly web designs and digital solutions, I aim to assist you in constructing the brand of your fantasies.</p>
-        <a href="" class="font-medium self-end">More <i class="fa-solid fa-arrow-right ml-2"></i></a>
+        <p class="w-80">At SwiftGoals, our mission is to be your trusted ally in achieving your aspirations with effortless efficiency. Our meticulously curated selection of website templates is designed to propel you towards your goals with ease.</p>
+        <a href="{{route('explore')}}" class="font-medium self-end group cursor-pointer">More <i class="fa-solid fa-arrow-right ml-2 group-hover:mr-3 group-hover:ml-0  transition-all duration-200 ease-in"></i></a>
       </div>
     </div>
     <!-- templates cards section -->
 
     <section class="mt-10 mb-10 flex flex-wrap justify-between gap-10 px-32">
-      <div class="w-96 rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark">
+      @foreach ($templates as $template)
+      <div class="w-64 relative rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark">
         <div class="relative overflow-hidden bg-cover bg-no-repeat" data-twe-ripple-init data-twe-ripple-color="light">
-          <img class="rounded-t-3xl" src="https://tecdn.b-cdn.net/img/new/standard/nature/186.jpg" alt="" />
-          <a href="#">
+          <div class="rounded-xl w-full border border-gray-500 h-32" style="background-image: url('{{isset($template->image->path) ? asset('storage/' . $template->image->path) : asset('/images/sam-schooler-E9aetBe2w40-unsplash.jpg')}}'); background-size: cover; background-repeat: no-repeat; background-position: center"></div>
+          <a href="{{route('goal.show', $template->id)}}">
             <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
           </a>
-          <div class="absolute top-5 right-5 rounded-full bg-[#2A44AB] text-white py-1 px-4">
-            <p class="">label</p>
+          <div class="absolute top-2 right-2 text-sm rounded-full bg-[#2A44AB] text-white py-1 px-4">
+            <p>{{ $template->categories->name }}</p>
           </div>
         </div>
-        <div class="p-6 text-surface bg-[#2A44AB] dark:text-white rounded-b-3xl shadow-2xl">
-          <h5 class="mb-2 text-xl text-white font-medium leading-tight">Headline</h5>
-          <p class="mb-4 text-base text-white">
-            Please add your content here. Keep it short and simple. And smile :)
-          </p>
-        </div>
-        <div class="flex justify-between p-5">
+        <div class="flex my-5 justify-between w-full px-2 text-[#666666]">
+          <p class="">by {{ $template->users->name }}</p>
           <div class="flex">
-            <img class="rounded-full bg-gray-600 h-6" src="{{ asset('images/default_profile.png') }}" alt="d">
-            <p class="ml-3">Headline</p>
+            <span class="mr-3 text-sm"><i class="fa-solid fa-clone fa-sm mr-1"></i>1k</span>
+            <span class="text-sm"><i class="fa-brands fa-gratipay fa-sm mr-1"></i>1.4k</span>
           </div>
-          <div class="flex text-[#666666]">
-            <span class="mr-3"><i class="fa-solid fa-clone mr-1"></i>1k</span>
-            <span><i class="fa-brands fa-gratipay mr-1"></i>1.4k</span>
-          </div>
+        </div>
+        <div class="px-2 text-start bg-transparent text-[#666666] dark:text-white rounded-b-3xl ">
+          <h5 class="mb-2 text-md font-extrabold text-[#2A44AB] leading-tight">{{ $template->title }}</h5>
+          @if($template->mainGoal != null)
+          <p class="mb-4 text-sm">
+            {{ $template->mainGoal }}
+          </p>
+          @else
+          <p class="mb-4 text-sm ">
+            the creator haven't left any description
+          </p>
+          @endif
+        </div>
+        <div class="absolute top-24 left-3">
+          <img class="rounded-full bg-gray-600 h-10" src="{{ asset('images/default_profile.png') }}" alt="d">
         </div>
       </div>
-      <div class="w-96 rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark">
-        <div class="relative overflow-hidden bg-cover bg-no-repeat" data-twe-ripple-init data-twe-ripple-color="light">
-          <img class="rounded-t-3xl" src="https://tecdn.b-cdn.net/img/new/standard/nature/186.jpg" alt="" />
-          <a href="#">
-            <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
-          </a>
-          <div class="absolute top-5 right-5 rounded-full bg-[#2A44AB] text-white py-1 px-4">
-            <p class="">label</p>
-          </div>
-        </div>
-        <div class="p-6 text-surface bg-[#2A44AB] dark:text-white rounded-b-3xl shadow-2xl">
-          <h5 class="mb-2 text-xl text-white font-medium leading-tight">Headline</h5>
-          <p class="mb-4 text-base text-white">
-            Please add your content here. Keep it short and simple. And smile :)
-          </p>
-        </div>
-        <div class="flex justify-between p-5">
-          <div class="flex">
-            <img class="rounded-full bg-gray-600 h-6" src="{{ asset('images/default_profile.png') }}" alt="d">
-            <p class="ml-3">Headline</p>
-          </div>
-          <div class="flex text-[#666666]">
-            <span class="mr-3"><i class="fa-solid fa-clone mr-1"></i>1k</span>
-            <span><i class="fa-brands fa-gratipay mr-1"></i>1.4k</span>
-          </div>
-        </div>
-      </div>
-      <div class="w-96 rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark">
-        <div class="relative overflow-hidden bg-cover bg-no-repeat" data-twe-ripple-init data-twe-ripple-color="light">
-          <img class="rounded-t-3xl" src="https://tecdn.b-cdn.net/img/new/standard/nature/186.jpg" alt="" />
-          <a href="#">
-            <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
-          </a>
-          <div class="absolute top-5 right-5 rounded-full bg-[#2A44AB] text-white py-1 px-4">
-            <p class="">label</p>
-          </div>
-        </div>
-        <div class="p-6 text-surface bg-[#2A44AB] dark:text-white rounded-b-3xl shadow-2xl">
-          <h5 class="mb-2 text-xl text-white font-medium leading-tight">Headline</h5>
-          <p class="mb-4 text-base text-white">
-            Please add your content here. Keep it short and simple. And smile :)
-          </p>
-        </div>
-        <div class="flex justify-between p-5">
-          <div class="flex">
-            <img class="rounded-full bg-gray-600 h-6" src="{{ asset('images/default_profile.png') }}" alt="d">
-            <p class="ml-3">Headline</p>
-          </div>
-          <div class="flex text-[#666666]">
-            <span class="mr-3"><i class="fa-solid fa-clone mr-1"></i>1k</span>
-            <span><i class="fa-brands fa-gratipay mr-1"></i>1.4k</span>
-          </div>
-        </div>
-      </div>
-      <div class="w-96 rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark">
-        <div class="relative overflow-hidden bg-cover bg-no-repeat" data-twe-ripple-init data-twe-ripple-color="light">
-          <img class="rounded-t-3xl" src="https://tecdn.b-cdn.net/img/new/standard/nature/186.jpg" alt="" />
-          <a href="#">
-            <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
-          </a>
-          <div class="absolute top-5 right-5 rounded-full bg-[#2A44AB] text-white py-1 px-4">
-            <p class="">label</p>
-          </div>
-        </div>
-        <div class="p-6 text-surface bg-[#2A44AB] dark:text-white rounded-b-3xl shadow-2xl">
-          <h5 class="mb-2 text-xl text-white font-medium leading-tight">Headline</h5>
-          <p class="mb-4 text-base text-white">
-            Please add your content here. Keep it short and simple. And smile :)
-          </p>
-        </div>
-        <div class="flex justify-between p-5">
-          <div class="flex">
-            <img class="rounded-full bg-gray-600 h-6" src="{{ asset('images/default_profile.png') }}" alt="d">
-            <p class="ml-3">Headline</p>
-          </div>
-          <div class="flex text-[#666666]">
-            <span class="mr-3"><i class="fa-solid fa-clone mr-1"></i>1k</span>
-            <span><i class="fa-brands fa-gratipay mr-1"></i>1.4k</span>
-          </div>
-        </div>
-      </div>
+      @endforeach
     </section>
     <section class="mt-32 py-32 z-10 relative" style="background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ), url('{{ asset('images/kai-gradert-DtDe2ZTfAcM-unsplash.jpg') }}'); background-size: cover; background-repeat: no-repeat;">
       <div class="px-32 text-white">
@@ -151,27 +78,27 @@
         </div>
         <div class="flex justify-between mb-12">
           <h2 class="font-semibold text-3xl ">Goals Inspiration</h2>
-          <a href="" class="font-medium self-center">Create Your Own <i class="fa-solid fa-arrow-right ml-2"></i></a>
+          <a href="{{ route('goal.index') }}" class="font-medium self-center group cursor-pointer">Create Your Own <i class="fa-solid fa-arrow-right ml-2 group-hover:mr-3 group-hover:ml-0  transition-all duration-200 ease-in"></i></a>
         </div>
         <ul class="flex justify-between">
           <div>
             <li class="mb-16">
-              <h5 class="font-medium text-2xl mb-5">Branding</h5>
-              <p class="w-96">Collaborating closely, we'll develop an impactful brand identity for your emerging enterprise. The full spectrum of brand analysis and design is addressed, culminating in a visually stunning, evergreen logo concept.</p>
+              <h5 class="font-medium text-2xl mb-5">Strategic Planning</h5>
+              <p class="w-96">Strategize effectively for success with our comprehensive planning solutions. Collaborating closely, we'll develop strategic roadmaps tailored to your objectives, ensuring every step aligns with your overarching goals. From setting SMART objectives to outlining actionable plans, we empower you to navigate the path to success with clarity and confidence.</p>
             </li>
             <li>
-              <h5 class="font-medium text-2xl mb-5">UX Design</h5>
-              <p class="w-96">Collaborating closely, we'll develop an impactful brand identity for your emerging enterprise. The full spectrum of brand analysis and design is addressed, culminating in a visually stunning, evergreen logo concept.</p>
+              <h5 class="font-medium text-2xl mb-5">Goal Setting and Tracking</h5>
+              <p class="w-96">Set, track, and achieve your objectives with precision using our goal-setting tools. Together, we'll define clear and measurable goals, breaking them down into manageable tasks and milestones.</p>
             </li>
           </div>
           <div>
             <li class="mb-16">
-              <h5 class="font-medium text-2xl mb-5">UI Design</h5>
-              <p class="w-96">Collaborating closely, we'll develop an impactful brand identity for your emerging enterprise. The full spectrum of brand analysis and design is addressed, culminating in a visually stunning, evergreen logo concept.</p>
+              <h5 class="font-medium text-2xl mb-5">Performance Optimization</h5>
+              <p class="w-96">Optimize your performance and maximize your productivity with our performance enhancement strategies. Through data-driven insights and continuous improvement techniques, we'll identify areas for growth and refine your approach to goal attainment.</p>
             </li>
             <li>
-              <h5 class="font-medium text-2xl mb-5">Development</h5>
-              <p class="w-96">Collaborating closely, we'll develop an impactful brand identity for your emerging enterprise. The full spectrum of brand analysis and design is addressed, culminating in a visually stunning, evergreen logo concept.</p>
+              <h5 class="font-medium text-2xl mb-5">Accountability and Support</h5>
+              <p class="w-96">Stay accountable and motivated on your journey towards success with our supportive community and accountability features. Whether through peer support networks, mentorship programs, or personalized coaching sessions, we provide the encouragement and guidance you need to stay on track and overcome challenges</p>
             </li>
           </div>
         </ul>
