@@ -28,12 +28,7 @@
       </div>
       <button type="submit" class="text-white bg-[#012E4A] font-medium rounded-lg text-sm w-full py-2 text-center">Sign up</button>
       <div class="w-full text-center my-5">
-        <p class="block text-xs font-normal text-white ">or continue with</p>
-      </div>
-      <div class="flex justify-between gap-4">
-        <a href="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg py-1.5 text-center w-full"><i class="fa-brands fa-google"></i></a>
-        <a href="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg py-1.5 text-center w-full"><i class="fa-brands fa-github"></i></a>
-        <a href="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg py-1.5 text-center w-full"><i class="fa-brands fa-facebook"></i></a>
+        <p class="block text-xs font-normal text-white ">or</p>
       </div>
       <div class="flex justify-center my-5">
         <p class=" text-xs font-normal text-white ">Already Registered?<a href="{{ route('login') }}" class="font-bold ms-3 text-white hover:underline ">Login To Your Account</a></p>

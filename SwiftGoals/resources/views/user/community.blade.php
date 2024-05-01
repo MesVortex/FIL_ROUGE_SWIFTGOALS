@@ -100,7 +100,7 @@
                                             </button>
                                         </form>
                                     @endif
-                                    <span>1.4k</span>
+                                    <span>0</span>
                                     <button type="button" onclick="showComments({{ $question->id }})" class="">
                                         <svg class=" text-[#012E4A]" xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 24 24" width="28" height="28" color="#000000"
@@ -113,7 +113,7 @@
                                                 stroke-linejoin="round" />
                                         </svg>
                                     </button>
-                                    <span class="">100</span>
+                                    <span class="">{{sizeof($question->answers()->get())}}</span>
                                 </div>
                             </div>
                         </article>
@@ -163,7 +163,7 @@
                                                 stroke-linejoin="round" />
                                         </svg>
                                     </button>
-                                    <span>1.4k</span>
+                                    <span>0</span>
                                     <button class="">
                                         <svg class="text-white" xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 24 24" width="28" height="28" color="#000000"
@@ -176,7 +176,7 @@
                                                 stroke-linejoin="round" />
                                         </svg>
                                     </button>
-                                    <span class="">100</span>
+                                    <span class="">{{sizeof($userQuestion->answers()->get())}}</span>
                                 </div>
                             </div>
                         </article>

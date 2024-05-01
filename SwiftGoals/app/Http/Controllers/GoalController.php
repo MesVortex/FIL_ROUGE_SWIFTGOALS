@@ -84,7 +84,7 @@ class GoalController extends Controller
     {
         $templates = Goal::where('isTemplate', 1)
             ->with('categories', 'users')
-            ->paginate(9);
+            ->get();
         $categories = Category::all();
         return view('user.explore', compact('templates', 'categories'));
     }
@@ -210,11 +210,11 @@ class GoalController extends Controller
         $newGoal = Goal::create($goalCopy->toArray());
 
         foreach ($goalCopy->steps as $step) {
-            $newStep = Step::where('id', $step->id)->with('tinysteps')->first();
+            $stepCopy = Step::where('id', $step->id)->with('tinysteps')->first();
             $newStep = Step::create($step->toArray());
             $newStep->goalID = $newGoal->id;
             $newStep->save();
-            foreach ($newStep->tinysteps as $tinystep) {
+            foreach ($stepCopy->tinysteps as $tinystep) {
                 $tinystep = Tinystep::create($tinystep->toArray());
                 $tinystep->stepID = $newStep->id;
                 $tinystep->save();

@@ -247,13 +247,6 @@
       <span class="absolute w-36 h-32 -top-8 -left-2 bg-blue-600 rotate-12 transform scale-x-0 group-hover:scale-x-50 transition-transform group-hover:duration-1000 duration-500 origin-left"></span>
       <span class="group-hover:opacity-100 group-hover:duration-1000 duration-100 opacity-0 text-white absolute top-2.5 left-3 z-10">Create Goal!</span>
     </button>
-    <button class="overflow-hidden relative w-32 py-2 h-12 bg-white text-black border-none rounded-md text-md font-bold cursor-pointer relative z-10 group">
-      Add To
-      <span class="absolute w-36 h-32 -top-8 -left-2 bg-red-200 rotate-12 transform scale-x-0 group-hover:scale-x-100 transition-transform group-hover:duration-500 duration-1000 origin-right"></span>
-      <span class="absolute w-36 h-32 -top-8 -left-2 bg-red-400 rotate-12 transform scale-x-0 group-hover:scale-x-100 transition-transform group-hover:duration-700 duration-700 origin-right"></span>
-      <span class="absolute w-36 h-32 -top-8 -left-2 bg-red-600 rotate-12 transform scale-x-0 group-hover:scale-x-100 transition-transform group-hover:duration-1000 duration-500 origin-right"></span>
-      <span class="group-hover:opacity-100 group-hover:duration-1000 duration-100 text-white opacity-0 absolute top-3 left-6 z-10">Favorites!</span>
-    </button>
     @endif
   </div>
 
