@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <p class="para">paragraphe1</p>
+  <p class="para">paragraphe2</p>
+  <p class="para">paragraphe3</p>
+  <p class="para">paragraphe4</p>
+
+  <script>
+    const paras = document.querySelectorAll('.para');
+    paras.forEach((para) => 
+      para.addEventListener('click', function(){
+      this.remove();
+   })
+  );
+    
+    </script>
+</body>
+</html>
